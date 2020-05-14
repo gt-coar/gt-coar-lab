@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+from subprocess import check_call
+from pathlib import Path
+
+HERE = Path(__file__).parent
+
+
+def _(args, **kwargs):
+    """ a little wrapper to handle Paths for windows, and echoing
+    """
+    str_args = [str(a) for a in args]
+
+    print("\n{}\n".format(" ".join(str_args)))
+
+    if "cwd" in kwargs:
+        kwargs["cwd"] = str(kwargs["cwd"])
+
+    return check_call(args, **kwargs)
+
+
+LABEXTENSIONS = (HERE / "labextensions.txt").read_text().splitlines()
+
+_(["jupyter", "labextension", "install", "--debug", "--no-build", *LABEXTENSIONS])
+_(["jupyter", "lab", "build", "--debug", "--dev-build=False", "--minimize=True"])

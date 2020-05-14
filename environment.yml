@@ -1,0 +1,56 @@
+name: rl-lab
+
+description: an environment for interactive exploration of reinforcement learning
+
+channels:
+  - conda-forge
+  - anaconda
+  - msys2
+
+dependencies:
+  # core
+  - python >=3.7,<3.8.0a0
+  # gym and friends
+  # - gym-atari # TODO: look into windows builds
+  - gym
+  - gym-box2d
+  # interactive computing
+  - jupyterlab ==2.1.2
+  - nodejs >=12,<13.0.0a0
+  - jupyterlab-git
+  - dask_labextension
+  # numerical compute
+  - numpy
+  - pandas
+  # differentiable compute
+  - dask
+  - distributed
+  - pytorch-cpu
+  - tensorflow
+  # interactive visualization
+  - datashader
+  - hvplot
+  - ipywidgets
+  # computer algebra
+  - antlr-python-runtime
+  - sympy
+  # network manipulation
+  - networkx
+  # benchmarking
+  - asv
+  # computer vision
+  - py-opencv
+  - scikit-image
+  # software distribution pipeline
+  - git
+  - conda
+  - conda-build
+  - constructor
+  - conda-pack
+  # testing
+  - pytest
+  - pytest-asyncio
+  - firefox =68
+  - robotframework
+  - robotframework-seleniumlibrary
+  - geckodriver

@@ -1,0 +1,55 @@
+name: rl-lab
+
+commands:
+  postBuild:
+    unix: python postBuild
+    windows: python postBuild
+  lab:
+    unix: jupyter lab --no-browser --debug
+    windows: jupyter lab --no-browser --debug
+
+platforms:
+- linux-64
+- osx-64
+- win-64
+
+env_specs:
+  rl-lab:
+    packages:
+    - python >=3.7,<3.8.0a0
+    - gym
+    - gym-box2d
+    - jupyterlab ==2.1.2
+    - nodejs >=12,<13.0.0a0
+    - jupyterlab-git
+    - dask_labextension
+    - numpy
+    - pandas
+    - dask
+    - distributed
+    - pytorch-cpu
+    - tensorflow
+    - datashader
+    - hvplot
+    - ipywidgets
+    - antlr-python-runtime
+    - sympy
+    - networkx
+    - asv
+    - py-opencv
+    - scikit-image
+    - git
+    - conda
+    - conda-build
+    - constructor
+    - conda-pack
+    - pytest
+    - pytest-asyncio
+    - firefox =68
+    - robotframework
+    - robotframework-seleniumlibrary
+    - geckodriver
+    channels:
+    - conda-forge
+    - anaconda
+    - msys2
