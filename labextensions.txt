@@ -1,5 +1,5 @@
 @bokeh/jupyter_bokeh@2.0.1
 @jupyter-widgets/jupyterlab-manager@2.0.0
 @jupyterlab/git@0.20.0
-@jupyterlab/toc@0.3.0
+@jupyterlab/toc@3.0.0
 nbdime@6.0.0
