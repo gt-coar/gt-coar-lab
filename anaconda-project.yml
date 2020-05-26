@@ -29,10 +29,11 @@ env_specs:
     channels:
       - https://conda.anaconda.org/conda-forge
     packages:
-      - constructor >=3.0.2,<3.1.0a0
       - conda >=4.8.3,<4.9.0a0
-      - python >=3.7,<3.8.0a0
+      - constructor >=3.0.2,<3.1.0a0
+      - jinja2
       - pillow
+      - python >=3.7,<3.8.0a0
 
   coar-lab:
     channels:

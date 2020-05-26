@@ -4,13 +4,13 @@ import pathlib
 import ruamel_yaml
 import sys
 from constructor.conda_interface import cc_platform
-import datetime
+from datetime import datetime
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 INSTALLER = ROOT / "installer"
 TMPL = INSTALLER / "construct.yaml.j2"
-CONSTRUCT = installer / "construct.yaml"
+CONSTRUCT = INSTALLER / "construct.yaml"
 PROJ = ROOT / "anaconda-project.yml"
 LOCK = ROOT / "anaconda-project-lock.yml"
 ENV = "coar-lab"
@@ -32,7 +32,7 @@ def template():
     packages = lock["env_specs"][ENV]["packages"]
     context = dict(
         version=f"{today.year}.{today.month}.{today.day}",
-        channels=proj[ENV]["channels"],
+        channels=proj["env_specs"][ENV]["channels"],
         specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
     )
     CONSTRUCT.write_text(tmpl.render(**context))
