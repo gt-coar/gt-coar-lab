@@ -4,119 +4,119 @@
 name: gt-coar-lab
 
 commands:
-    postBuild:
-        description: perform post-install steps, as on binder
-        unix: python postBuild
-        windows: python postBuild
-        env_spec: gt-coar-lab
+  postBuild:
+    description: perform post-install steps, as on binder
+    unix: python postBuild
+    windows: python postBuild
+    env_spec: gt-coar-lab
 
-    lab:
-        description: try out the interactive experience (needs postBuild)
-        unix: jupyter lab --no-browser --debug
-        windows: jupyter lab --no-browser --debug
-        env_spec: gt-coar-lab
+  lab:
+    description: try out the interactive experience (needs postBuild)
+    unix: jupyter lab --no-browser --debug
+    windows: jupyter lab --no-browser --debug
+    env_spec: gt-coar-lab
 
-    build:
-        description: build the installer
-        unix: python -m scripts.build
-        windows: python -m scripts.build
-        env_spec: build
+  build:
+    description: build the installer
+    unix: python -m scripts.build
+    windows: python -m scripts.build
+    env_spec: build
 
-    lint:
-        description: lint the project
-        unix: python -m scripts.lint
-        windows: python -m scripts.lint
-        env_spec: qa
+  lint:
+    description: lint the project
+    unix: python -m scripts.lint
+    windows: python -m scripts.lint
+    env_spec: qa
 
-    yarn:
-        description: just yarn, but in the right env
-        unix: yarn
-        windows: yarn
-        env_spec: qa
+  yarn:
+    description: just yarn, but in the right env
+    unix: yarn
+    windows: yarn
+    env_spec: qa
 
 platforms:
-    - linux-64
-    - osx-64
-    - win-64
+  - linux-64
+  - osx-64
+  - win-64
 
 env_specs:
-    qa:
-        inherit_from:
-            - _py
-            - _node
-            - _yarn
-        channels:
-            - https://conda.anaconda.org/conda-forge
-        packages:
-            - black
-            - flake8
-            - isort
-            - yamllint
+  qa:
+    inherit_from:
+      - _py
+      - _node
+      - _yarn
+    channels:
+      - https://conda.anaconda.org/conda-forge
+    packages:
+      - black
+      - flake8
+      - isort
+      - yamllint
 
-    build:
-        inherit_from:
-            - _py
-        channels:
-            - https://conda.anaconda.org/conda-forge
-            - https://conda.anaconda.org/msys2
-        packages:
-            - conda >=4.8.3,<4.9.0a0
-            - constructor >=3.0.2,<3.1.0a0
-            - git
-            - jinja2
-            - pillow
+  build:
+    inherit_from:
+      - _py
+    channels:
+      - https://conda.anaconda.org/conda-forge
+      - https://conda.anaconda.org/msys2
+    packages:
+      - conda >=4.8.3,<4.9.0a0
+      - constructor >=3.0.2,<3.1.0a0
+      - git
+      - jinja2
+      - pillow
 
-    gt-coar-lab:
-        channels:
-            - https://conda.anaconda.org/anaconda
-            - https://conda.anaconda.org/conda-forge
-            - https://conda.anaconda.org/msys2
-        inherit_from:
-            - _py
-            - _node
-        packages:
-            - python >=3.7,<3.8.0a0
-            - gym
-            - gym-box2d
-            - jupyterlab ==2.1.2
-            - nodejs >=12,<13.0.0a0
-            - jupyterlab-git
-            - dask_labextension
-            - numpy
-            - pandas
-            - dask
-            - distributed
-            - pytorch-cpu
-            - tensorflow
-            - datashader
-            - hvplot
-            - ipywidgets
-            - antlr-python-runtime
-            - sympy
-            - networkx
-            - asv
-            - py-opencv
-            - scikit-image
-            - git
-            - conda
-            - conda-build
-            - constructor
-            - conda-pack
-            - pytest
-            - pytest-asyncio
-            - firefox =68
-            - robotframework
-            - robotframework-seleniumlibrary
-            - geckodriver
+  gt-coar-lab:
+    channels:
+      - https://conda.anaconda.org/anaconda
+      - https://conda.anaconda.org/conda-forge
+      - https://conda.anaconda.org/msys2
+    inherit_from:
+      - _py
+      - _node
+    packages:
+      - python >=3.7,<3.8.0a0
+      - gym
+      - gym-box2d
+      - jupyterlab ==2.1.2
+      - nodejs >=12,<13.0.0a0
+      - jupyterlab-git
+      - dask_labextension
+      - numpy
+      - pandas
+      - dask
+      - distributed
+      - pytorch-cpu
+      - tensorflow
+      - datashader
+      - hvplot
+      - ipywidgets
+      - antlr-python-runtime
+      - sympy
+      - networkx
+      - asv
+      - py-opencv
+      - scikit-image
+      - git
+      - conda
+      - conda-build
+      - constructor
+      - conda-pack
+      - pytest
+      - pytest-asyncio
+      - firefox =68
+      - robotframework
+      - robotframework-seleniumlibrary
+      - geckodriver
 
-    _py:
-        packages:
-            - python >=3.7,<3.8.0a0
+  _py:
+    packages:
+      - python >=3.7,<3.8.0a0
 
-    _node:
-        packages:
-            - nodejs >=12,<13.0.0a0
+  _node:
+    packages:
+      - nodejs >=12,<13.0.0a0
 
-    _yarn:
-        packages:
-            - yarn >=1,<2.0.0a0
+  _yarn:
+    packages:
+      - yarn >=1,<2.0.0a0
