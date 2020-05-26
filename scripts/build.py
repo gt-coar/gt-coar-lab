@@ -1,3 +1,5 @@
+# Copyright (c) 2020 University System of Georgia and GT-COAR-Lab Contributors
+# Distributed under the terms of the BSD-3-Clause License
 import subprocess
 import jinja2
 import pathlib
@@ -39,6 +41,7 @@ def template():
         specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
     )
     CONSTRUCT.write_text(tmpl.render(**context))
+    ruamel_yaml.safe_load(CONSTRUCT.read_text())
     return 0
 
 
