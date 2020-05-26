@@ -23,6 +23,7 @@ jobs:
         run: |
           anaconda-project run yarn
           anaconda-project run lint
+          git diff || echo "no changes made"
 
   construct:
     name: ${{ matrix.os }}
