@@ -14,6 +14,9 @@ CONSTRUCT = INSTALLER / "construct.yaml"
 PROJ = ROOT / "anaconda-project.yml"
 LOCK = ROOT / "anaconda-project-lock.yml"
 ENV = "coar-lab"
+DIST = ROOT / "dist"
+CACHE = ROOT / ".cache"
+CONSTRUCTOR_CACHE = CACHE / "constructor"
 
 PLATFORMS = ["all", cc_platform]
 
@@ -42,7 +45,11 @@ def template():
 def build():
     """ Build an installer from the generated construct.yaml
     """
-    return subprocess.call(["constructor", "."], cwd=str(INSTALLER))
+    return subprocess.call([
+        "constructor", ".",
+        "--output-dir", str(DIST),
+        "--cache-dir", str(CONSTRUCTOR_CACHE),
+    ], cwd=str(INSTALLER))
 
 
 if __name__ == "__main__":
