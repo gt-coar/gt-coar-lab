@@ -45,11 +45,12 @@ def template():
 def build():
     """ Build an installer from the generated construct.yaml
     """
-    return subprocess.call([
+    args = list(map(str, [
         "constructor", ".",
-        "--output-dir", str(DIST),
-        "--cache-dir", str(CONSTRUCTOR_CACHE),
-    ], cwd=str(INSTALLER))
+        "--output-dir", DIST.resolve(),
+        "--cache-dir", CONSTRUCTOR_CACHE.resolve(),
+    ]))
+    return subprocess.call(args, cwd=str(INSTALLER))
 
 
 if __name__ == "__main__":

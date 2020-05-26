@@ -1,6 +1,6 @@
-name: coar-lab
+# an environment for interactive exploration of reinforcement learning
 
-description: an environment for interactive exploration of reinforcement learning
+name: coar-lab
 
 channels:
   - https://conda.anaconda.org/anaconda
