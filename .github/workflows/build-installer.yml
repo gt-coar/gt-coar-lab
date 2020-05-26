@@ -23,10 +23,10 @@ jobs:
           environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
       - shell: bash -l {0}
-        if: ${{ matrix.os != "windows-latest" }}
+        if: ${{ !contains(matrix.os, 'windows') }}
         run: |
           anaconda-project run build
       - shell: cmd /C CALL {0}
-        if: ${{ matrix.os == "windows-latest" }}
+        if: ${{ contains(matrix.os, 'windows') }}
         run: >-
           anaconda-project run build
