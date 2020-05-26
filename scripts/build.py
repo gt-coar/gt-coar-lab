@@ -15,6 +15,11 @@ PROJ = ROOT / "anaconda-project.yml"
 LOCK = ROOT / "anaconda-project-lock.yml"
 ENV = "coar-lab"
 
+PLATFORMS = ["all", cc_platform]
+
+if not cc_platform.startswith("win-"):
+    PLATFORMS += ["unix"]
+
 
 def template():
     """ Build a construct.yaml from the project file, lock file
@@ -28,7 +33,7 @@ def template():
     context = dict(
         version=f"{today.year}.{today.month}.{today.day}",
         channels=proj[ENV]["channels"],
-        specs=sorted([*packages.get("all", []), *packages.get(cc_platform, [])])
+        specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
     )
     CONSTRUCT.write_text(tmpl.render(**context))
     return 0
@@ -40,5 +45,5 @@ def build():
     return subprocess.call(["constructor", "."], cwd=str(INSTALLER))
 
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     sys.exit(template() or build())
