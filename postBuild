@@ -20,7 +20,11 @@ def _(args, **kwargs):
     return check_call(args, **kwargs)
 
 
-LABEXTENSIONS = (HERE / "labextensions.txt").read_text().splitlines()
+LABEXTENSIONS = sorted([
+    ext.strip()
+    for ext in (HERE / "labextensions.txt").read_text().strip().splitlines()
+    if ext.strip() and not ext.startswith("#")
+])
 
 _(["jupyter", "labextension", "install", "--debug", "--no-build", *LABEXTENSIONS])
 _(["jupyter", "lab", "build", "--debug", "--dev-build=False", "--minimize=True"])
