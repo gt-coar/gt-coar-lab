@@ -12,8 +12,9 @@ jobs:
   construct:
     name: Build UNIX Construct
     runs-on: ${{ matrix.os }}
-    matrix:
-      os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
     steps:
       - uses: actions/checkout@v2
       - uses: goanpeca/setup-miniconda@v1fe2244619a6c1a47c83a5465382cb9287eb772b5
