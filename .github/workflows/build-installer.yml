@@ -9,8 +9,8 @@ on:
       - master
 
 jobs:
-  jobs:
-    name: lint
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
           git diff || echo "no changes made"
 
   construct:
-    name: ${{ matrix.os }}
+    name: Build ${{ matrix.os }}
     needs: lint
     runs-on: ${{ matrix.os }}
     strategy:
