@@ -18,7 +18,16 @@ locking_enabled: true
 # A key goes in here for each env spec.
 #
 env_specs:
-  coar-lab:
+  _py:
+    locked: false
+
+  _node:
+    locked: false
+
+  _yarn:
+    locked: false
+
+  gt-coar-lab:
     locked: true
     env_spec_hash: 0b5014131a392a1d0a83792420069c0cfa7da3bd
     platforms:
@@ -520,9 +529,10 @@ env_specs:
       - zeromq=4.3.1=h33f27b4_3
       - zlib=1.2.11=vc14h1cdd9ab_1
       - zstd=1.3.7=h508b16e_0
+
   build:
     locked: true
-    env_spec_hash: 3ec6bdc4b48e713456347cb0ffc1a50f543d9334
+    env_spec_hash: ad5e54e994f65a7daa622403952450aa9c87a28c
     platforms:
     - linux-64
     - osx-64
@@ -666,3 +676,95 @@ env_specs:
       - yaml=0.2.4=he774522_0
       - zlib=1.2.11=h2fa13f4_1006
       - zstd=1.4.4=h9f78265_3
+
+  qa:
+    locked: true
+    env_spec_hash: c04b60b08d07e9734bfe8dc0d4f42ffbd8ac6b56
+    platforms:
+    - linux-64
+    - osx-64
+    - win-64
+    packages:
+      all:
+      - appdirs=1.4.3=py_1
+      - attrs=19.3.0=py_0
+      - black=19.10b0=py37_0
+      - ca-certificates=2020.4.5.1=hecc5488_0
+      - certifi=2020.4.5.1=py37hc8dfbb8_0
+      - click=7.1.2=pyh9f0ad1d_0
+      - flake8=3.8.2=pyh9f0ad1d_0
+      - importlib-metadata=1.6.0=py37hc8dfbb8_0
+      - isort=4.3.21=py37hc8dfbb8_1
+      - mccabe=0.6.1=py_1
+      - mypy_extensions=0.4.3=py37hc8dfbb8_1
+      - pathspec=0.8.0=pyh9f0ad1d_0
+      - pip=20.1.1=pyh9f0ad1d_0
+      - pycodestyle=2.6.0=pyh9f0ad1d_0
+      - pyflakes=2.2.0=pyh9f0ad1d_0
+      - python_abi=3.7=1_cp37m
+      - setuptools=46.4.0=py37hc8dfbb8_0
+      - toml=0.10.1=pyh9f0ad1d_0
+      - typing_extensions=3.7.4.2=py_0
+      - wheel=0.34.2=py_1
+      - yamllint=1.21.0=pyh9f0ad1d_0
+      - yarn=1.22.4=0
+      - zipp=3.1.0=py_0
+      linux-64:
+      - _libgcc_mutex=0.1=conda_forge
+      - _openmp_mutex=4.5=0_gnu
+      - binutils_impl_linux-64=2.34=h53a641e_2
+      - gcc_impl_linux-64=7.5.0=hd420e75_6
+      - gfortran_impl_linux-64=7.5.0=hdf63c60_6
+      - gxx_impl_linux-64=7.5.0=hdf63c60_6
+      - icu=64.2=he1b5a44_1
+      - ld_impl_linux-64=2.34=h53a641e_2
+      - libffi=3.2.1=he1b5a44_1007
+      - libgcc-ng=9.2.0=h24d8f2e_2
+      - libgfortran-ng=7.5.0=hdf63c60_6
+      - libgomp=9.2.0=h24d8f2e_2
+      - libstdcxx-ng=9.2.0=hdf63c60_2
+      - libuv=1.34.0=h516909a_0
+      - ncurses=6.1=hf484d3e_1002
+      - nodejs=12.16.1=h67efad7_0
+      - openssl=1.1.1g=h516909a_0
+      - python=3.7.6=h8356626_5_cpython
+      - pyyaml=5.3.1=py37h8f50634_0
+      - readline=8.0=hf8c457e_0
+      - regex=2020.5.14=py37h8f50634_0
+      - sqlite=3.30.1=hcee41ef_0
+      - sysroot_linux-64=2.12=h3a0023d_3
+      - tk=8.6.10=hed695b0_0
+      - typed-ast=1.4.1=py37h516909a_0
+      - xz=5.2.5=h516909a_0
+      - yaml=0.2.4=h516909a_0
+      - zlib=1.2.11=h516909a_1006
+      osx-64:
+      - icu=64.2=h6de7cb9_1
+      - libcxx=10.0.0=h1af66ff_2
+      - libffi=3.2.1=h4a8c4bd_1007
+      - libuv=1.34.0=h0b31af3_0
+      - ncurses=6.1=h0a44026_1002
+      - nodejs=12.16.1=h64044b7_0
+      - openssl=1.1.1g=h0b31af3_0
+      - python=3.7.6=h90870a6_5_cpython
+      - pyyaml=5.3.1=py37h9bfed18_0
+      - readline=8.0=hcfe32e1_0
+      - regex=2020.5.14=py37h9bfed18_0
+      - sqlite=3.30.1=h93121df_0
+      - tk=8.6.10=hbbe82c9_0
+      - typed-ast=1.4.1=py37h0b31af3_0
+      - xz=5.2.5=h0b31af3_0
+      - yaml=0.2.4=h0b31af3_0
+      - zlib=1.2.11=h0b31af3_1006
+      win-64:
+      - nodejs=12.16.1=0
+      - openssl=1.1.1g=he774522_0
+      - python=3.7.6=h60c2a47_5_cpython
+      - pyyaml=5.3.1=py37h8055547_0
+      - regex=2020.5.14=py37h4ab8f01_0
+      - sqlite=3.30.1=hfa6e2cd_0
+      - typed-ast=1.4.1=py37hfa6e2cd_0
+      - vc=14.1=h869be7e_1
+      - vs2015_runtime=14.16.27012=h30e32a0_2
+      - wincertstore=0.2=py37_1003
+      - yaml=0.2.4=he774522_0

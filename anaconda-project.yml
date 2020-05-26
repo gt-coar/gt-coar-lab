@@ -8,19 +8,25 @@ commands:
     description: perform post-install steps, as on binder
     unix: python postBuild
     windows: python postBuild
-    env_spec: coar-lab
+    env_spec: gt-coar-lab
 
   lab:
     description: try out the interactive experience (needs postBuild)
     unix: jupyter lab --no-browser --debug
     windows: jupyter lab --no-browser --debug
-    env_spec: coar-lab
+    env_spec: gt-coar-lab
 
   build:
     description: build the installer
-    unix: python scripts/build.py
-    windows: python scripts\build.py
+    unix: python -m scripts.build
+    windows: python -m scripts.build
     env_spec: build
+
+  lint:
+    description: lint the project
+    unix: python -m scripts.lint
+    windows: python -m scripts.lint
+    env_spec: qa
 
 platforms:
   - linux-64
@@ -28,7 +34,22 @@ platforms:
   - win-64
 
 env_specs:
+  qa:
+    inherit_from:
+      - _py
+      - _node
+      - _yarn
+    channels:
+      - https://conda.anaconda.org/conda-forge
+    packages:
+      - black
+      - flake8
+      - isort
+      - yamllint
+
   build:
+    inherit_from:
+      - _py
     channels:
       - https://conda.anaconda.org/conda-forge
       - https://conda.anaconda.org/msys2
@@ -38,13 +59,15 @@ env_specs:
       - git
       - jinja2
       - pillow
-      - python >=3.7,<3.8.0a0
 
-  coar-lab:
+  gt-coar-lab:
     channels:
       - https://conda.anaconda.org/anaconda
       - https://conda.anaconda.org/conda-forge
       - https://conda.anaconda.org/msys2
+    inherit_from:
+      - _py
+      - _node
     packages:
       - python >=3.7,<3.8.0a0
       - gym
@@ -79,3 +102,15 @@ env_specs:
       - robotframework
       - robotframework-seleniumlibrary
       - geckodriver
+
+  _py:
+    packages:
+      - python >=3.7,<3.8.0a0
+
+  _node:
+    packages:
+      - nodejs >=12,<13.0.0a0
+
+  _yarn:
+    packages:
+      - yarn >=1,<2.0.0a0

@@ -1,9 +1,10 @@
+__pycache__/
 .cache/
 .ipynb_checkpoints/
 construct.yaml
 dist/
 envs/
 gym-results/
+tmp/
 untitled*
 Untitled*
-tmp/

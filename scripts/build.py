@@ -1,24 +1,14 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
-import subprocess
-import jinja2
-import pathlib
-import ruamel_yaml
 import sys
-from constructor.conda_interface import cc_platform
 from datetime import datetime
 
-HERE = pathlib.Path(__file__).parent
-ROOT = HERE.parent
-INSTALLER = ROOT / "installer"
-TMPL = INSTALLER / "construct.yaml.j2"
-CONSTRUCT = INSTALLER / "construct.yaml"
-PROJ = ROOT / "anaconda-project.yml"
-LOCK = ROOT / "anaconda-project-lock.yml"
-ENV = "coar-lab"
-DIST = ROOT / "dist"
-CACHE = ROOT / ".cache"
-CONSTRUCTOR_CACHE = CACHE / "constructor"
+import jinja2
+import ruamel_yaml
+from constructor.conda_interface import cc_platform
+
+from . import paths as P
+from . import utils as U
 
 PLATFORMS = ["all", cc_platform]
 
@@ -26,41 +16,40 @@ if not cc_platform.startswith("win-"):
     PLATFORMS += ["unix"]
 
 
-def git_commit():
-    return subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode("utf-8")[:7]
-
-
 def template():
     """ Build a construct.yaml from the project file, lock file
     """
-    lock = ruamel_yaml.safe_load(LOCK.read_text())
-    proj = ruamel_yaml.safe_load(PROJ.read_text())
-    env = lock
-    tmpl = jinja2.Template(TMPL.read_text())
+    lock = ruamel_yaml.safe_load(P.LOCK.read_text())
+    proj = ruamel_yaml.safe_load(P.PROJ.read_text())
+    tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
     today = datetime.today()
-    packages = lock["env_specs"][ENV]["packages"]
+    packages = lock["env_specs"][P.ENV]["packages"]
     context = dict(
-        version=f"{today.year}.{today.month}.{today.day}-{git_commit()}",
-        channels=proj["env_specs"][ENV]["channels"],
-        specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
+        version=f"{today.year}.{today.month}.{today.day}-{U.git_commit()}",
+        channels=proj["env_specs"][P.ENV]["channels"],
+        specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], [])),
     )
-    CONSTRUCT.write_text(tmpl.render(**context))
-    ruamel_yaml.safe_load(CONSTRUCT.read_text())
+    P.CONSTRUCT.write_text(tmpl.render(**context))
+    ruamel_yaml.safe_load(P.CONSTRUCT.read_text())
     return 0
 
 
 def build():
     """ Build an installer from the generated construct.yaml
     """
-    DIST.exists() or DIST.mkdir()
+    P.DIST.exists() or P.DIST.mkdir()
 
-    args = list(map(str, [
-        "constructor", ".",
-        "--output-dir", DIST.resolve(),
-        "--cache-dir", CONSTRUCTOR_CACHE.resolve(),
-    ]))
-
-    return subprocess.call(args, cwd=str(INSTALLER))
+    return U._(
+        [
+            "constructor",
+            ".",
+            "--output-dir",
+            P.DIST.resolve(),
+            "--cache-dir",
+            P.CONSTRUCTOR_CACHE.resolve(),
+        ],
+        cwd=str(P.INSTALLER),
+    )
 
 
 if __name__ == "__main__":

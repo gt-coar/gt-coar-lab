@@ -3,7 +3,7 @@
 
 # an environment for interactive exploration of reinforcement learning
 
-name: coar-lab
+name: gt-coar-lab
 
 channels:
   - https://conda.anaconda.org/anaconda
