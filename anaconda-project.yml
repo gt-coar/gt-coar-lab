@@ -2,11 +2,22 @@ name: coar-lab
 
 commands:
   postBuild:
+    description: perform post-install steps, as on binder
     unix: python postBuild
     windows: python postBuild
+    env_spec: coar-lab
+
   lab:
+    description: try out the interactive experience (needs postBuild)
     unix: jupyter lab --no-browser --debug
     windows: jupyter lab --no-browser --debug
+    env_spec: coar-lab
+
+  build:
+    description: build the installer
+    unix: python scripts/build.py
+    windows: python scripts\build.py
+    env_spec: build
 
 platforms:
   - linux-64
@@ -14,6 +25,15 @@ platforms:
   - win-64
 
 env_specs:
+  build:
+    channels:
+      - https://conda.anaconda.org/conda-forge
+    packages:
+      - constructor >=3.0.2,<3.1.0a0
+      - conda >=4.8.3,<4.9.0a0
+      - python >=3.7,<3.8.0a0
+      - pillow
+
   coar-lab:
     channels:
       - https://conda.anaconda.org/anaconda
@@ -53,12 +73,3 @@ env_specs:
       - robotframework
       - robotframework-seleniumlibrary
       - geckodriver
-
-  build:
-    channels:
-      - https://conda.anaconda.org/conda-forge
-    packages:
-      - constructor >=3.0.2,<3.1.0a0
-      - conda >=4.8.3,<4.9.0a0
-      - python >=3.7,<3.8.0a0
-      - pillow
