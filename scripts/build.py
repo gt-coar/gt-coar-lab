@@ -1,4 +1,4 @@
-# Copyright (c) 2020 University System of Georgia and GT-COAR-Lab Contributors
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import subprocess
 import jinja2
@@ -26,6 +26,10 @@ if not cc_platform.startswith("win-"):
     PLATFORMS += ["unix"]
 
 
+def git_commit():
+    return subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode("utf-8")[:7]
+
+
 def template():
     """ Build a construct.yaml from the project file, lock file
     """
@@ -36,7 +40,7 @@ def template():
     today = datetime.today()
     packages = lock["env_specs"][ENV]["packages"]
     context = dict(
-        version=f"{today.year}.{today.month}.{today.day}",
+        version=f"{today.year}.{today.month}.{today.day}-{git_commit()}",
         channels=proj["env_specs"][ENV]["channels"],
         specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
     )
