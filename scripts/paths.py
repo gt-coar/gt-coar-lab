@@ -20,9 +20,11 @@ ENV = "gt-coar-lab"
 ALL_PY = sorted([*HERE.rglob("*.py"), ROOT / "postBuild"])
 ALL_YAML = sorted(
     [
-        *ROOT.glob("*.yml"),
         ROOT / ".yamllint",
-        *GITHUB.rglob("*.yml"),
+        ROOT / ".prettierrc",
         *CI_SUPPORT.glob("*.yml"),
+        *GITHUB.rglob("*.yml"),
+        *ROOT.glob("*.yml"),
     ]
 )
+ALL_MD = sorted([*ROOT.glob("*.md")])

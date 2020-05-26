@@ -30,5 +30,9 @@ def lint_yaml():
     return lint_rc
 
 
+def prettier():
+    return U._(["yarn", "prettier", "--write", *P.ALL_YAML, *P.ALL_MD])
+
+
 if __name__ == "__main__":
-    sys.exit(lint_py() or lint_yaml())
+    sys.exit(prettier() or lint_py() or lint_yaml())
