@@ -1,0 +1,31 @@
+name: Build Installer
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  construct:
+    name: Build UNIX Construct
+    runs-on: ${{ matrix.os }}
+    matrix:
+      os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goanpeca/setup-miniconda@v1fe2244619a6c1a47c83a5465382cb9287eb772b5
+        with:
+          activate-environment: rl-lab-base
+          environment-file: .ci_support/environment-base.yml
+          auto-activate-base: false
+      - shell: bash -l {0}
+        if: ${{ matrix.os != "windows-latest" }}
+        run: |
+          anaconda-project run build
+      - shell: cmd /C CALL {0}
+        if: ${{ matrix.os == "windows-latest" }}
+        run: >-
+          anaconda-project run build

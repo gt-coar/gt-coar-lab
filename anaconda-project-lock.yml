@@ -15,7 +15,7 @@ locking_enabled: true
 # A key goes in here for each env spec.
 #
 env_specs:
-  rl-lab:
+  coar-lab:
     locked: true
     env_spec_hash: 38d3ae12687472a1f3489c62ae7bb60bf5ccb2e3
     platforms:

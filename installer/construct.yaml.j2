@@ -1,0 +1,13 @@
+name: rl-lab
+version: {{ version }}
+company: University System of Georgia
+ignore_duplicate_files: True
+license_file: LICENSE
+
+channels:
+  {% for channel in channels %}- {{ channel }}
+  {% endfor %}
+
+specs:
+  {% for spec in specs %}- {{ spec }}
+  {% endfor %}
