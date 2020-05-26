@@ -52,11 +52,14 @@ def template():
 def build():
     """ Build an installer from the generated construct.yaml
     """
+    DIST.exists() or DIST.mkdir()
+
     args = list(map(str, [
         "constructor", ".",
         "--output-dir", DIST.resolve(),
         "--cache-dir", CONSTRUCTOR_CACHE.resolve(),
     ]))
+
     return subprocess.call(args, cwd=str(INSTALLER))
 
 
