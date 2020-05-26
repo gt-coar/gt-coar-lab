@@ -13,6 +13,7 @@ initialize_by_default: false
 register_python_default: false
 install_in_dependency_order: true
 
+
 channels:
   {% for channel in channels %}- {{ channel }}
   {% endfor %}
