@@ -15,6 +15,10 @@ platforms:
 
 env_specs:
   coar-lab:
+    channels:
+      - https://conda.anaconda.org/anaconda
+      - https://conda.anaconda.org/conda-forge
+      - https://conda.anaconda.org/msys2
     packages:
       - python >=3.7,<3.8.0a0
       - gym
@@ -49,14 +53,12 @@ env_specs:
       - robotframework
       - robotframework-seleniumlibrary
       - geckodriver
-    channels:
-      - https://conda.anaconda.org/anaconda
-      - https://conda.anaconda.org/conda-forge
-      - https://conda.anaconda.org/msys2
 
   build:
     channels:
       - https://conda.anaconda.org/conda-forge
-    dependencies:
+    packages:
       - constructor >=3.0.2,<3.1.0a0
       - conda >=4.8.3,<4.9.0a0
+      - python >=3.7,<3.8.0a0
+      - pillow
