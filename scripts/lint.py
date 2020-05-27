@@ -6,12 +6,12 @@ from . import paths as P
 from . import utils as U
 
 PY_LINTERS = [
-    ["isort", "-rc", *P.ALL_PY],
-    ["black", *P.ALL_PY],
-    ["flake8", *P.ALL_PY],
+    ["isort", "-rc", *P.LINTERS["py"]],
+    ["black", *P.LINTERS["py"]],
+    ["flake8", *P.LINTERS["py"]],
 ]
 
-YAML_LINTERS = [["yamllint", *P.ALL_YAML]]
+YAML_LINTERS = [["yamllint", *P.LINTERS["yaml"]]]
 
 
 def lint_py():
@@ -30,9 +30,22 @@ def lint_yaml():
     return lint_rc
 
 
-def prettier():
-    return U._(["yarn", "prettier", "--write", *P.ALL_YAML, *P.ALL_MD])
+def lint_prettier():
+    return U._(["yarn", "prettier", "--write", *P.LINTERS["prettier"]])
+
+
+def lint(targets):
+    lint_rc = 1
+    for target in targets:
+        linter = globals().get(f"lint_{target}")
+        if not linter:
+            print(f"don't know how to lint {target}")
+            break
+        lint_rc = linter()
+        if lint_rc != 0:
+            break
+    return lint_rc
 
 
 if __name__ == "__main__":
-    sys.exit(prettier() or lint_py() or lint_yaml())
+    sys.exit(lint(sys.argv[1:] or ["prettier", "py", "yaml"]))

@@ -7,6 +7,7 @@ import jinja2
 import ruamel_yaml
 from constructor.conda_interface import cc_platform
 
+from . import meta as M
 from . import paths as P
 from . import utils as U
 
@@ -23,10 +24,10 @@ def template():
     proj = ruamel_yaml.safe_load(P.PROJ.read_text())
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
     today = datetime.today()
-    packages = lock["env_specs"][P.ENV]["packages"]
+    packages = lock["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
     context = dict(
         version=f"{today.year}.{today.month}.{today.day}-{U.git_commit()}",
-        channels=proj["env_specs"][P.ENV]["channels"],
+        channels=proj["env_specs"][M.INSTALLER_ENV_SPEC]["channels"],
         specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], [])),
     )
     P.CONSTRUCT.write_text(tmpl.render(**context))
