@@ -42,8 +42,8 @@ commands:
 
   demo:list:
     description: list stuff in demo
-    unix: gt-coar-lab labextension list
-    windows: gt-coar-lab labextension list
+    unix: gt-coar-labextension list
+    windows: gt-coar-labextension list
     env_spec: _demo
 
   demo:lab:
@@ -51,7 +51,6 @@ commands:
     unix: gt-coar-lab --no-browser --debug
     windows: gt-coar-lab --no-browser --debug
     env_spec: _demo
-
 
 platforms:
   - linux-64

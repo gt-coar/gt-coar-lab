@@ -7,7 +7,10 @@ from . import utils as U
 
 def demo():
     channels = U.channel_args([P.CONDA_DIST_URI])
-    U._(["conda", "uninstall", *channels, "gt-coar-lab"])
+    try:
+        U._(["conda", "uninstall", *channels, "gt-coar-lab"])
+    except Exception:
+        pass
     U._(["conda", "install", *channels, "--force", M.BUILDERS["conda_lab"][1][0]])
     return 0
 
