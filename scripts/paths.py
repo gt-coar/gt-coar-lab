@@ -4,8 +4,8 @@ import pathlib
 import sys
 
 PY = pathlib.Path(sys.executable)
-AP = ["anaconda-project"]
-APR = [*AP, "run"]
+AP = "anaconda-project"
+APR = [AP, "run"]
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
