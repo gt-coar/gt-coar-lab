@@ -64,13 +64,6 @@ jobs:
         with:
           name: conda-gt-coar-lab
           path: dist/conda-bld/noarch
-      - shell: bash
-        if: ${{ !contains(matrix.os, 'windows') }}
-        run: |
-          ls
-          ls dist
-          ls dist/conda-bld
-          ls dist/conda-bld/noarch
       - uses: goanpeca/setup-miniconda@v1.4.1
         with:
           activate-environment: rl-lab-base
