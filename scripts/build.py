@@ -48,7 +48,7 @@ def build():
             "--cache-dir",
             P.CONSTRUCTOR_CACHE.resolve(),
         ],
-        cwd=str(P.INSTALLER),
+        cwd=P.INSTALLER,
     )
 
 

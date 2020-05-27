@@ -19,4 +19,4 @@ def _(args, **kwargs):
     if "cwd" in kwargs:
         kwargs["cwd"] = str(kwargs["cwd"])
 
-    return subprocess.check_call(args, **kwargs)
+    return subprocess.check_call(str_args, **kwargs)

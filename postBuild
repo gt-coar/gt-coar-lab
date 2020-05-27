@@ -17,7 +17,7 @@ def _(args, **kwargs):
     if "cwd" in kwargs:
         kwargs["cwd"] = str(kwargs["cwd"])
 
-    return check_call(args, **kwargs)
+    return check_call(str_args, **kwargs)
 
 
 LABEXTENSIONS = sorted(
