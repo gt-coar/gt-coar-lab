@@ -27,7 +27,7 @@ def build_template():
     context = dict(
         name=M.INSTALLER_NAME,
         version=M.VERSION,
-        build_channel=P.CONDA_DIST.as_uri(),
+        build_channel=P.CONDA_DIST_URI,
         channels=U.project_channels(),
         specs=project_specs + M.EXTRA_SPECS,
     )

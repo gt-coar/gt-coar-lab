@@ -21,6 +21,7 @@ INSTALLER = ROOT / "installer"
 RECIPES = ROOT / "recipes"
 
 CONDA_DIST = DIST / "conda-bld"
+CONDA_DIST_URI = CONDA_DIST.as_uri()
 
 INSTALLER_TMPL = INSTALLER / "construct.yaml.j2"
 CONSTRUCT = INSTALLER / "construct.yaml"

@@ -46,6 +46,13 @@ commands:
     windows: gt-coar-lab labextension list
     env_spec: _demo
 
+  demo:lab:
+    description: run demo lab
+    unix: gt-coar-lab --no-browser --debug
+    windows: gt-coar-lab --no-browser --debug
+    env_spec: _demo
+
+
 platforms:
   - linux-64
   - osx-64
