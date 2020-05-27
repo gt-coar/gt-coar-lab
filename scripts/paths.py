@@ -9,13 +9,21 @@ APR = [*AP, "run"]
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
-INSTALLER = ROOT / "installer"
-INSTALLER_TMPL = INSTALLER / "construct.yaml.j2"
-CONSTRUCT = INSTALLER / "construct.yaml"
+
 PROJ = ROOT / "anaconda-project.yml"
 LOCK = ROOT / "anaconda-project-lock.yml"
 DIST = ROOT / "dist"
 CACHE = ROOT / ".cache"
+
+PACKAGES = ROOT / "packages"
+
+INSTALLER = ROOT / "installer"
+RECIPES = ROOT / "recipes"
+
+CONDA_DIST = DIST / "conda-bld"
+
+INSTALLER_TMPL = INSTALLER / "construct.yaml.j2"
+CONSTRUCT = INSTALLER / "construct.yaml"
 CONSTRUCTOR_CACHE = CACHE / "constructor"
 
 GITHUB = ROOT / ".github"
@@ -23,8 +31,20 @@ CI_SUPPORT = ROOT / ".ci_support"
 
 ENVS = ROOT / "envs"
 
+POSTBUILD = ROOT / "postBuild"
+LABEXTENSIONS = ROOT / "labextensions.txt"
+DODO = ROOT / "dodo.py"
+
 # linting
-ALL_PY = sorted([*HERE.rglob("*.py"), ROOT / "postBuild", ROOT / "dodo.py",])
+ALL_PY = sorted(
+    [
+        *HERE.rglob("*.py"),
+        *RECIPES.rglob("*.py"),
+        *PACKAGES.rglob("*.py"),
+        POSTBUILD,
+        DODO,
+    ]
+)
 ALL_YAML = sorted(
     [
         ROOT / ".yamllint",
@@ -32,9 +52,10 @@ ALL_YAML = sorted(
         *CI_SUPPORT.glob("*.yml"),
         *GITHUB.rglob("*.yml"),
         *ROOT.glob("*.yml"),
+        *RECIPES.rglob("*.yaml"),
     ]
 )
-ALL_MD = sorted([*ROOT.glob("*.md")])
+ALL_MD = sorted([*ROOT.glob("*.md"), *PACKAGES.rglob("*.md")])
 ALL_PRETTIER = sorted([*ALL_YAML, *ALL_MD])
 
 LINTERS = dict(prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML,)

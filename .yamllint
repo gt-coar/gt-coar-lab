@@ -7,3 +7,5 @@ yaml-files:
 
 rules:
   document-start: disable
+  line-length:
+    max: 88

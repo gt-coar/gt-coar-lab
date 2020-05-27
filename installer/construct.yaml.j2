@@ -13,8 +13,13 @@ initialize_by_default: false
 register_python_default: false
 install_in_dependency_order: true
 
+# TODO: get a real channel
+channels_remap:
+  - src: {{ build_channel }}
+    dest: {{ channels[0] }}
 
 channels:
+  - {{ build_channel }}
   {% for channel in channels %}- {{ channel }}
   {% endfor %}
 

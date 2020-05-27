@@ -1,33 +1,41 @@
-{% set name = "gt-coar-lab" %}
-{% set version = "2.1.3" %}
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
 
 package:
-  name: {{ name }}
-  version: {{ version }}
+  name: "{% set name = 'gt-coar-lab' %}{{ name }}"
+  version: "{% set version = '2.1.3' %}{{ version }}"
 
 source:
+  - path: ../../packages/gt-coar-lab
   - path: ../../labextensions.txt
-  - path: ../../LICENSE
-  - path: ../../postBuild
 
 build:
   noarch: python
   number: 0
-  script: "cd {{ RECIPE_DIR }} && {{ PYTHON }} postBuild"
+  script:
+    - '{{ PYTHON }} -m pip install . --no-deps'
+    - 'cd {{ RECIPE_DIR }} && {{ PYTHON }} builder.py'
+  entry_points:
+    - gt-coar-lab = gt_coar_lab.labapp:main
+    - gt-coar-labextension = gt_coar_lab.labextensionapp:main
 
 requirements:
   host:
-    - python
-    - pip
-    - nodejs >=12,<13.0.0a0
     - jupyterlab =={{ version }}
+    - nodejs >=12,<13.0.0a0
+    - pip
+    - python >=3.6
   run:
     - python
     - jupyterlab =={{ version }}
 
 test:
+  requires:
+    - nodejs >=12,<13.0.0a0
+    - pip
   commands:
-    - jupyter labextension list
+    - python -m pip check
+    - gt-coar-labextension list
 
 about:
   home: https://github.com/gt-coar/gt-coar-lab

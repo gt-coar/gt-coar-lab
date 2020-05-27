@@ -19,19 +19,37 @@ if not cc_platform.startswith("win-"):
 def build_template():
     """ Build a construct.yaml from the project file, lock file
     """
-    lock = ruamel_yaml.safe_load(P.LOCK.read_text())
-    proj = ruamel_yaml.safe_load(P.PROJ.read_text())
+    U.conda_index()
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
-    packages = lock["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
+    packages = U.LOCK["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
+    project_specs = sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
+
     context = dict(
         name=M.INSTALLER_NAME,
         version=M.VERSION,
-        channels=proj["env_specs"][M.INSTALLER_ENV_SPEC]["channels"],
-        specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], [])),
+        build_channel=P.CONDA_DIST.as_uri(),
+        channels=U.project_channels(),
+        specs=project_specs + M.EXTRA_SPECS,
     )
     P.CONSTRUCT.write_text(tmpl.render(**context))
     ruamel_yaml.safe_load(P.CONSTRUCT.read_text())
     return 0
+
+
+def build_conda_lab():
+    """ Build the static assets for JupyterLab
+    """
+
+    return U._(
+        [
+            "conda-build",
+            *U.channel_args(),
+            "gt-coar-lab",
+            "--output-folder",
+            P.CONDA_DIST.resolve(),
+        ],
+        cwd=P.RECIPES,
+    )
 
 
 def build_installer():
@@ -66,4 +84,4 @@ def build(targets):
 
 
 if __name__ == "__main__":
-    sys.exit(build(sys.argv[1:] or ["template", "installer"]))
+    sys.exit(build(sys.argv[1:] or list(M.BUILDERS.keys())))

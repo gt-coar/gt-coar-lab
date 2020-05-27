@@ -20,6 +20,9 @@ INSTALLER_NAME = "GTCOARLab"
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
 # building
+LAB_VERSION = "2.1.3"
+LAB_BUILD = "0"
+
 INSTALLER_PLATFORM = {
     "linux": "Linux-x86_64",
     "darwin": "MacOSX-x86_64",
@@ -30,9 +33,17 @@ INSTALLER_EXT = {"win32": "exe", "darwin": "sh", "linux": "sh"}[sys.platform]
 
 INSTALLER_FILENAME = f"{INSTALLER_NAME}-{VERSION}-{INSTALLER_PLATFORM}.{INSTALLER_EXT}"
 
-# GTCOARLab-2020.5.27-89d82c0-MacOSX-x86_64.sh
-
 BUILDERS = dict(
     template=[[P.LOCK, P.INSTALLER_TMPL], [P.CONSTRUCT]],
+    conda_lab=[
+        [
+            P.RECIPES / "gt-coar-lab" / "meta.yaml",
+            P.LABEXTENSIONS,
+            *((P.PACKAGES / "gt-coar-lab").rglob("*.py")),
+        ],
+        [P.CONDA_DIST / "noarch" / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"],
+    ],
     installer=[[P.CONSTRUCT], [P.DIST / INSTALLER_FILENAME]],
 )
+
+EXTRA_SPECS = [f"gt-coar-lab={LAB_VERSION}=py_{LAB_BUILD}"]
