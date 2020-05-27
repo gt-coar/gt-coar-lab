@@ -1,7 +1,6 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import sys
-from datetime import datetime
 
 import jinja2
 import ruamel_yaml
@@ -17,16 +16,16 @@ if not cc_platform.startswith("win-"):
     PLATFORMS += ["unix"]
 
 
-def template():
+def build_template():
     """ Build a construct.yaml from the project file, lock file
     """
     lock = ruamel_yaml.safe_load(P.LOCK.read_text())
     proj = ruamel_yaml.safe_load(P.PROJ.read_text())
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
-    today = datetime.today()
     packages = lock["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
     context = dict(
-        version=f"{today.year}.{today.month}.{today.day}-{U.git_commit()}",
+        name=M.INSTALLER_NAME,
+        version=M.VERSION,
         channels=proj["env_specs"][M.INSTALLER_ENV_SPEC]["channels"],
         specs=sorted(sum([packages.get(p, []) for p in PLATFORMS], [])),
     )
@@ -35,7 +34,7 @@ def template():
     return 0
 
 
-def build():
+def build_installer():
     """ Build an installer from the generated construct.yaml
     """
     P.DIST.exists() or P.DIST.mkdir()
@@ -53,5 +52,18 @@ def build():
     )
 
 
+def build(targets):
+    build_rc = 1
+    for target in targets:
+        builder = globals().get(f"build_{target}")
+        if not builder:
+            print(f"don't know how to build {target}")
+            break
+        build_rc = builder()
+        if build_rc != 0:
+            break
+    return build_rc
+
+
 if __name__ == "__main__":
-    sys.exit(template() or build())
+    sys.exit(build(sys.argv[1:] or ["template", "installer"]))

@@ -23,6 +23,7 @@ CI_SUPPORT = ROOT / ".ci_support"
 
 ENVS = ROOT / "envs"
 
+# linting
 ALL_PY = sorted([*HERE.rglob("*.py"), ROOT / "postBuild", ROOT / "dodo.py",])
 ALL_YAML = sorted(
     [

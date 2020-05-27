@@ -19,3 +19,9 @@ DOIT_CONFIG = {
     globals().update(U.make_lint_task(target, files))
     for target, files in P.LINTERS.items()
 ]
+
+# building
+[
+    globals().update(U.make_build_task(target, *files))
+    for target, files in M.BUILDERS.items()
+]

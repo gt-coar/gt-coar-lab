@@ -46,3 +46,15 @@ def make_lint_task(target, files):
     task.__doc__ = f"lint/format files with {target}"
 
     return {task.__name__: task}
+
+
+def make_build_task(target, file_dep, targets):
+    def task():
+        return dict(
+            file_dep=file_dep, targets=targets, actions=[[*P.APR, "build", target]]
+        )
+
+    task.__name__ = f"task_build_{target}"
+    task.__doc__ = f"build {target}"
+
+    return {task.__name__: task}
