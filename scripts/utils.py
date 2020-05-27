@@ -44,11 +44,15 @@ def git_commit():
 
 
 # doit stuff
+def env_canary(env_spec):
+    return P.ENVS / env_spec / "conda-meta" / "history"
+
+
 def make_prepare_task(env_spec):
     def task():
         return dict(
             file_dep=[P.LOCK],
-            targets=[P.ENVS / env_spec / "conda-meta" / "history"],
+            targets=[env_canary(env_spec)],
             actions=[[P.AP, "prepare", "--env-spec", env_spec]],
         )
 
@@ -60,7 +64,9 @@ def make_prepare_task(env_spec):
 
 def make_lint_task(target, files):
     def task():
-        return dict(file_dep=files, actions=[[*P.APR, "lint", target]])
+        return dict(
+            file_dep=[*files, env_canary("qa")], actions=[[*P.APR, "lint", target]]
+        )
 
     task.__name__ = f"task_lint_{target}"
     task.__doc__ = f"lint/format files with {target}"
@@ -71,7 +77,9 @@ def make_lint_task(target, files):
 def make_build_task(target, file_dep, targets):
     def task():
         return dict(
-            file_dep=file_dep, targets=targets, actions=[[*P.APR, "build", target]]
+            file_dep=[*file_dep, env_canary("build")],
+            targets=targets,
+            actions=[[*P.APR, "build", target]],
         )
 
     task.__name__ = f"task_build_{target}"

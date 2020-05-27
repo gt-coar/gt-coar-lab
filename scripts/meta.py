@@ -43,7 +43,7 @@ BUILDERS = dict(
         ],
         [P.CONDA_DIST / "noarch" / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"],
     ],
-    installer=[[P.CONSTRUCT], [P.DIST / INSTALLER_FILENAME]],
+    installer=[[P.CONSTRUCT], [P.INSTALLER_DIST / INSTALLER_FILENAME]],
 )
 
 EXTRA_SPECS = [f"gt-coar-lab={LAB_VERSION}=py_{LAB_BUILD}"]

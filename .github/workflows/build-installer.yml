@@ -76,3 +76,8 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: >-
           anaconda-project run build template installer
+      - name: upload installer
+        uses: actions/upload-artifact@v2
+        with:
+          name: installer
+          path: dist/installers

@@ -55,14 +55,12 @@ def build_conda_lab():
 def build_installer():
     """ Build an installer from the generated construct.yaml
     """
-    P.DIST.exists() or P.DIST.mkdir()
-
     return U._(
         [
             "constructor",
             ".",
             "--output-dir",
-            P.DIST.resolve(),
+            P.INSTALLER_DIST.resolve(),
             "--cache-dir",
             P.CONSTRUCTOR_CACHE.resolve(),
         ],
