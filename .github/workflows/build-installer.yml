@@ -40,7 +40,7 @@ jobs:
         run: |
           anaconda-project run build conda_lab
       - name: upload gt-coar-lab conda package
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: conda-gt-coar-lab
           path: dist/conda-bld
@@ -60,7 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: download gt-coar-lab conda package
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: conda-gt-coar-lab
       - uses: goanpeca/setup-miniconda@v1.4.1
@@ -71,8 +71,8 @@ jobs:
       - shell: bash -l {0}
         if: ${{ !contains(matrix.os, 'windows') }}
         run: |
-          anaconda-project run build
+          anaconda-project run build template installer
       - shell: cmd /C CALL {0}
         if: ${{ contains(matrix.os, 'windows') }}
         run: >-
-          anaconda-project run build
+          anaconda-project run build template installer
