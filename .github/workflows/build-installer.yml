@@ -52,6 +52,7 @@ jobs:
       - conda_lab
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest

@@ -75,13 +75,13 @@ env_specs:
     inherit_from:
       - _py
     channels:
-      - https://conda.anaconda.org/conda-forge
+      - https://conda.anaconda.org/anaconda
       - https://conda.anaconda.org/msys2
     packages:
       - conda >=4.8.3,<4.9.0a0
       - conda-build >=3.18.2,<3.19.0a0
       - conda-verify
-      - constructor >=3.0.2,<3.1.0a0
+      - constructor >=3,<3.1.0a0
       - git
       - jinja2
       - pillow
