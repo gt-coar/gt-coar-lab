@@ -1,6 +1,6 @@
 name: Build Installer
 
-on:
+on:  # yamllint disable rule:truthy
   push:
     branches:
       - master
@@ -21,10 +21,8 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: >-
-            ${{ runner.os }}
-            -conda
-            -${{ env.CACHE_NUMBER }}
-            -${{ hashFiles('.ci_support/environment-base.yml') }}
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER
+            }}-${{hashFiles('.ci_support/environment-base.yml') }}
       - uses: goanpeca/setup-miniconda@v1.4.1
         with:
           activate-environment: rl-lab-base
