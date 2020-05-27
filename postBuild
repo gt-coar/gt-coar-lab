@@ -28,5 +28,6 @@ LABEXTENSIONS = sorted(
     ]
 )
 
+_(["jupyter", "lab", "clean", "--all"])
 _(["jupyter", "labextension", "install", "--debug", "--no-build", *LABEXTENSIONS])
 _(["jupyter", "lab", "build", "--debug", "--dev-build=False", "--minimize=True"])
