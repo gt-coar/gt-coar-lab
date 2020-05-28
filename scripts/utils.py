@@ -2,13 +2,8 @@
 # Distributed under the terms of the BSD-3-Clause License
 import subprocess
 
-import yaml
-
 from . import meta as M
 from . import paths as P
-
-PROJ = yaml.safe_load(P.PROJ.read_text())
-LOCK = yaml.safe_load(P.LOCK.read_text())
 
 
 def _(args, **kwargs):
@@ -25,7 +20,7 @@ def _(args, **kwargs):
 
 
 def project_channels():
-    return PROJ["env_specs"][M.INSTALLER_ENV_SPEC]["channels"]
+    return M.PROJ["env_specs"][M.INSTALLER_ENV_SPEC]["channels"]
 
 
 def channel_args(pre=None, post=None):
