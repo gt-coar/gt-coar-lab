@@ -16,6 +16,9 @@ DIST = ROOT / "dist"
 CACHE = ROOT / ".cache"
 
 PACKAGES = ROOT / "packages"
+LAB_NAME = "gt-coar-lab"
+LAB_MODULE = LAB_NAME.replace("-", "_")
+LAB_PACKAGE = PACKAGES / LAB_NAME
 
 INSTALLER = ROOT / "installer"
 RECIPES = ROOT / "recipes"
@@ -33,6 +36,8 @@ GITHUB = ROOT / ".github"
 CI_SUPPORT = ROOT / ".ci_support"
 
 ENVS = ROOT / "envs"
+
+NODE_MODULES = ROOT / "node_modules"
 
 POSTBUILD = ROOT / "postBuild"
 LABEXTENSIONS = ROOT / "labextensions.txt"

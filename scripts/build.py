@@ -44,7 +44,7 @@ def build_conda_lab():
         [
             "conda-build",
             *U.channel_args(),
-            "gt-coar-lab",
+            P.LAB_NAME,
             "--output-folder",
             P.CONDA_DIST.resolve(),
         ],

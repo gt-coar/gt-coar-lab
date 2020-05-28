@@ -31,6 +31,8 @@ def lint_yaml():
 
 
 def lint_prettier():
+    if not P.NODE_MODULES.exists():
+        U._(["yarn", "--prefer-offline"])
     return U._(["yarn", "prettier", "--write", *P.LINTERS["prettier"]])
 
 

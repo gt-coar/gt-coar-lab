@@ -28,6 +28,12 @@ commands:
     windows: python -m scripts.lint
     env_spec: qa
 
+  integrity:
+    description: test repo integrity
+    unix: python -m scripts.integrity
+    windows: python -m scripts.integrity
+    env_spec: qa
+
   yarn:
     description: just yarn, but in the right env
     unix: yarn
@@ -70,6 +76,7 @@ env_specs:
       - black
       - flake8
       - isort
+      - pytest
       - yamllint
 
   build:
