@@ -156,6 +156,7 @@ env_specs:
       # interactive computing extensions
       - jupyterlab-git
       - dask_labextension
+      - importnb
       # numerical compute
       - numpy
       - pandas
