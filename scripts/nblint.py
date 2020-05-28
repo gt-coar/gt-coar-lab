@@ -11,6 +11,7 @@ import nbformat
 
 from . import paths as P
 
+
 def blacken(source):
     return black.format_str(source, mode=black.FileMode(line_length=88))
 
