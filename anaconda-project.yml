@@ -64,6 +64,7 @@ env_specs:
       - _node
       - _yarn
     channels:
+      - https://conda.anaconda.org/anaconda
       - https://conda.anaconda.org/conda-forge
     packages:
       - black
