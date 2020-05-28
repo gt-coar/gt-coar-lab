@@ -169,7 +169,7 @@ env_specs:
       - hvplot
       - ipywidgets
       # computer algebra
-      - antlr-python-runtime
+      - antlr-python-runtime >=4.7,<4.8
       - sympy
       # network manipulation
       - networkx
