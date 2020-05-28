@@ -64,7 +64,7 @@ env_specs:
       - _node
       - _yarn
     channels:
-      - https://conda.anaconda.org/anaconda
+      - https://repo.anaconda.com/pkgs/main
       - https://conda.anaconda.org/conda-forge
     packages:
       - black
@@ -76,8 +76,8 @@ env_specs:
     inherit_from:
       - _py
     channels:
-      - https://conda.anaconda.org/anaconda
-      - https://conda.anaconda.org/msys2
+      - https://repo.anaconda.com/pkgs/main
+      - https://repo.anaconda.com/pkgs/msys2
     packages:
       - conda >=4.8.3,<4.9.0a0
       - conda-build >=3.11,<3.18.0a0
@@ -90,9 +90,9 @@ env_specs:
 
   gt-coar-lab:
     channels:
-      - https://conda.anaconda.org/anaconda
+      - https://repo.anaconda.com/pkgs/main
       - https://conda.anaconda.org/conda-forge
-      - https://conda.anaconda.org/msys2
+      - https://repo.anaconda.com/pkgs/msys2
     inherit_from:
       - _py
       - _node

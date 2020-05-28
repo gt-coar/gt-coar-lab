@@ -6,9 +6,9 @@
 name: gt-coar-lab
 
 channels:
-  - https://conda.anaconda.org/anaconda
+  - https://repo.anaconda.com/pkgs/main
   - https://conda.anaconda.org/conda-forge
-  - https://conda.anaconda.org/msys2
+  - https://repo.anaconda.com/pkgs/msys2
 
 dependencies:
   # core
