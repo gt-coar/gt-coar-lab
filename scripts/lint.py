@@ -30,12 +30,11 @@ def lint_yaml():
     return lint_rc
 
 
-def lint_prettier():
+def lint_prettier(files=None):
+    files = files or P.LINTERS["prettier"]
     if not P.NODE_MODULES.exists():
         U._(["yarn", "--prefer-offline"])
-    return U._(
-        ["yarn", "prettier", "--loglevel", "warn", "--write", *P.LINTERS["prettier"]]
-    )
+    return U._(["yarn", "prettier", "--loglevel", "warn", "--write", *files])
 
 
 def lint(targets):

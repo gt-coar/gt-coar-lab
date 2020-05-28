@@ -21,7 +21,7 @@ def _(args, **kwargs):
     if "cwd" in kwargs:
         kwargs["cwd"] = str(kwargs["cwd"])
 
-    return subprocess.check_call(str_args, **kwargs)
+    return subprocess.call(str_args, **kwargs)
 
 
 def project_channels():

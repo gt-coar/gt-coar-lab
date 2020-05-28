@@ -60,7 +60,7 @@ commands:
     description: refresh binder assets
     unix: python -m scripts.binder
     windows: python -m scripts.binder
-    env_spec: build
+    env_spec: qa
 
 env_specs:
   qa:

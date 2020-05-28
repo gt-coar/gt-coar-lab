@@ -8,6 +8,7 @@ import yaml
 from . import meta as M
 from . import paths as P
 from . import utils as U
+from .lint import lint_prettier
 
 
 def binder():
@@ -35,7 +36,7 @@ def binder():
         )
     )
 
-    return 0
+    return lint_prettier([P.BINDER_ENV])
 
 
 if __name__ == "__main__":
