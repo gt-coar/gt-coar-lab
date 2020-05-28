@@ -34,6 +34,7 @@ def channel_args(pre=None, post=None):
 
 
 def conda_index():
+    [p.chmod(0o777) for p in P.CONDA_DIST.rglob("*")]
     return _(["conda", "index", P.CONDA_DIST])
 
 
