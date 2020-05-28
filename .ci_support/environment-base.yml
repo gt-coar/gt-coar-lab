@@ -1,7 +1,7 @@
 name: rl-lab-base
 
 channels:
-  - conda-forge
+  - anaconda
 
 dependencies:
   - anaconda-project ==0.8.3
