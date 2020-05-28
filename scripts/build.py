@@ -55,6 +55,8 @@ def build_conda_lab():
 def build_installer():
     """ Build an installer from the generated construct.yaml
     """
+    P.INSTALLER_DIST.exists() or P.INSTALLER_DIST.mkdir(parents=True)
+
     return U._(
         [
             "constructor",
