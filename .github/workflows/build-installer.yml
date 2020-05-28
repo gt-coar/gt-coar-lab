@@ -80,7 +80,7 @@ jobs:
           show-channel-urls: true
       - shell: bash -l {0}
         if: ${{ !contains(matrix.os, 'windows') }}
-        run:  anaconda-project run build template installer
+        run: anaconda-project run build template installer
       - shell: cmd /C CALL {0}
         if: ${{ contains(matrix.os, 'windows') }}
         run: anaconda-project run build template installer
