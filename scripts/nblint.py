@@ -9,6 +9,7 @@ import black
 import isort
 import nbformat
 
+from . import paths as P
 
 def blacken(source):
     return black.format_str(source, mode=black.FileMode(line_length=88))
@@ -16,7 +17,6 @@ def blacken(source):
 
 def nblint(files):
     for nb_path in map(Path, files):
-        print(".", end="", flush=True)
         nb_text = nb_path.read_text()
         nb_node = nbformat.reads(nb_text, 4)
         changes = 0
@@ -29,8 +29,8 @@ def nblint(files):
             if cell_type == "markdown":
                 prettier = subprocess.Popen(
                     [
-                        "yarn",
-                        "prettier",
+                        P.NODE,
+                        P.NODE_MODULES / ".bin" / "prettier",
                         "--stdin-filepath",
                         "foo.md",
                         "--prose-wrap",

@@ -3,9 +3,12 @@
 import pathlib
 import sys
 
+import shutil
+
 PY = pathlib.Path(sys.executable)
 AP = "anaconda-project"
 APR = [AP, "run"]
+NODE = shutil.which("node") or shutil.which("node.cmd") or shutil.which("node.exe")
 
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
