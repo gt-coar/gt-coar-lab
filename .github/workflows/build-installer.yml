@@ -30,7 +30,7 @@ jobs:
         run: |
           anaconda-project run integrity
           anaconda-project run lint
-          git diff || echo "no changes made"
+          git diff -u || echo "no changes made"
   conda_lab:
     name: conda lab
     runs-on: ubuntu-latest

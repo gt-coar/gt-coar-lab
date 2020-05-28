@@ -6,9 +6,9 @@ from . import paths as P
 from . import utils as U
 
 PY_LINTERS = [
-    ["isort", "-rc", *P.LINTERS["py"]],
-    ["black", *P.LINTERS["py"]],
-    ["flake8", *P.LINTERS["py"]],
+    ["isort", "-q", "-rc", *P.LINTERS["py"]],
+    ["black", "--quiet", *P.LINTERS["py"]],
+    ["flake8", "--quiet", *P.LINTERS["py"]],
 ]
 
 YAML_LINTERS = [["yamllint", *P.LINTERS["yaml"]]]
@@ -33,7 +33,9 @@ def lint_yaml():
 def lint_prettier():
     if not P.NODE_MODULES.exists():
         U._(["yarn", "--prefer-offline"])
-    return U._(["yarn", "prettier", "--write", *P.LINTERS["prettier"]])
+    return U._(
+        ["yarn", "prettier", "--loglevel", "warn", "--write", *P.LINTERS["prettier"]]
+    )
 
 
 def lint(targets):
