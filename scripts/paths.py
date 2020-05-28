@@ -24,6 +24,7 @@ ENVS = ROOT / "envs"
 GITHUB = ROOT / ".github"
 INSTALLER = ROOT / "installer"
 NODE_MODULES = ROOT / "node_modules"
+NOTEBOOKS = ROOT / "notebooks"
 PACKAGES = ROOT / "packages"
 RECIPES = ROOT / "recipes"
 
@@ -70,5 +71,10 @@ ALL_YAML = sorted(
 )
 ALL_MD = sorted([*ROOT.glob("*.md"), *PACKAGES.rglob("*.md")])
 ALL_PRETTIER = sorted([*ALL_YAML, *ALL_MD])
+ALL_IPYNB = [
+    ipynb
+    for ipynb in sorted(NOTEBOOKS.rglob("*.ipynb"))
+    if ".ipynb_checkpoints" not in str(ipynb)
+]
 
-LINTERS = dict(prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML,)
+LINTERS = dict(prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML, ipynb=ALL_IPYNB)

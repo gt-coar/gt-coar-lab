@@ -84,6 +84,7 @@ env_specs:
       - isort
       - pytest
       - yamllint
+      - nbformat
 
   build:
     platforms:

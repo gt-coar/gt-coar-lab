@@ -37,6 +37,10 @@ def lint_prettier(files=None):
     return U._(["yarn", "prettier", "--loglevel", "warn", "--write", *files])
 
 
+def lint_ipynb():
+    return U._([sys.executable, "-m", "scripts.nblint", *P.ALL_IPYNB])
+
+
 def lint(targets):
     lint_rc = 1
     for target in targets:
@@ -51,4 +55,4 @@ def lint(targets):
 
 
 if __name__ == "__main__":
-    sys.exit(lint(sys.argv[1:] or ["prettier", "py", "yaml"]))
+    sys.exit(lint(sys.argv[1:] or ["prettier", "py", "yaml", "ipynb"]))
