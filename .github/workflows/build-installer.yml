@@ -83,20 +83,45 @@ jobs:
           auto-activate-base: false
           use-only-tar-bz2: true
           show-channel-urls: true
+
+      # prepare
       - if: ${{ !contains(matrix.os, 'windows') }}
         shell: bash -l {0}
         run: anaconda-project prepare --env-spec build
-      - if: ${{ !contains(matrix.os, 'windows') }}
-        shell: bash -l {0}
-        run: anaconda-project run build template installer
       - if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
         run: anaconda-project prepare --env-spec build
+
+      # template
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        shell: bash -l {0}
+        run: anaconda-project run build template
       - if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd /C CALL {0}
-        run: anaconda-project run build template installer
-      - name: upload installer
-        uses: actions/upload-artifact@v2
+        run: anaconda-project run build template
+
+      # cache
+      - uses: actions/cache@v1
+        with:
+          path: ~/.constructor
+          key: ${{ runner.os }}-constructor-${{ hashFiles('installer/construct.yaml') }}
+
+      # build
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        env:
+          CONSTRUCTOR_CACHE: ~/.constructor
+          PYTHONUNBUFFERED: 1
+        shell: bash -l {0}
+        run: anaconda-project run build installer
+      - if: ${{ contains(matrix.os, 'windows') }}
+        env:
+          CONSTRUCTOR_CACHE: ~/.constructor
+          PYTHONUNBUFFERED: 1
+        shell: cmd /C CALL {0}
+        run: anaconda-project run build installer
+
+      # upload
+      - uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}-installer
           path: dist/installers

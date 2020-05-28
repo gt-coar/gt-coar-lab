@@ -1,5 +1,6 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
+import os
 import sys
 
 import jinja2
@@ -64,7 +65,7 @@ def build_installer():
             "--output-dir",
             P.INSTALLER_DIST.resolve(),
             "--cache-dir",
-            P.CONSTRUCTOR_CACHE.resolve(),
+            os.environ.get("CONSTRUCTOR_CACHE", P.CONSTRUCTOR_CACHE.resolve()),
         ],
         cwd=P.INSTALLER,
     )
