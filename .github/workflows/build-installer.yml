@@ -27,10 +27,13 @@ jobs:
           use-only-tar-bz2: true
           show-channel-urls: true
       - shell: bash -l {0}
-        run: |
-          anaconda-project run integrity
-          anaconda-project run lint
-          git diff -u || echo "no changes made"
+        run: anaconda-project prepare --env-spec qa
+      - shell: bash -l {0}
+        run: anaconda-project run integrity
+      - shell: bash -l {0}
+        run: anaconda-project run lint
+      - shell: bash -l {0}
+        run: git diff -u || echo "no changes made"
   conda_lab:
     name: conda lab
     runs-on: ubuntu-latest
@@ -43,6 +46,8 @@ jobs:
           auto-activate-base: false
           use-only-tar-bz2: true
           show-channel-urls: true
+      - shell: bash -l {0}
+        run: anaconda-project prepare --env-spec build
       - shell: bash -l {0}
         run: anaconda-project run build conda_lab
       - name: upload gt-coar-lab conda package
@@ -78,11 +83,17 @@ jobs:
           auto-activate-base: false
           use-only-tar-bz2: true
           show-channel-urls: true
-      - shell: bash -l {0}
-        if: ${{ !contains(matrix.os, 'windows') }}
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        shell: bash -l {0}
+        run: anaconda-project prepare --env-spec build
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        shell: bash -l {0}
         run: anaconda-project run build template installer
-      - shell: cmd /C CALL {0}
-        if: ${{ contains(matrix.os, 'windows') }}
+      - if: ${{ contains(matrix.os, 'windows') }}
+        shell: cmd /C CALL {0}
+        run: anaconda-project prepare --env-spec build
+      - if: ${{ contains(matrix.os, 'windows') }}
+        shell: cmd /C CALL {0}
         run: anaconda-project run build template installer
       - name: upload installer
         uses: actions/upload-artifact@v2
