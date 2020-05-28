@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: goanpeca/setup-miniconda@v1.4.1
         with:
-          activate-environment: rl-lab-base
+          activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
           use-only-tar-bz2: true
@@ -34,6 +34,7 @@ jobs:
         run: anaconda-project run lint
       - shell: bash -l {0}
         run: git diff -u || echo "no changes made"
+
   conda_lab:
     name: conda lab
     runs-on: ubuntu-latest
@@ -41,7 +42,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: goanpeca/setup-miniconda@v1.4.1
         with:
-          activate-environment: rl-lab-base
+          activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
           use-only-tar-bz2: true
@@ -78,7 +79,7 @@ jobs:
           path: dist/conda-bld
       - uses: goanpeca/setup-miniconda@v1.4.1
         with:
-          activate-environment: rl-lab-base
+          activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
           use-only-tar-bz2: true

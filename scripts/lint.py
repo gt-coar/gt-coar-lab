@@ -8,7 +8,7 @@ from . import utils as U
 PY_LINTERS = [
     ["isort", "-q", "-rc", *P.LINTERS["py"]],
     ["black", "--quiet", *P.LINTERS["py"]],
-    ["flake8", "--quiet", *P.LINTERS["py"]],
+    ["flake8", *P.LINTERS["py"]],
 ]
 
 YAML_LINTERS = [["yamllint", *P.LINTERS["yaml"]]]

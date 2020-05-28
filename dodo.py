@@ -25,3 +25,11 @@ DOIT_CONFIG = {
     globals().update(U.make_build_task(target, *files))
     for target, files in M.BUILDERS.items()
 ]
+
+# binding
+def task_binder():
+    return dict(
+        file_dep=[P.PROJ, U.env_canary("qa")],
+        targets=[P.BINDER_ENV],
+        actions=[[*P.APR, "binder"]],
+    )

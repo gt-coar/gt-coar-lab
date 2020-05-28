@@ -3,10 +3,11 @@
 ## Set Up
 
 - Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for Python 3
-
+- Create the core env
 ```bash
-conda install doit anaconda-project
+conda env update --file .ci_support/environment-base.yml
 ```
+- follow the instructions, and always run the commands below from that env
 
 ## doit
 

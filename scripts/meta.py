@@ -10,11 +10,11 @@ TODAY = datetime.today()
 
 QA_ENV_SPEC = "qa"
 BUILD_ENV_SPEC = "build"
+BINDER_ENV_SPEC = "_binder"
 
 # TODO: something more predictable?
 VERSION = f"{TODAY.year}.{TODAY.month}.{TODAY.day}-{G.short_commit()}"
 
-INSTALLER_ENV_SPEC = "gt-coar-lab"
 INSTALLER_NAME = "GTCOARLab"
 
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
@@ -23,15 +23,17 @@ ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 LAB_VERSION = "2.1.3"
 LAB_BUILD = "0"
 
-INSTALLER_PLATFORM = {
-    "linux": "Linux-x86_64",
-    "darwin": "MacOSX-x86_64",
-    "win32": "Windows-x86_64",
+INSTALLER_PLATFORM, INSTALLER_EXT = {
+    "linux": ["Linux", "sh"],
+    "darwin": ["MacOSX", "sh"],
+    "win32": ["Windows", "exe"],
 }[sys.platform]
 
-INSTALLER_EXT = {"win32": "exe", "darwin": "sh", "linux": "sh"}[sys.platform]
+INSTALLER_ENV_SPEC = f"gt-coar-lab-{INSTALLER_PLATFORM.lower()}"
 
-INSTALLER_FILENAME = f"{INSTALLER_NAME}-{VERSION}-{INSTALLER_PLATFORM}.{INSTALLER_EXT}"
+INSTALLER_FILENAME = (
+    f"{INSTALLER_NAME}-{VERSION}-{INSTALLER_PLATFORM}-x86_64.{INSTALLER_EXT}"
+)
 
 BUILDERS = dict(
     template=[[P.LOCK, P.INSTALLER_TMPL], [P.CONSTRUCT]],

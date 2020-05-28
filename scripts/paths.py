@@ -10,18 +10,27 @@ APR = [AP, "run"]
 HERE = pathlib.Path(__file__).parent
 ROOT = HERE.parent
 
-PROJ = ROOT / "anaconda-project.yml"
+# files
+DODO = ROOT / "dodo.py"
 LOCK = ROOT / "anaconda-project-lock.yml"
-DIST = ROOT / "dist"
-CACHE = ROOT / ".cache"
+PROJ = ROOT / "anaconda-project.yml"
 
+# folders
+BINDER = ROOT / "binder"
+CACHE = ROOT / ".cache"
+CI_SUPPORT = ROOT / ".ci_support"
+DIST = ROOT / "dist"
+ENVS = ROOT / "envs"
+GITHUB = ROOT / ".github"
+INSTALLER = ROOT / "installer"
+NODE_MODULES = ROOT / "node_modules"
 PACKAGES = ROOT / "packages"
+RECIPES = ROOT / "recipes"
+
 LAB_NAME = "gt-coar-lab"
 LAB_MODULE = LAB_NAME.replace("-", "_")
 LAB_PACKAGE = PACKAGES / LAB_NAME
 
-INSTALLER = ROOT / "installer"
-RECIPES = ROOT / "recipes"
 
 CONDA_DIST = DIST / "conda-bld"
 CONDA_DIST_URI = CONDA_DIST.as_uri()
@@ -32,16 +41,11 @@ INSTALLER_TMPL = INSTALLER / "construct.yaml.j2"
 CONSTRUCT = INSTALLER / "construct.yaml"
 CONSTRUCTOR_CACHE = CACHE / "constructor"
 
-GITHUB = ROOT / ".github"
-CI_SUPPORT = ROOT / ".ci_support"
 
-ENVS = ROOT / "envs"
-
-NODE_MODULES = ROOT / "node_modules"
-
-POSTBUILD = ROOT / "postBuild"
-LABEXTENSIONS = ROOT / "labextensions.txt"
-DODO = ROOT / "dodo.py"
+# demoing
+BINDER_ENV = BINDER / "environment.yml"
+POSTBUILD = BINDER / "postBuild"
+LABEXTENSIONS = BINDER / "labextensions.txt"
 
 # linting
 ALL_PY = sorted(
@@ -57,6 +61,7 @@ ALL_YAML = sorted(
     [
         ROOT / ".yamllint",
         ROOT / ".prettierrc",
+        BINDER_ENV,
         *CI_SUPPORT.glob("*.yml"),
         *GITHUB.rglob("*.yml"),
         *ROOT.glob("*.yml"),

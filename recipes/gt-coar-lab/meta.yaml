@@ -7,7 +7,7 @@ package:
 
 source:
   - path: ../../packages/gt-coar-lab
-  - path: ../../labextensions.txt
+  - path: ../../binder/labextensions.txt
 
 build:
   noarch: python
