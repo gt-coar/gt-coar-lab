@@ -307,7 +307,7 @@ env_specs:
         - zlib=1.2.11=h62dcd97_4
   gt-coar-lab-linux:
     locked: true
-    env_spec_hash: dac38caaa8a935d6fd6f2c2e0ed9c5d6071ff7fe
+    env_spec_hash: b7e3a43a119a8194ea135af475496ca75fe2cb85
     platforms:
       - linux-64
     packages:
@@ -317,7 +317,7 @@ env_specs:
         - _tflow_select=2.3.0=mkl
         - absl-py=0.9.0=py37_0
         - aiohttp=3.6.2=py37h7b6447c_0
-        - antlr-python-runtime=4.8=py37hc8dfbb8_1
+        - antlr-python-runtime=4.7.2=py37_1001
         - astor=0.8.0=py37_0
         - asv=0.4.2=py37h3340039_0
         - async-timeout=3.0.1=py37_0
@@ -598,7 +598,7 @@ env_specs:
         - zstd=1.3.7=h0b5b093_0
   gt-coar-lab-windows:
     locked: true
-    env_spec_hash: eb2416601659e35121c6685c1a5d36132e9c7552
+    env_spec_hash: 2705f71af50d63073229f643d5773086beef0ec7
     platforms:
       - win-64
     packages:
@@ -606,7 +606,7 @@ env_specs:
         - _tflow_select=2.2.0=eigen
         - absl-py=0.9.0=py37_0
         - aiohttp=3.6.2=py37he774522_0
-        - antlr-python-runtime=4.8=py37hc8dfbb8_1
+        - antlr-python-runtime=4.7.2=py37_1001
         - astor=0.8.0=py37_0
         - asv=0.4.2=py37h1834ac0_0
         - async-timeout=3.0.1=py37_0
@@ -863,7 +863,7 @@ env_specs:
         - zstd=1.3.7=h508b16e_0
   gt-coar-lab-macosx:
     locked: true
-    env_spec_hash: 8d8b147a767c4439a2c9a8ca1cf6a3f0d6792384
+    env_spec_hash: b63283dc172d0e1ab02ad35deacd943a576665b5
     platforms:
       - osx-64
     packages:
@@ -871,7 +871,7 @@ env_specs:
         - _tflow_select=2.3.0=mkl
         - absl-py=0.9.0=py37_0
         - aiohttp=3.6.2=py37h1de35cc_0
-        - antlr-python-runtime=4.8=py37hc8dfbb8_1
+        - antlr-python-runtime=4.7.2=py37_1001
         - appnope=0.1.0=py37_0
         - astor=0.8.0=py37_0
         - asv=0.4.2=py37h570ac47_0

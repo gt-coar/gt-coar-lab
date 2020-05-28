@@ -5,7 +5,7 @@ channels:
   - https://repo.anaconda.com/pkgs/main
   - https://conda.anaconda.org/conda-forge
 dependencies:
-  - antlr-python-runtime
+  - antlr-python-runtime >=4.7,<4.8
   - asv
   - conda >=4.8.3,<4.9.0a0
   - conda-build >=3.11,<3.18.0a0

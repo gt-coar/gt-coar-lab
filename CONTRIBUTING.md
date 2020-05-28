@@ -28,16 +28,16 @@ To run _everything that needs to be run_:
 doit
 ```
 
+- `*` may be used as a wildcard
+
 ## Updating dependencies
 
-One notable task that doesn't occur in the default flow is updating the installer
-dependencies.
+One notable task that doesn't occur in the `doit` flow is updating dependencies.
 
-After changing a dependency in `anaconda-project.yml`, run:
+After changing a dependency in `anaconda-project.yml`:
 
 ```bash
-python -m scripts.update   # updates the lock file
-doit lint*                 # fixes whitespace
+python -m scripts.update
 ```
 
 ---

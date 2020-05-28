@@ -9,6 +9,8 @@ from anaconda_project.internal.cli.project_load import load_project
 from anaconda_project.internal.default_conda_manager import DefaultCondaManager
 
 from . import meta as M
+from . import paths as P
+from . import utils as U
 
 
 def _noop_none_(*args, **kwargs):
@@ -19,7 +21,7 @@ def _noop_true_(*args, **kwargs):
     return True
 
 
-# apply some patches for cross-platform work
+# apply some patches for cross-platform work, without installing
 DefaultCondaManager._broken_lock_set_error = _noop_none_
 project_ops._try_requirement_without_commit = _noop_true_
 
@@ -27,10 +29,12 @@ project_ops._try_requirement_without_commit = _noop_true_
 def update():
     proj = load_project(str(Path.cwd()))
 
-    for platform in M.ALL_PLATFORMS:
-        env_spec = f"{M.INSTALLER_ENV_STEM}-{platform}"
-        print("updating", env_spec)
-        project_ops.update(proj, env_spec)
+    for name, spec in sorted(M.LOCK["env_specs"].items()):
+        if spec["locked"]:
+            print("\nUpdating", name, "on", spec["platforms"], "\n")
+            project_ops.update(proj, name)
+
+    U._([*P.APR, "lint", "prettier", "yaml"])
 
     return 0
 
