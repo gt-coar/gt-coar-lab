@@ -5,7 +5,6 @@ import pathlib
 import re
 import sys
 import tempfile
-from datetime import datetime
 
 import pytest
 
@@ -16,7 +15,6 @@ PYTEST_INI = """
 [pytest]
 junit_family = xunit2
 addopts =
-    -vv
     --junitxml dist/xunit/integrity.xunit.xml
 """
 
@@ -24,12 +22,6 @@ VERSIONS = {
     P.LAB_PACKAGE / "src" / P.LAB_MODULE / "_version.py": r"""__version__ = "(.*?)\"""",
     P.RECIPES / P.LAB_NAME / "meta.yaml": r"""{% set version = "(.*?)" %}""",
 }
-
-YEAR = datetime.today().year
-COPYRIGHT_HEADER = (
-    f"{YEAR} University System of Georgia and {M.INSTALLER_NAME} Contributors"
-)
-LICENSE_HEADER = "Distributed under the terms of the BSD-3-Clause License"
 
 
 def test_integrity_lab_versions():
@@ -49,8 +41,8 @@ def test_integrity_lab_versions():
 )
 def test_integrity_headers(the_file, the_path):
     the_text = the_path.read_text()
-    assert COPYRIGHT_HEADER in the_text
-    assert LICENSE_HEADER in the_text
+    assert M.COPYRIGHT_HEADER in the_text
+    assert M.LICENSE_HEADER in the_text
 
 
 def check_integrity():

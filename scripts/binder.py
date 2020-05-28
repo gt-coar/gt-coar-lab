@@ -22,12 +22,16 @@ def binder():
         needs_inheriting += env_spec.get("inherit_from", [])
 
     P.BINDER_ENV.write_text(
-        yaml.safe_dump(
-            dict(
-                name=P.LAB_NAME,
-                channels=channels,
-                dependencies=sorted(set(dependencies)),
-            )
+        "# {}\n# {}\n\n{}".format(
+            M.COPYRIGHT_HEADER,
+            M.LICENSE_HEADER,
+            yaml.safe_dump(
+                dict(
+                    name=P.LAB_NAME,
+                    channels=channels,
+                    dependencies=sorted(set(dependencies)),
+                )
+            ),
         )
     )
 

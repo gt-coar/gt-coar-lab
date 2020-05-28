@@ -20,6 +20,14 @@ DOIT_CONFIG = {
     for target, files in P.LINTERS.items()
 ]
 
+
+def task_integrity():
+    return dict(
+        file_dep=[P.PROJ, U.env_canary("qa"), *P.ALL_PY, *P.ALL_PRETTIER],
+        actions=[[*P.APR, "integrity"]],
+    )
+
+
 # building
 [
     globals().update(U.make_build_task(target, *files))
@@ -30,6 +38,6 @@ DOIT_CONFIG = {
 def task_binder():
     return dict(
         file_dep=[P.PROJ, U.env_canary("qa")],
-        targets=[P.BINDER_ENV],
         actions=[[*P.APR, "binder"]],
+        targets=[P.BINDER_ENV],
     )

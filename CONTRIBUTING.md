@@ -28,6 +28,18 @@ To run _everything that needs to be run_:
 doit
 ```
 
+## Updating dependencies
+
+One notable task that doesn't occur in the default flow is updating the installer
+dependencies.
+
+After changing a dependency in `anaconda-project.yml`, run:
+
+```bash
+python -m scripts.update   # updates the lock file
+doit lint*                 # fixes whitespace
+```
+
 ---
 
 > Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
