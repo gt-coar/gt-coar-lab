@@ -58,7 +58,7 @@ def make_prepare_task(env_spec):
         )
 
     task.__name__ = f"task_prep_{env_spec}"
-    task.__doc__ = f"prepare {env_spec} environment"
+    task.__doc__ = f"prepare environment {env_spec}"
 
     return {task.__name__: task}
 
@@ -70,7 +70,7 @@ def make_lint_task(target, files):
         )
 
     task.__name__ = f"task_lint_{target}"
-    task.__doc__ = f"lint/format files with {target}"
+    task.__doc__ = f"lint/format {target}"
 
     return {task.__name__: task}
 

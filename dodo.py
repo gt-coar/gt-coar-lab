@@ -22,6 +22,8 @@ DOIT_CONFIG = {
 
 
 def task_integrity():
+    """ ensure the repo is internally consistent
+    """
     return dict(
         file_dep=[P.PROJ, U.env_canary("qa"), *P.ALL_PY, *P.ALL_PRETTIER],
         actions=[[*P.APR, "integrity"]],
@@ -36,6 +38,8 @@ def task_integrity():
 
 # binding
 def task_binder():
+    """ ensure the binder env is up-to-date
+    """
     return dict(
         file_dep=[P.PROJ, U.env_canary("qa")],
         actions=[[*P.APR, "binder"]],
