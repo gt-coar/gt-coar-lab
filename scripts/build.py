@@ -20,7 +20,7 @@ if not cc_platform.startswith("win-"):
 def build_template():
     """ Build a construct.yaml from the project file, lock file
     """
-    U.conda_index()
+    U.conda_index(cc_platform)
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
     packages = U.LOCK["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
     project_specs = sorted(sum([packages.get(p, []) for p in PLATFORMS], []))

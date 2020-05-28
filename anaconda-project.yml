@@ -186,6 +186,7 @@ env_specs:
       - geckodriver
       # headless rendering
       - pyopengl
+      - pyopengl-accelerate
 
   _binder:
     inherit_from:

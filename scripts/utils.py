@@ -33,8 +33,13 @@ def channel_args(pre=None, post=None):
     return sum([["-c", c] for c in all_channels], [])
 
 
-def conda_index():
+def conda_index(ensure_subdir=None):
+    if ensure_subdir:
+        subdir = P.CONDA_DIST / ensure_subdir
+        subdir.mkdir(parents=True, exist_ok=True)
+
     [p.chmod(0o777) for p in P.CONDA_DIST.rglob("*")]
+
     return _(["conda", "index", P.CONDA_DIST])
 
 

@@ -307,7 +307,7 @@ env_specs:
         - zlib=1.2.11=h62dcd97_4
   gt-coar-lab-linux:
     locked: true
-    env_spec_hash: e77eb71151f3202dd97b28ea729a0246852179a0
+    env_spec_hash: dac38caaa8a935d6fd6f2c2e0ed9c5d6071ff7fe
     platforms:
       - linux-64
     packages:
@@ -521,6 +521,7 @@ env_specs:
         - pyglet=1.5.0=py37hc8dfbb8_1
         - pygments=2.6.1=py_0
         - pyjwt=1.7.1=py37_0
+        - pyopengl-accelerate=3.1.3b1=py37hdd07704_0
         - pyopengl=3.1.1a1=py37_0
         - pyopenssl=19.1.0=py37_0
         - pyparsing=2.4.7=py_0
@@ -597,7 +598,7 @@ env_specs:
         - zstd=1.3.7=h0b5b093_0
   gt-coar-lab-windows:
     locked: true
-    env_spec_hash: 1a049d49319f0bc240363903d7bec1029937dc05
+    env_spec_hash: eb2416601659e35121c6685c1a5d36132e9c7552
     platforms:
       - win-64
     packages:
@@ -780,6 +781,7 @@ env_specs:
         - pyglet=1.5.0=py37hc8dfbb8_1
         - pygments=2.6.1=py_0
         - pyjwt=1.7.1=py37_0
+        - pyopengl-accelerate=3.1.3b1=py37h8c2d366_0
         - pyopengl=3.1.1a1=py37_0
         - pyopenssl=19.1.0=py37_0
         - pyparsing=2.4.7=py_0
@@ -861,7 +863,7 @@ env_specs:
         - zstd=1.3.7=h508b16e_0
   gt-coar-lab-macosx:
     locked: true
-    env_spec_hash: 0299818ac0d299679ee88f151dfbe05be8a468c0
+    env_spec_hash: 8d8b147a767c4439a2c9a8ca1cf6a3f0d6792384
     platforms:
       - osx-64
     packages:
@@ -1058,6 +1060,7 @@ env_specs:
         - pyct=0.4.6=py37_0
         - pyglet=1.5.0=py37hc8dfbb8_1
         - pygments=2.6.1=py_0
+        - pyopengl-accelerate=3.1.3b1=py37h1d22016_0
         - pyopengl=3.1.1a1=py37_0
         - pyopenssl=19.1.0=py37_0
         - pyparsing=2.4.7=py_0
