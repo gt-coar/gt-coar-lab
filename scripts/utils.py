@@ -38,7 +38,7 @@ def conda_index(ensure_subdir=None):
         subdir = P.CONDA_DIST / ensure_subdir
         subdir.mkdir(parents=True, exist_ok=True)
 
-    [p.chmod(0o777) for p in P.CONDA_DIST.rglob("*")]
+    [[p.chmod(0o777), print(p)] for p in sorted(P.CONDA_DIST.rglob("*"))]
 
     return _(["conda", "index", P.CONDA_DIST])
 
