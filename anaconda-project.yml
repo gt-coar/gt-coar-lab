@@ -3,6 +3,9 @@
 
 name: gt-coar-lab
 
+variables:
+  INSTALLER_VERSION: 2020.5.0
+
 commands:
   postBuild:
     description: perform post-install steps, as on binder

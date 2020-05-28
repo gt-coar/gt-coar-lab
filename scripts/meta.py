@@ -1,21 +1,20 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
+import os
 import sys
 from datetime import datetime
 
-from . import git as G
+import yaml
+
 from . import paths as P
 
-TODAY = datetime.today()
+PROJ = yaml.safe_load(P.PROJ.read_text())
+LOCK = yaml.safe_load(P.LOCK.read_text())
 
 QA_ENV_SPEC = "qa"
 BUILD_ENV_SPEC = "build"
 BINDER_ENV_SPEC = "_binder"
 
-# TODO: something more predictable?
-VERSION = f"{TODAY.year}.{TODAY.month}.{TODAY.day}-{G.short_commit()}"
-
-INSTALLER_NAME = "GTCOARLab"
 
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
@@ -25,6 +24,10 @@ LAB_BUILD = "0"
 
 ALL_PLATFORMS = ["linux", "macosx", "windows"]
 
+INSTALLER_VERSION = os.environ.get(
+    "INSTALLER_VERSION", PROJ["variables"]["INSTALLER_VERSION"]
+)
+INSTALLER_NAME = "GTCOARLab"
 INSTALLER_PLATFORM, INSTALLER_EXT = {
     "linux": ["Linux", "sh"],
     "darwin": ["MacOSX", "sh"],
@@ -35,7 +38,7 @@ INSTALLER_ENV_STEM = "gt-coar-lab"
 INSTALLER_ENV_SPEC = f"{INSTALLER_ENV_STEM}-{INSTALLER_PLATFORM.lower()}"
 
 INSTALLER_FILENAME = (
-    f"{INSTALLER_NAME}-{VERSION}-{INSTALLER_PLATFORM}-x86_64.{INSTALLER_EXT}"
+    f"{INSTALLER_NAME}-{INSTALLER_VERSION}-{INSTALLER_PLATFORM}-x86_64.{INSTALLER_EXT}"
 )
 
 BUILDERS = dict(

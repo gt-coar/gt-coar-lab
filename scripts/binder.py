@@ -7,7 +7,6 @@ import yaml
 
 from . import meta as M
 from . import paths as P
-from . import utils as U
 from .lint import lint_prettier
 
 
@@ -17,7 +16,7 @@ def binder():
     dependencies = []
 
     while needs_inheriting:
-        env_spec = U.PROJ["env_specs"][needs_inheriting.pop()]
+        env_spec = M.PROJ["env_specs"][needs_inheriting.pop()]
         channels += env_spec.get("channels", [])
         dependencies += env_spec.get("packages", [])
         needs_inheriting += env_spec.get("inherit_from", [])

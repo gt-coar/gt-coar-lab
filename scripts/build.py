@@ -22,12 +22,12 @@ def build_template():
     """
     U.conda_index(cc_platform)
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
-    packages = U.LOCK["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
+    packages = M.LOCK["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
     project_specs = sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
 
     context = dict(
         name=M.INSTALLER_NAME,
-        version=M.VERSION,
+        version=M.INSTALLER_VERSION,
         build_channel=P.CONDA_DIST_URI,
         channels=U.project_channels(),
         specs=project_specs + M.EXTRA_SPECS,
