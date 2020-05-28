@@ -23,6 +23,7 @@ dependencies:
   - gym-atari
   - gym-box2d
   - hvplot
+  - importnb
   - ipywidgets
   - jupyterlab ==2.1.3
   - jupyterlab-git
