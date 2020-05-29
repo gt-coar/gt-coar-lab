@@ -1,0 +1,45 @@
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+package:
+  name: '{% set name = "gt-coar-lab" %}{{ name }}'
+  version: '{% set version = "2.1.3" %}{{ version }}'
+
+source:
+  - path: ../../packages/gt-coar-lab
+  - path: ../../binder/labextensions.txt
+
+build:
+  noarch: python
+  number: 0
+  script:
+    - '{{ PYTHON }} -m pip install . --no-deps'
+    - 'cd {{ RECIPE_DIR }} && {{ PYTHON }} builder.py'
+  entry_points:
+    - gt-coar-lab = gt_coar_lab.labapp:main
+    - gt-coar-labextension = gt_coar_lab.labextensionapp:main
+
+requirements:
+  host:
+    - jupyterlab =={{ version }}
+    - nodejs >=12,<13.0.0a0
+    - pip
+    - python >=3.6
+  run:
+    - python
+    - jupyterlab =={{ version }}
+
+test:
+  requires:
+    - nodejs >=12,<13.0.0a0
+    - pip
+  commands:
+    - python -m pip check
+    - gt-coar-labextension list
+
+about:
+  home: https://github.com/gt-coar/gt-coar-lab
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: 'A pre-built JupyterLab to support interactive reinforcement learning'

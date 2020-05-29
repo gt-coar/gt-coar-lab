@@ -1,9 +1,4 @@
-# GTCOARLab Roadmap
-
-- Initial working installers
-- Headless testing
-- GPU-enabled distributions
-- Research Library
+# gt-coar-lab
 
 ---
 

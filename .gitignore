@@ -1,0 +1,12 @@
+__pycache__/
+.*cache/
+.doit.*
+.ipynb_checkpoints/
+construct.yaml
+dist/
+envs/
+gym-results/
+node_modules/
+tmp/
+untitled*
+Untitled*

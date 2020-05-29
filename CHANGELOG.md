@@ -1,9 +1,6 @@
-# GTCOARLab Roadmap
+# 2020.5.0
 
-- Initial working installers
-- Headless testing
-- GPU-enabled distributions
-- Research Library
+- initial prototype builds
 
 ---
 
