@@ -2,9 +2,9 @@
 
 _an environment for interactive exploration of reinforcement learning_
 
-| Build | Interactive Demo |
-|:-----:|:----:|
-| [![Build Installer][ci-badge]](ci) | [![Binder][demo-badge]][demo]
+|               Build                |       Interactive Demo        |
+| :--------------------------------: | :---------------------------: |
+| [![Build Installer][ci-badge]](ci) | [![Binder][demo-badge]][demo] |
 
 [ci]: https://github.com/gt-coar/gt-coar-lab/actions
 [ci-badge]: https://github.com/gt-coar/gt-coar-lab/workflows/Build%20Installer/badge.svg
