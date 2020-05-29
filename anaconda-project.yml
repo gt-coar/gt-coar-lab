@@ -170,6 +170,9 @@ env_specs:
       - datashader
       - hvplot
       - ipywidgets
+      - python-graphviz
+      - ipycytoscape
+      - py2cytoscape
       # computer algebra
       - antlr-python-runtime >=4.7,<4.8
       - sympy

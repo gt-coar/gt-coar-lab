@@ -6,7 +6,8 @@
 
 # fancy widgets
 @bokeh/jupyter_bokeh@2.0.1
-@pyviz/jupyterlab_pyviz
+@pyviz/jupyterlab_pyviz@1.0.4
+jupyter-cytoscape@0.2.2
 
 # authoring
 @jupyterlab/toc@3.0.0
