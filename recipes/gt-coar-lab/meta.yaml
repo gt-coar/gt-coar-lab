@@ -3,7 +3,7 @@
 
 package:
   name: '{% set name = "gt-coar-lab" %}{{ name }}'
-  version: '{% set version = "2.1.3" %}{{ version }}'
+  version: '{% set version = "2.1.4" %}{{ version }}'
 
 source:
   - path: ../../packages/gt-coar-lab

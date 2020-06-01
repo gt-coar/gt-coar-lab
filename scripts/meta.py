@@ -19,7 +19,7 @@ BINDER_ENV_SPEC = "_binder"
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
 # building
-LAB_VERSION = "2.1.3"
+LAB_VERSION = "2.1.4"
 LAB_BUILD = "0"
 
 ALL_PLATFORMS = ["linux", "macosx", "windows"]
