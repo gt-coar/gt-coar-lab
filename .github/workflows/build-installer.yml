@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: goanpeca/setup-miniconda@v1.4.1
+      - uses: goanpeca/setup-miniconda@v1.5.0
         with:
           activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: goanpeca/setup-miniconda@v1.4.1
+      - uses: goanpeca/setup-miniconda@v1.5.0
         with:
           activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
@@ -77,7 +77,7 @@ jobs:
         with:
           name: conda-gt-coar-lab
           path: dist/conda-bld
-      - uses: goanpeca/setup-miniconda@v1.4.1
+      - uses: goanpeca/setup-miniconda@v1.5.0
         with:
           activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml

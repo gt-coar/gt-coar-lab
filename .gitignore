@@ -3,6 +3,7 @@ __pycache__/
 .doit.*
 .ipynb_checkpoints/
 construct.yaml
+dask-worker-space/
 dist/
 envs/
 gym-results/
