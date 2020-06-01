@@ -317,7 +317,7 @@ env_specs:
         - zlib=1.2.11=h62dcd97_4
   gt-coar-lab-linux:
     locked: true
-    env_spec_hash: bebfebb378a21e20043919d0bab5675581287171
+    env_spec_hash: 22aba58488059e4cbd49ad86e8a5005634f09fc1
     platforms:
       - linux-64
     packages:
@@ -366,9 +366,9 @@ env_specs:
         - cryptography=2.9.2=py37h1ba5d50_0
         - cycler=0.10.0=py37_0
         - cytoolz=0.10.1=py37h7b6447c_0
-        - dask-core=2.17.0=py_0
+        - dask-core=2.17.2=py_0
         - dask-labextension=2.0.2=py_0
-        - dask=2.17.0=py_0
+        - dask=2.17.2=py_0
         - dask_labextension=2.0.2=0
         - datashader=0.10.0=py_0
         - datashape=0.5.4=py37_1
@@ -386,7 +386,7 @@ env_specs:
         - fontconfig=2.13.0=h9420a91_0
         - freeglut=3.0.0=hf484d3e_5
         - freetype=2.9.1=h8a8886c_1
-        - fsspec=0.7.1=py_0
+        - fsspec=0.7.4=py_0
         - future=0.18.2=py37_0
         - gast=0.2.2=py37_0
         - geckodriver=0.26.0=he1b5a44_0
@@ -424,21 +424,22 @@ env_specs:
         - importnb=0.6.1=py37hc8dfbb8_2
         - intel-openmp=2020.1=217
         - ipycytoscape=0.2.2=py_0
-        - ipykernel=5.1.4=py37h39e3cac_0
-        - ipython=7.13.0=py37h5ca1d4c_0
+        - ipykernel=5.3.0=py37h43977f1_0
+        - ipython=7.15.0=py37hc8dfbb8_0
         - ipython_genutils=0.2.0=py37_0
         - ipywidgets=7.5.1=py_0
         - jasper=2.0.14=h07fcdf6_1
         - jedi=0.17.0=py37_0
         - jinja2=2.11.2=py_0
-        - jpeg=9c=h14c3975_1001
+        - jpeg=9d=h516909a_0
         - json5=0.9.4=py_0
         - jsonschema=3.2.0=py37_0
         - jupyter-server-proxy=1.5.0=py_0
+        - jupyter_bokeh=2.0.2=py_0
         - jupyter_client=6.1.3=py_0
         - jupyter_core=4.6.3=py37_0
         - jupyterlab-git=0.20.0=py_0
-        - jupyterlab=2.1.3=py_0
+        - jupyterlab=2.1.4=py_0
         - jupyterlab_server=1.1.5=py_0
         - keras-applications=1.0.8=py_0
         - keras-preprocessing=1.1.0=py_1
@@ -524,7 +525,6 @@ env_specs:
         - pluggy=0.13.1=py37_0
         - prometheus_client=0.7.1=py_0
         - prompt-toolkit=3.0.4=py_0
-        - prompt_toolkit=3.0.4=0
         - protobuf=3.11.4=py37he6710b0_0
         - psutil=5.7.0=py37h7b6447c_0
         - ptyprocess=0.6.0=py37_0
@@ -635,7 +635,7 @@ env_specs:
         - zstd=1.3.7=h0b5b093_0
   gt-coar-lab-windows:
     locked: true
-    env_spec_hash: d7e521484f88adb6bda8f9d6829c498804646312
+    env_spec_hash: 9f1d7064048b88b5b66f12199c9d5120ab3db8f2
     platforms:
       - win-64
     packages:
@@ -681,9 +681,9 @@ env_specs:
         - cryptography=2.9.2=py37h7a1dbc1_0
         - cycler=0.10.0=py37_0
         - cytoolz=0.10.1=py37he774522_0
-        - dask-core=2.17.0=py_0
+        - dask-core=2.17.2=py_0
         - dask-labextension=2.0.2=py_0
-        - dask=2.17.0=py_0
+        - dask=2.17.2=py_0
         - dask_labextension=2.0.2=0
         - datashader=0.10.0=py_0
         - datashape=0.5.4=py37_1
@@ -696,7 +696,7 @@ env_specs:
         - filelock=3.0.12=py_0
         - firefox=68.8.0esr=ha925a31_0
         - freetype=2.9.1=ha9979f8_1
-        - fsspec=0.7.1=py_0
+        - fsspec=0.7.4=py_0
         - future=0.18.2=py37_0
         - gast=0.2.2=py37_0
         - geckodriver=0.26.0=he025d50_0
@@ -725,8 +725,8 @@ env_specs:
         - importnb=0.6.1=py37hc8dfbb8_2
         - intel-openmp=2020.1=216
         - ipycytoscape=0.2.2=py_0
-        - ipykernel=5.1.4=py37h39e3cac_0
-        - ipython=7.13.0=py37h5ca1d4c_0
+        - ipykernel=5.3.0=py37h5ca1d4c_0
+        - ipython=7.15.0=py37hc8dfbb8_0
         - ipython_genutils=0.2.0=py37_0
         - ipywidgets=7.5.1=py_0
         - jedi=0.17.0=py37_0
@@ -735,10 +735,11 @@ env_specs:
         - json5=0.9.4=py_0
         - jsonschema=3.2.0=py37_0
         - jupyter-server-proxy=1.5.0=py_0
+        - jupyter_bokeh=2.0.2=py_0
         - jupyter_client=6.1.3=py_0
         - jupyter_core=4.6.3=py37_0
         - jupyterlab-git=0.20.0=py_0
-        - jupyterlab=2.1.3=py_0
+        - jupyterlab=2.1.4=py_0
         - jupyterlab_server=1.1.5=py_0
         - keras-applications=1.0.8=py_0
         - keras-preprocessing=1.1.0=py_1
@@ -812,7 +813,6 @@ env_specs:
         - pluggy=0.13.1=py37_0
         - prometheus_client=0.7.1=py_0
         - prompt-toolkit=3.0.4=py_0
-        - prompt_toolkit=3.0.4=0
         - protobuf=3.11.4=py37h33f27b4_0
         - psutil=5.7.0=py37he774522_0
         - py-lief=0.10.1=py37ha925a31_0
@@ -917,7 +917,7 @@ env_specs:
         - zstd=1.3.7=h508b16e_0
   gt-coar-lab-macosx:
     locked: true
-    env_spec_hash: 329b491aee9cf14fb85ec721ff1c2e7116a8c188
+    env_spec_hash: a5218016060936bcef77786e930148e60332fd3e
     platforms:
       - osx-64
     packages:
@@ -963,9 +963,9 @@ env_specs:
         - cryptography=2.9.2=py37ha12b0ac_0
         - cycler=0.10.0=py37_0
         - cytoolz=0.10.1=py37h1de35cc_0
-        - dask-core=2.17.0=py_0
+        - dask-core=2.17.2=py_0
         - dask-labextension=2.0.2=py_0
-        - dask=2.17.0=py_0
+        - dask=2.17.2=py_0
         - dask_labextension=2.0.2=0
         - datashader=0.10.0=py_0
         - datashape=0.5.4=py37_1
@@ -980,7 +980,7 @@ env_specs:
         - firefox=68.8.0esr=h4a8c4bd_0
         - fontconfig=2.13.0=h5d5b041_1
         - freetype=2.9.1=hb4e5f40_0
-        - fsspec=0.7.1=py_0
+        - fsspec=0.7.4=py_0
         - future=0.18.2=py37_0
         - gast=0.2.2=py37_0
         - geckodriver=0.26.0=h4a8c4bd_0
@@ -1014,21 +1014,22 @@ env_specs:
         - importnb=0.6.1=py37hc8dfbb8_2
         - intel-openmp=2019.4=233
         - ipycytoscape=0.2.2=py_0
-        - ipykernel=5.1.4=py37h39e3cac_0
-        - ipython=7.13.0=py37h5ca1d4c_0
+        - ipykernel=5.3.0=py37h43977f1_0
+        - ipython=7.15.0=py37hc8dfbb8_0
         - ipython_genutils=0.2.0=py37_0
         - ipywidgets=7.5.1=py_0
         - jasper=2.0.14=h636a363_1
         - jedi=0.17.0=py37_0
         - jinja2=2.11.2=py_0
-        - jpeg=9c=h1de35cc_1001
+        - jpeg=9d=h0b31af3_0
         - json5=0.9.4=py_0
         - jsonschema=3.2.0=py37_0
         - jupyter-server-proxy=1.5.0=py_0
+        - jupyter_bokeh=2.0.2=py_0
         - jupyter_client=6.1.3=py_0
         - jupyter_core=4.6.3=py37_0
         - jupyterlab-git=0.20.0=py_0
-        - jupyterlab=2.1.3=py_0
+        - jupyterlab=2.1.4=py_0
         - jupyterlab_server=1.1.5=py_0
         - keras-applications=1.0.8=py_0
         - keras-preprocessing=1.1.0=py_1
@@ -1106,7 +1107,6 @@ env_specs:
         - pluggy=0.13.1=py37_0
         - prometheus_client=0.7.1=py_0
         - prompt-toolkit=3.0.4=py_0
-        - prompt_toolkit=3.0.4=0
         - protobuf=3.11.4=py37h0a44026_0
         - psutil=5.7.0=py37h1de35cc_0
         - ptyprocess=0.6.0=py37_0
