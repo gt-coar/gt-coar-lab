@@ -13,9 +13,20 @@ PY_LINTERS = [
 
 YAML_LINTERS = [["yamllint", *P.LINTERS["yaml"]]]
 
+
+RFLINT_RULES = [
+    "LineTooLong:200",
+    "TooFewKeywordSteps:1",
+    "TooFewTestSteps:1",
+    "TooManyTestSteps:30",
+    "TooManyTestCases:13",
+]
+
+RFLINT = sum([["--configure", rule] for rule in RFLINT_RULES], [])
+
 ROBOT_LINTERS = [
     ["python", "-m", "robot.tidy", "--inplace", *P.LINTERS["robot"]],
-    ["rflint", *P.LINTERS["robot"]],
+    ["rflint", *RFLINT, *P.LINTERS["robot"]],
     ["python", "-m", "scripts.atest", "--dryrun"],
 ]
 

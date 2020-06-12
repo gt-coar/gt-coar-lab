@@ -1,13 +1,7 @@
 *** Settings ***
 Documentation     Basic tests of GTCOARLab installer
 Library           OperatingSystem
+Resource          ./resources/Install.robot
 Force Tags        os:${OS}    version:${VERSION}
-Suite Setup       Run Installer
-
-*** Keywords ***
-Run Installer
-    [Documentation]    Run the installer
-    File Should Exist    ${INSTALLER}
-    Log    It's
-    Log    all
-    Log    good
+Suite Setup       Run the Installer
+Suite Teardown    Clean up the Installation

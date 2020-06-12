@@ -62,6 +62,10 @@ def atest(attempt, extra_args):
         "--xunit",
         P.ATEST_OUT / f"{stem}.xunit.xml",
         "--variable",
+        f"NAME:{M.INSTALLER_NAME}",
+        "--variable",
+        f"ATTEMPT:{attempt}",
+        "--variable",
         f"OS:{M.INSTALLER_PLATFORM}",
         "--variable",
         f"INSTALLER:{P.INSTALLER_DIST / M.INSTALLER_FILENAME}",
@@ -73,7 +77,7 @@ def atest(attempt, extra_args):
         P.ATEST,
     ]
 
-    print("Robot Arguments\n", " ".join(["robot"] + list(map(str, args))))
+    # print("Robot Arguments\n", " ".join(["robot"] + list(map(str, args))))
 
     os.chdir(P.ATEST)
 
