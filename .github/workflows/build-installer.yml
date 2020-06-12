@@ -23,6 +23,7 @@ jobs:
         with:
           activate-environment: gt-coar-lab-base
           auto-activate-base: false
+          auto-update-conda: true
           condarc-file: .ci_support/.condarc
           environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
@@ -56,6 +57,7 @@ jobs:
         with:
           activate-environment: gt-coar-lab-base
           auto-activate-base: false
+          auto-update-conda: true
           condarc-file: .ci_support/.condarc
           environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
@@ -103,6 +105,7 @@ jobs:
         with:
           activate-environment: gt-coar-lab-base
           auto-activate-base: false
+          auto-update-conda: true
           condarc-file: .ci_support/.condarc
           environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
@@ -175,6 +178,7 @@ jobs:
         with:
           activate-environment: gt-coar-lab-base
           auto-activate-base: false
+          auto-update-conda: true
           condarc-file: .ci_support/.condarc
           environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
