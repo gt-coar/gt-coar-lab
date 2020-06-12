@@ -36,11 +36,22 @@ jobs:
         run: git diff -u || echo "no changes made"
 
   conda_lab:
-    name: conda lab
+    name: Build conda lab
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: goanpeca/setup-miniconda@v1.6.0
+
+      # cache
+      - id: cache-conda-lab
+        uses: actions/cache@v2
+        with:
+          path: dist/conda-bld
+          key:
+            lab-${{ hashFiles('binder/*', 'recipes/gt-coar-lab/**/*',
+            'packages/gt-coar-lab/**.*') }}
+
+      - if: ${{ steps.cache-conda-lab.outputs.cache-hit != 'true' }}
+        uses: goanpeca/setup-miniconda@v1.6.0
         with:
           activate-environment: gt-coar-lab-base
           environment-file: .ci_support/environment-base.yml
@@ -49,12 +60,14 @@ jobs:
           show-channel-urls: true
 
       # build
-      - shell: bash -l {0}
+      - if: ${{ steps.cache-conda-lab.outputs.cache-hit != 'true' }}
+        shell: bash -l {0}
         run: anaconda-project prepare --env-spec build
-      - shell: bash -l {0}
+      - if: ${{ steps.cache-conda-lab.outputs.cache-hit != 'true' }}
+        shell: bash -l {0}
         run: anaconda-project run build conda_lab
 
-      # uplaod
+      # upload
       - name: upload gt-coar-lab conda package
         uses: actions/upload-artifact@v2
         with:
