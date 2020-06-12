@@ -37,6 +37,7 @@ def task_atest():
     return dict(
         file_dep=[P.INSTALLER_DIST / M.INSTALLER_FILENAME, *P.ALL_ROBOT, *P.ROBOT_PY],
         actions=[[*P.APR, "atest"]],
+        task_dep=["lint_robot"],
     )
 
 
