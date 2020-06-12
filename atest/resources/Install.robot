@@ -9,9 +9,9 @@ Resource          ./Variables.robot
 Run the Installer
     [Documentation]    Run the platform-specific installer
     File Should Exist    ${INSTALLER}
-    ${tmpdir} =    Evaluate    __import__("tempfile").mkdtemp("${NAME}_${ATTEMPT}")
+    ${installation} =    Evaluate    __import__("tempfile").mkdtemp("${NAME}_${ATTEMPT}")
     ${path} =    Set Variable    ${OUTPUT DIR}
-    Set Global Variable    ${INSTALL DIR}    ${tmpdir}
+    Set Global Variable    ${INSTALLATION}    ${installation}
     Set Global Variable    ${HOME}    ${path}${/}home
     ${rc} =    Run Keyword If    "${OS}" == "Linux"    Run the Linux Installer
     ...    ELSE IF    "${OS}" == "Windows"    Run the Windows Installer

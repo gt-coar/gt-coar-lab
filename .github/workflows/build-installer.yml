@@ -147,6 +147,15 @@ jobs:
           name: ${{ matrix.os }}-installer
           path: dist/installers
 
+      # conda
+      - uses: goanpeca/setup-miniconda@v1.6.0
+        with:
+          activate-environment: gt-coar-lab-base
+          environment-file: .ci_support/environment-base.yml
+          auto-activate-base: false
+          use-only-tar-bz2: true
+          show-channel-urls: true
+
       # prepare
       - if: ${{ !contains(matrix.os, 'windows') }}
         shell: bash -l {0}

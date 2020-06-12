@@ -88,6 +88,9 @@ def atest(attempt, extra_args):
         except Exception as err:
             print("Error deleting {}, hopefully harmless: {}".format(out_dir, err))
 
+    print(f"Creating {out_dir}")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
     try:
         robot.run_cli(list(map(str, args)))
         return U.OK
