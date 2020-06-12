@@ -22,10 +22,11 @@ jobs:
       - uses: goanpeca/setup-miniconda@v1.6.0
         with:
           activate-environment: gt-coar-lab-base
-          environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
-          use-only-tar-bz2: true
+          condarc-file: .ci_support/.condarc
+          environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
+          use-only-tar-bz2: true
       - shell: bash -l {0}
         run: anaconda-project prepare --env-spec qa
       - shell: bash -l {0}
@@ -54,10 +55,11 @@ jobs:
         uses: goanpeca/setup-miniconda@v1.6.0
         with:
           activate-environment: gt-coar-lab-base
-          environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
-          use-only-tar-bz2: true
+          condarc-file: .ci_support/.condarc
+          environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
+          use-only-tar-bz2: true
 
       # build
       - if: ${{ steps.cache-conda-lab.outputs.cache-hit != 'true' }}
@@ -100,10 +102,11 @@ jobs:
       - uses: goanpeca/setup-miniconda@v1.6.0
         with:
           activate-environment: gt-coar-lab-base
-          environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
-          use-only-tar-bz2: true
+          condarc-file: .ci_support/.condarc
+          environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
+          use-only-tar-bz2: true
 
       # prepare
       - if: ${{ !contains(matrix.os, 'windows') }}
@@ -171,10 +174,11 @@ jobs:
       - uses: goanpeca/setup-miniconda@v1.6.0
         with:
           activate-environment: gt-coar-lab-base
-          environment-file: .ci_support/environment-base.yml
           auto-activate-base: false
-          use-only-tar-bz2: true
+          condarc-file: .ci_support/.condarc
+          environment-file: .ci_support/environment-base.yml
           show-channel-urls: true
+          use-only-tar-bz2: true
 
       # prepare
       - if: ${{ !contains(matrix.os, 'windows') }}
