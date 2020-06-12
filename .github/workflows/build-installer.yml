@@ -45,7 +45,7 @@ jobs:
       - id: cache-conda-lab
         uses: actions/cache@v2
         with:
-          path: dist/conda-bld
+          path: dist/conda-bld/noarch/gt-coar-lab-*.tar.bz2
           key:
             lab-${{ hashFiles('binder/*', 'recipes/gt-coar-lab/**/*',
             'packages/gt-coar-lab/**.*') }}
