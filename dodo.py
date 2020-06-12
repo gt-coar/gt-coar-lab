@@ -25,7 +25,7 @@ def task_integrity():
     """ ensure the repo is internally consistent
     """
     return dict(
-        file_dep=[P.PROJ, U.env_canary("qa"), *P.ALL_PY, *P.ALL_PRETTIER],
+        file_dep=sorted([*P.ALL_PRETTIER, *P.ALL_PY, P.PROJ, U.env_canary("qa")]),
         actions=[[*P.APR, "integrity"]],
     )
 
