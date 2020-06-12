@@ -30,6 +30,7 @@ NOTEBOOKS = ROOT / "notebooks"
 PACKAGES = ROOT / "packages"
 RECIPES = ROOT / "recipes"
 ATEST = ROOT / "atest"
+ATEST_LIBS = ATEST / "libraries"
 
 LAB_NAME = "gt-coar-lab"
 LAB_MODULE = LAB_NAME.replace("-", "_")
@@ -54,7 +55,7 @@ POSTBUILD = BINDER / "postBuild"
 LABEXTENSIONS = BINDER / "labextensions.txt"
 
 # linting
-ROBOT_PY = sorted(ATEST.rglob("*.py"))
+ROBOT_PY = sorted((ATEST_LIBS).rglob("*.py"))
 ALL_PY = sorted(
     [
         *ROBOT_PY,

@@ -9,7 +9,7 @@ Resource          ./Variables.robot
 Run the Installer
     [Documentation]    Run the platform-specific installer
     File Should Exist    ${INSTALLER}
-    ${installation} =    Evaluate    __import__("tempfile").mkdtemp("${NAME}_${ATTEMPT}")
+    ${installation} =    Normalize Path    ${CURDIR}${/}..${/}..${/}tmp${/}${NAME}_${ATTEMPT}
     ${path} =    Set Variable    ${OUTPUT DIR}
     Set Global Variable    ${INSTALLATION}    ${installation}
     Set Global Variable    ${HOME}    ${path}${/}home
