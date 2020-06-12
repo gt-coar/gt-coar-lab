@@ -42,12 +42,6 @@ def conda_index(ensure_subdir=None):
     return _(["conda", "index", P.CONDA_DIST])
 
 
-def git_commit():
-    return subprocess.check_output(["git", "rev-parse", "--verify", "HEAD"]).decode(
-        "utf-8"
-    )[:7]
-
-
 # doit stuff
 def env_canary(env_spec):
     return P.ENVS / env_spec / "conda-meta" / "history"
@@ -70,7 +64,8 @@ def make_prepare_task(env_spec):
 def make_lint_task(target, files):
     def task():
         return dict(
-            file_dep=[*files, env_canary("qa")], actions=[[*P.APR, "lint", target]]
+            file_dep=[*files, env_canary("qa"), P.SCRIPTS / "lint.py",],
+            actions=[[*P.APR, "lint", target],],
         )
 
     task.__name__ = f"task_lint_{target}"

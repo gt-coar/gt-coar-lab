@@ -35,7 +35,14 @@ def task_atest():
     """ run acceptance tests
     """
     return dict(
-        file_dep=[P.INSTALLER_DIST / M.INSTALLER_FILENAME, *P.ALL_ROBOT, *P.ROBOT_PY],
+        file_dep=sorted(
+            [
+                *P.ALL_ROBOT,
+                *P.ROBOT_PY,
+                P.INSTALLER_DIST / M.INSTALLER_FILENAME,
+                P.SCRIPTS / "atest.py",
+            ]
+        ),
         actions=[[*P.APR, "atest"]],
         task_dep=["lint_robot"],
     )

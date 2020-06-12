@@ -42,6 +42,7 @@ def atest(attempt, extra_args):
     stem = get_stem(attempt, extra_args)
 
     if attempt != 1:
+        extra_args += ["--loglevel", "TRACE"]
         previous = P.ATEST_OUT / f"{get_stem(attempt - 1, extra_args)}.robot.xml"
         if previous.exists():
             extra_args += ["--rerunfailed", str(previous)]

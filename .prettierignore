@@ -1,5 +1,8 @@
 __pycache__/
 .cache/
+.pytest_cache/
+atest/output/
 dist/
 envs/
 node_modules/
+tmp/
