@@ -168,16 +168,19 @@ jobs:
       - if: ${{ !contains(matrix.os, 'windows') }}
         env:
           PYTHONUNBUFFERED: 1
-          ATEST_RETRIES: 3
+          ATEST_RETRIES: 1
         shell: bash -l {0}
         run: anaconda-project run atest
       - if: ${{ contains(matrix.os, 'windows') }}
         env:
           PYTHONUNBUFFERED: 1
-          ATEST_RETRIES: 3
+          ATEST_RETRIES: 1
         shell: cmd /C CALL {0}
         run: anaconda-project run atest
-      - uses: actions/upload-artifact@v2
+
+      # report
+      - if: ${{ always() }}
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.os }}-atest
           path: atest/output
