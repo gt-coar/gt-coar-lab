@@ -19,5 +19,5 @@ Run Shell Script in Installation
     ${proc} =    Run Process    ${shell}
     ...    shell=True    cwd=${OUTPUT DIR}    stdout=${log}.log    stderr=STDOUT    env:PS1=[gtc]
     Should Be Equal As Numbers    ${proc.rc}    ${rc}
-    ${output} =    Get File    ${log}
+    ${output} =    Get File    ${log}.log
     [Return]    ${output}

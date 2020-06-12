@@ -33,7 +33,7 @@ Run the Linux installer
 Run the MacOSX installer
     [Documentation]    Install on OSX
     Set Global Variable    ${ACTIVATE SCRIPT}    ${INSTALLATION}${/}bin${/}activate
-    Set Global Variable    ${ACTIVATE}    set -ex && . "${ACTIVATE SCRIPT}" "${INSTALLATION}"
+    Set Global Variable    ${ACTIVATE}    . "${ACTIVATE SCRIPT}" "${INSTALLATION}"
     Set Global Variable    ${PATH ENV}    ${INSTALLATION}${/}bin${:}%{PATH}
     ${result} =    Run Process    bash    ${INSTALLER}    -fbp    ${INSTALLATION}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT
@@ -42,11 +42,11 @@ Run the MacOSX installer
 Run the Windows installer
     [Documentation]    Install on Windows
     Set Global Variable    ${ACTIVATE SCRIPT}    ${INSTALLATION}${/}Scripts${/}activate.bat
-    Set Global Variable    ${ACTIVATE}    ECHO ON && "${ACTIVATE SCRIPT}" "${INSTALLATION}"
+    Set Global Variable    ${ACTIVATE}    call "${ACTIVATE SCRIPT}" "${INSTALLATION}"
     Set Global Variable    ${PATH ENV}
     ...    ${INSTALLATION}${:}${INSTALLATION}${/}Scripts${:}${INSTALLATION}${/}Library${/}bin${:}%{PATH}
     ${args} =    Set Variable    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INSTALLATION}
-    ${result} =    Run Process    ${INSTALLER} ${args}
+    ${result} =    Run Process    start /wait "" ${INSTALLER} ${args}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT    shell=True
     [Return]    ${result.rc}
 
