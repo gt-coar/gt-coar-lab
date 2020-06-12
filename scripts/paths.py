@@ -9,8 +9,8 @@ AP = "anaconda-project"
 APR = [AP, "run"]
 NODE = shutil.which("node") or shutil.which("node.cmd") or shutil.which("node.exe")
 
-HERE = pathlib.Path(__file__).parent
-ROOT = HERE.parent
+SCRIPTS = pathlib.Path(__file__).parent
+ROOT = SCRIPTS.parent
 
 # files
 DODO = ROOT / "dodo.py"
@@ -29,6 +29,7 @@ NODE_MODULES = ROOT / "node_modules"
 NOTEBOOKS = ROOT / "notebooks"
 PACKAGES = ROOT / "packages"
 RECIPES = ROOT / "recipes"
+ATEST = ROOT / "atest"
 
 LAB_NAME = "gt-coar-lab"
 LAB_MODULE = LAB_NAME.replace("-", "_")
@@ -44,6 +45,8 @@ INSTALLER_TMPL = INSTALLER / "construct.yaml.j2"
 CONSTRUCT = INSTALLER / "construct.yaml"
 CONSTRUCTOR_CACHE = CACHE / "constructor"
 
+# testing
+ATEST_OUT = ATEST / "output"
 
 # demoing
 BINDER_ENV = BINDER / "environment.yml"
@@ -51,11 +54,13 @@ POSTBUILD = BINDER / "postBuild"
 LABEXTENSIONS = BINDER / "labextensions.txt"
 
 # linting
+ROBOT_PY = sorted(ATEST.rglob("*.py"))
 ALL_PY = sorted(
     [
-        *HERE.rglob("*.py"),
-        *RECIPES.rglob("*.py"),
+        *ROBOT_PY,
+        *SCRIPTS.rglob("*.py"),
         *PACKAGES.rglob("*.py"),
+        *RECIPES.rglob("*.py"),
         POSTBUILD,
         DODO,
     ]
@@ -78,5 +83,8 @@ ALL_IPYNB = [
     for ipynb in sorted(NOTEBOOKS.rglob("*.ipynb"))
     if ".ipynb_checkpoints" not in str(ipynb)
 ]
+ALL_ROBOT = sorted(ATEST.rglob("*.robot"))
 
-LINTERS = dict(prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML, ipynb=ALL_IPYNB)
+LINTERS = dict(
+    prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML, ipynb=ALL_IPYNB, robot=ALL_ROBOT
+)

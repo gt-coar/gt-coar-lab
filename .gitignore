@@ -2,6 +2,7 @@ __pycache__/
 .*cache/
 .doit.*
 .ipynb_checkpoints/
+atest/output
 construct.yaml
 dask-worker-space/
 dist/

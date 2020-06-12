@@ -10,31 +10,34 @@
 locking_enabled: true
 
 env_specs:
-  _py:
+  _binder:
     locked: false
 
-  _node:
-    locked: false
-
-  _yarn:
-    locked: false
-
-  _demo:
+  _conda:
     locked: false
 
   _core:
     locked: false
 
-  _binder:
+  _demo:
     locked: false
 
-  _unix:
+  _py:
     locked: false
 
   _lab:
     locked: false
 
-  _conda:
+  _node:
+    locked: false
+
+  _robot:
+    locked: false
+
+  _unix:
+    locked: false
+
+  _yarn:
     locked: false
 
   build:
@@ -208,7 +211,7 @@ env_specs:
         - zstd=1.4.4=ha9fde0e_3
   qa:
     locked: true
-    env_spec_hash: 4a057974bbf267d1ccf7f98ec9e62cbb826afba8
+    env_spec_hash: 239ba8313fd8578213ed0a07b57d45f4143bd6de
     platforms:
       - linux-64
       - osx-64
@@ -223,6 +226,7 @@ env_specs:
         - click=7.1.2=py_0
         - decorator=4.4.2=py_0
         - flake8=3.8.2=py_0
+        - idna=2.9=py_1
         - importlib-metadata=1.6.0=py37_0
         - importlib_metadata=1.6.0=0
         - ipython_genutils=0.2.0=py37_0
@@ -239,14 +243,21 @@ env_specs:
         - pluggy=0.13.1=py37_0
         - py=1.8.1=py_0
         - pycodestyle=2.6.0=py_0
+        - pycparser=2.20=py_0
         - pyflakes=2.2.0=py_0
+        - pyopenssl=19.1.0=py37_0
         - pyparsing=2.4.7=py_0
+        - pysocks=1.7.1=py37_0
         - pytest=5.4.2=py37_0
+        - robotframework-lint=1.1=pyh9f0ad1d_0
+        - robotframework-seleniumlibrary=4.4.0=pyh9f0ad1d_0
+        - robotframework=3.2.1=pyh9f0ad1d_0
         - setuptools=47.1.1=py37_0
         - six=1.15.0=py_0
         - toml=0.10.0=py37h28b3542_0
         - traitlets=4.3.3=py37_0
         - typing_extensions=3.7.4.1=py37_0
+        - urllib3=1.25.8=py37_0
         - wcwidth=0.1.9=py_0
         - wheel=0.34.2=py37_0
         - yamllint=1.21.0=pyh9f0ad1d_0
@@ -254,6 +265,10 @@ env_specs:
         - zipp=3.1.0=py_0
       linux-64:
         - _libgcc_mutex=0.1=main
+        - cffi=1.14.0=py37he30daa8_1
+        - cryptography=2.9.2=py37h1ba5d50_0
+        - firefox=68.9.0esr=he1b5a44_0
+        - geckodriver=0.26.0=he1b5a44_0
         - icu=64.2=he1b5a44_1
         - ld_impl_linux-64=2.33.1=h53a641e_7
         - libedit=3.1.20181209=hc058e9b_0
@@ -269,6 +284,7 @@ env_specs:
         - pyyaml=5.3.1=py37h7b6447c_0
         - readline=8.0=h7b6447c_0
         - regex=2020.5.14=py37h7b6447c_0
+        - selenium=3.141.0=py37h7b6447c_0
         - sqlite=3.31.1=h62c20be_1
         - tk=8.6.8=hbc83047_0
         - typed-ast=1.4.1=py37h7b6447c_0
@@ -276,6 +292,10 @@ env_specs:
         - yaml=0.1.7=had09818_2
         - zlib=1.2.11=h7b6447c_3
       osx-64:
+        - cffi=1.14.0=py37hc512035_1
+        - cryptography=2.9.2=py37ha12b0ac_0
+        - firefox=68.9.0esr=h4a8c4bd_0
+        - geckodriver=0.26.0=h4a8c4bd_0
         - icu=64.2=h6de7cb9_1
         - libcxx=10.0.0=1
         - libedit=3.1.20181209=hb402a30_0
@@ -289,6 +309,7 @@ env_specs:
         - pyyaml=5.3.1=py37h1de35cc_0
         - readline=8.0=h1de35cc_0
         - regex=2020.5.14=py37haf1e3a3_0
+        - selenium=3.141.0=py37h1de35cc_0
         - sqlite=3.31.1=h5c1f38d_1
         - tk=8.6.8=ha441bb4_0
         - typed-ast=1.4.1=py37h1de35cc_0
@@ -297,7 +318,11 @@ env_specs:
         - zlib=1.2.11=h1de35cc_3
       win-64:
         - atomicwrites=1.4.0=py_0
+        - cffi=1.14.0=py37h7a1dbc1_0
         - colorama=0.4.3=py_0
+        - cryptography=2.9.2=py37h7a1dbc1_0
+        - firefox=68.9.0esr=ha925a31_0
+        - geckodriver=0.26.0=he025d50_0
         - nodejs=12.16.1=0
         - openssl=1.1.1g=he774522_0
         - pyrsistent=0.16.0=py37he774522_0
@@ -305,16 +330,18 @@ env_specs:
         - pywin32=227=py37he774522_1
         - pyyaml=5.3.1=py37he774522_0
         - regex=2020.5.14=py37he774522_0
+        - selenium=3.141.0=py37he774522_0
         - sqlite=3.31.1=h2a8f88b_1
         - typed-ast=1.4.1=py37he774522_0
         - vc=14.1=h0510ff6_4
         - vs2015_runtime=14.16.27012=hf0eaf9b_2
+        - win_inet_pton=1.1.0=py37_0
         - wincertstore=0.2=py37_0
         - yaml=0.1.7=hc54c509_2
         - zlib=1.2.11=h62dcd97_4
   gt-coar-lab-linux:
     locked: true
-    env_spec_hash: 22aba58488059e4cbd49ad86e8a5005634f09fc1
+    env_spec_hash: f69f4e6b43eac899656ee9f26806bc5b4aa8c89c
     platforms:
       - linux-64
     packages:
@@ -631,7 +658,7 @@ env_specs:
         - zstd=1.4.4=h0b5b093_3
   gt-coar-lab-windows:
     locked: true
-    env_spec_hash: 9f1d7064048b88b5b66f12199c9d5120ab3db8f2
+    env_spec_hash: d921a02d438c2b98c1a8754921405121ce857247
     platforms:
       - win-64
     packages:
@@ -912,7 +939,7 @@ env_specs:
         - zstd=1.4.4=ha9fde0e_3
   gt-coar-lab-macosx:
     locked: true
-    env_spec_hash: a5218016060936bcef77786e930148e60332fd3e
+    env_spec_hash: 19bdc61664f3c8f17d29ad6e4c60d99c0fff0af8
     platforms:
       - osx-64
     packages:

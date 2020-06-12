@@ -13,19 +13,33 @@ PY_LINTERS = [
 
 YAML_LINTERS = [["yamllint", *P.LINTERS["yaml"]]]
 
+ROBOT_LINTERS = [
+    ["python", "-m", "robot.tidy", "--inplace", *P.LINTERS["robot"]],
+    ["rflint", *P.LINTERS["robot"]],
+    ["python", "-m", "scripts.atest", "--dryrun"],
+]
+
 
 def lint_py():
     for lint_args in PY_LINTERS:
-        lint_rc = U._(lint_args)
-        if lint_rc != 0:
+        lint_rc = U._(lint_args, _quiet=True)
+        if lint_rc != U.OK:
             break
     return lint_rc
 
 
 def lint_yaml():
     for lint_args in YAML_LINTERS:
-        lint_rc = U._(lint_args)
-        if lint_rc != 0:
+        lint_rc = U._(lint_args, _quiet=True)
+        if lint_rc != U.OK:
+            break
+    return lint_rc
+
+
+def lint_robot():
+    for lint_args in ROBOT_LINTERS:
+        lint_rc = U._(lint_args, _quiet=True)
+        if lint_rc != U.OK:
             break
     return lint_rc
 
@@ -33,12 +47,14 @@ def lint_yaml():
 def lint_prettier(files=None):
     files = files or P.LINTERS["prettier"]
     if not P.NODE_MODULES.exists():
-        U._(["yarn", "--prefer-offline"])
-    return U._(["yarn", "prettier", "--loglevel", "warn", "--write", *files])
+        U._(["yarn", "--prefer-offline"], _quiet=True)
+    return U._(
+        ["yarn", "prettier", "--loglevel", "warn", "--write", *files], _quiet=True
+    )
 
 
 def lint_ipynb():
-    return U._([sys.executable, "-m", "scripts.nblint", *P.ALL_IPYNB])
+    return U._([sys.executable, "-m", "scripts.nblint", *P.ALL_IPYNB], _quiet=True)
 
 
 def lint(targets):
@@ -49,7 +65,7 @@ def lint(targets):
             print(f"don't know how to lint {target}")
             break
         lint_rc = linter()
-        if lint_rc != 0:
+        if lint_rc != U.OK:
             break
     return lint_rc
 

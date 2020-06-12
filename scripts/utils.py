@@ -5,13 +5,17 @@ import subprocess
 from . import meta as M
 from . import paths as P
 
+OK = 0
+ERROR = 1
 
-def _(args, **kwargs):
+
+def _(args, _quiet=False, **kwargs):
     """ a little wrapper to handle Paths for windows, and echoing
     """
     str_args = [str(a) for a in args]
 
-    print("\n{}\n".format(" ".join(str_args)))
+    if not _quiet:
+        print("\n{}\n".format(" ".join(str_args)))
 
     if "cwd" in kwargs:
         kwargs["cwd"] = str(kwargs["cwd"])

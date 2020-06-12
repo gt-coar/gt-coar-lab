@@ -30,6 +30,16 @@ def task_integrity():
     )
 
 
+# testing
+def task_atest():
+    """ run acceptance tests
+    """
+    return dict(
+        file_dep=[P.INSTALLER_DIST / M.INSTALLER_FILENAME, *P.ALL_ROBOT, *P.ROBOT_PY],
+        actions=[[*P.APR, "atest"]],
+    )
+
+
 # building
 [
     globals().update(U.make_build_task(target, *files))

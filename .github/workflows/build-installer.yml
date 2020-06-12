@@ -126,3 +126,40 @@ jobs:
         with:
           name: ${{ matrix.os }}-installer
           path: dist/installers
+
+  test:
+    name: Test ${{ matrix.os }}
+    needs:
+      - construct
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: download gt-coar-lab conda package
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ matrix.os }}-installer
+          path: dist/installers
+      # build
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        env:
+          PYTHONUNBUFFERED: 1
+          ATEST_RETRIES: 3
+        shell: bash -l {0}
+        run: anaconda-project run atest
+      - if: ${{ contains(matrix.os, 'windows') }}
+        env:
+          PYTHONUNBUFFERED: 1
+          ATEST_RETRIES: 3
+        shell: cmd /C CALL {0}
+        run: anaconda-project run atest
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-atest
+          path: atest/output
