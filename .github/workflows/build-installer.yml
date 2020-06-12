@@ -146,7 +146,16 @@ jobs:
         with:
           name: ${{ matrix.os }}-installer
           path: dist/installers
-      # build
+
+      # prepare
+      - if: ${{ !contains(matrix.os, 'windows') }}
+        shell: bash -l {0}
+        run: anaconda-project prepare --env-spec qa
+      - if: ${{ contains(matrix.os, 'windows') }}
+        shell: cmd /C CALL {0}
+        run: anaconda-project prepare --env-spec qa
+
+      # test
       - if: ${{ !contains(matrix.os, 'windows') }}
         env:
           PYTHONUNBUFFERED: 1
