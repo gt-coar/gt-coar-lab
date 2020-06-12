@@ -4,6 +4,7 @@ Library           OperatingSystem
 Library           Process
 Resource          ./Cleanup.robot
 Resource          ./Variables.robot
+Resource          ./Shell.robot
 
 *** Keywords ***
 Run the Installer
@@ -18,7 +19,7 @@ Run the Installer
     ...    ELSE IF    "${OS}" == "MacOSX"    Run the MacOSX Installer
     ...    ELSE    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0    msg=Couldn't complete installer, see ${INSTALL LOG}
-    Wait Until Keyword Succeeds    5x    60s    Wait Until Created    ${ACTIVATE SCRIPT}
+    Wait Until Keyword Succeeds    5x    30s    Run Shell Script in Installation    conda info && conda list
 
 Run the Linux installer
     [Documentation]    Install on Linux
@@ -41,7 +42,7 @@ Run the MacOSX installer
 Run the Windows installer
     [Documentation]    Install on Windows
     Set Global Variable    ${ACTIVATE SCRIPT}    ${INSTALLATION}${/}Scripts${/}activate.bat
-    Set Global Variable    ${ACTIVATE}    "${ACTIVATE SCRIPT}" "${INSTALLATION}"
+    Set Global Variable    ${ACTIVATE}    ECHO ON && "${ACTIVATE SCRIPT}" "${INSTALLATION}"
     Set Global Variable    ${PATH ENV}
     ...    ${INSTALLATION}${:}${INSTALLATION}${/}Scripts${:}${INSTALLATION}${/}Library${/}bin${:}%{PATH}
     ${args} =    Set Variable    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INSTALLATION}
