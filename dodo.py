@@ -45,6 +45,7 @@ def task_atest():
         ),
         actions=[[*P.APR, "atest"]],
         task_dep=["lint_robot"],
+        targets=[M.INSTALLED_REQS],
     )
 
 
@@ -53,6 +54,7 @@ def task_atest():
     globals().update(U.make_build_task(target, *files))
     for target, files in M.BUILDERS.items()
 ]
+
 
 # binding
 def task_binder():
@@ -63,3 +65,10 @@ def task_binder():
         actions=[[*P.APR, "binder"]],
         targets=[P.BINDER_ENV],
     )
+
+
+# auditing
+def task_audit():
+    """ ensure as-installed python requirements are free of _known_ vulnerabilities
+    """
+    return dict(file_dep=[M.INSTALLED_REQS], actions=[[*P.APR, "audit"]])

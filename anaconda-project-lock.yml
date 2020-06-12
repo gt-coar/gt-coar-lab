@@ -10,6 +10,9 @@
 locking_enabled: true
 
 env_specs:
+  audit:
+    locked: false
+
   _binder:
     locked: false
 

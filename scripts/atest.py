@@ -20,9 +20,14 @@ from . import paths as P
 from . import utils as U
 
 OS_ARGS = {
-    # notebook and ipykernel releases do not yet support python 3.8 on windows
+    # e.g. notebook and ipykernel releases do not yet support python 3.8 on windows
     # ("Windows"): ["--include", "not-supported", "--runemptysuite"]
 }
+
+NON_CRITICAL = [
+    # e.g. gpu testing might not work in CI
+    # ["gpu"]
+]
 
 
 def get_stem(attempt, extra_args):
@@ -37,9 +42,12 @@ def get_stem(attempt, extra_args):
 def atest(attempt, extra_args):
     """ perform a single attempt of the acceptance tests
     """
-    extra_args += OS_ARGS.get(M.INSTALLER_VERSION, [])
+    extra_args += OS_ARGS.get(M.INSTALLER_PLATFORM, [])
 
     stem = get_stem(attempt, extra_args)
+
+    for non_critical in NON_CRITICAL:
+        extra_args += ["--noncritical", "AND".join(non_critical)]
 
     if attempt != 1:
         extra_args += ["--loglevel", "TRACE"]
