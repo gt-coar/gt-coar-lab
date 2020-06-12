@@ -18,7 +18,7 @@ Run the Installer
     ...    ELSE IF    "${OS}" == "MacOSX"    Run the MacOSX Installer
     ...    ELSE    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0    msg=Couldn't complete installer, see ${INSTALL LOG}
-    Wait Until Created    ${ACTIVATE SCRIPT}
+    Wait Until Keyword Succeeds    5x    60s    Wait Until Created    ${ACTIVATE SCRIPT}
 
 Run the Linux installer
     [Documentation]    Install on Linux
