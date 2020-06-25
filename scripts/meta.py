@@ -34,7 +34,7 @@ INSTALLER_PLATFORM, INSTALLER_EXT = {
     "win32": ["Windows", "exe"],
 }[sys.platform]
 
-INSTALLER_ENV_STEM = "gt-coar-lab"
+INSTALLER_ENV_STEM = P.LAB_NAME
 INSTALLER_ENV_SPEC = f"{INSTALLER_ENV_STEM}-{INSTALLER_PLATFORM.lower()}"
 
 INSTALLER_FILENAME = (
@@ -43,28 +43,28 @@ INSTALLER_FILENAME = (
 INSTALLED_REQS = P.ATEST_OUT / f"{INSTALLER_PLATFORM.lower()}_1" / "requirements.txt"
 
 CONDA_TARBALLS = {
-    "gt-coar-lab": P.CONDA_DIST
+    P.LAB_NAME: P.CONDA_DIST
     / "noarch"
-    / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"
+    / f"{P.LAB_NAME}-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"
 }
 
 BUILDERS = dict(
     template=[[P.LOCK, P.INSTALLER_TMPL], [P.CONSTRUCT]],
     conda_lab=[
         [
-            P.RECIPES / "gt-coar-lab" / "meta.yaml",
+            P.RECIPES / P.LAB_NAME / "meta.yaml",
             P.LABEXTENSIONS,
-            *((P.PACKAGES / "gt-coar-lab").rglob("*.py")),
+            *(P.LAB_PACKAGE.rglob("*.py")),
         ],
-        [CONDA_TARBALLS["gt-coar-lab"]],
+        [CONDA_TARBALLS[P.LAB_NAME]],
     ],
     installer=[
-        [P.CONSTRUCT, CONDA_TARBALLS["gt-coar-lab"]],
+        [P.CONSTRUCT, CONDA_TARBALLS[P.LAB_NAME]],
         [P.INSTALLER_DIST / INSTALLER_FILENAME],
     ],
 )
 
-EXTRA_SPECS = [f"gt-coar-lab={LAB_VERSION}=py_{LAB_BUILD}"]
+EXTRA_SPECS = [f"{P.LAB_NAME}={LAB_VERSION}=py_{LAB_BUILD}"]
 
 
 YEAR = f"{datetime.today().year}"
