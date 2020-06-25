@@ -42,6 +42,12 @@ INSTALLER_FILENAME = (
 )
 INSTALLED_REQS = P.ATEST_OUT / f"{INSTALLER_PLATFORM.lower()}_1" / "requirements.txt"
 
+CONDA_TARBALLS = {
+    "gt-coar-lab": P.CONDA_DIST
+    / "noarch"
+    / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"
+}
+
 BUILDERS = dict(
     template=[[P.LOCK, P.INSTALLER_TMPL], [P.CONSTRUCT]],
     conda_lab=[
@@ -50,9 +56,12 @@ BUILDERS = dict(
             P.LABEXTENSIONS,
             *((P.PACKAGES / "gt-coar-lab").rglob("*.py")),
         ],
-        [P.CONDA_DIST / "noarch" / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"],
+        [CONDA_TARBALLS["gt-coar-lab"]],
     ],
-    installer=[[P.CONSTRUCT], [P.INSTALLER_DIST / INSTALLER_FILENAME]],
+    installer=[
+        [P.CONSTRUCT, CONDA_TARBALLS["gt-coar-lab"]],
+        [P.INSTALLER_DIST / INSTALLER_FILENAME],
+    ],
 )
 
 EXTRA_SPECS = [f"gt-coar-lab={LAB_VERSION}=py_{LAB_BUILD}"]
