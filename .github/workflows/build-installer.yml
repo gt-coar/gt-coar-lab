@@ -13,6 +13,11 @@ on:
     branches:
       - master
 
+env:
+  CONSTRUCTOR_CACHE: ~/.constructor
+  PYTHONUNBUFFERED: 1
+  ATEST_RETRIES: 1
+
 jobs:
   lint:
     name: Lint
@@ -126,7 +131,7 @@ jobs:
         shell: cmd /C CALL {0}
         run: anaconda-project run build template
 
-      # cache
+      # cache downloaded constructor packages
       - uses: actions/cache@v1
         with:
           path: ~/.constructor
@@ -136,15 +141,9 @@ jobs:
 
       # build
       - if: ${{ !contains(matrix.os, 'windows') }}
-        env:
-          CONSTRUCTOR_CACHE: ~/.constructor
-          PYTHONUNBUFFERED: 1
         shell: bash -l {0}
         run: anaconda-project run build installer
       - if: ${{ contains(matrix.os, 'windows') }}
-        env:
-          CONSTRUCTOR_CACHE: ~/.constructor
-          PYTHONUNBUFFERED: 1
         shell: cmd /C CALL {0}
         run: anaconda-project run build installer
 
@@ -195,15 +194,9 @@ jobs:
 
       # test
       - if: ${{ !contains(matrix.os, 'windows') }}
-        env:
-          PYTHONUNBUFFERED: 1
-          ATEST_RETRIES: 1
         shell: bash -l {0}
         run: anaconda-project run atest
       - if: ${{ contains(matrix.os, 'windows') }}
-        env:
-          PYTHONUNBUFFERED: 1
-          ATEST_RETRIES: 1
         shell: cmd /C CALL {0}
         run: anaconda-project run atest
 
