@@ -19,7 +19,7 @@ BINDER_ENV_SPEC = "_binder"
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
 # building
-LAB_VERSION = "2.1.4"
+LAB_VERSION = "2.1.5"
 LAB_BUILD = "0"
 
 ALL_PLATFORMS = ["linux", "macosx", "windows"]
@@ -34,31 +34,46 @@ INSTALLER_PLATFORM, INSTALLER_EXT = {
     "win32": ["Windows", "exe"],
 }[sys.platform]
 
-INSTALLER_ENV_STEM = "gt-coar-lab"
+INSTALLER_ENV_STEM = P.LAB_NAME
 INSTALLER_ENV_SPEC = f"{INSTALLER_ENV_STEM}-{INSTALLER_PLATFORM.lower()}"
 
 INSTALLER_FILENAME = (
     f"{INSTALLER_NAME}-{INSTALLER_VERSION}-{INSTALLER_PLATFORM}-x86_64.{INSTALLER_EXT}"
 )
+PLATFORM_ATEST_OUT = P.ATEST_OUT / f"{INSTALLER_PLATFORM.lower()}_1"
+INSTALLED_REQS = [
+    PLATFORM_ATEST_OUT / "requirements.txt",
+    PLATFORM_ATEST_OUT / "conda-explicit.txt",
+]
+
+CONDA_TARBALLS = {
+    P.LAB_NAME: P.CONDA_DIST
+    / "noarch"
+    / f"{P.LAB_NAME}-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"
+}
 
 BUILDERS = dict(
     template=[[P.LOCK, P.INSTALLER_TMPL], [P.CONSTRUCT]],
     conda_lab=[
         [
-            P.RECIPES / "gt-coar-lab" / "meta.yaml",
+            P.RECIPES / P.LAB_NAME / "meta.yaml",
             P.LABEXTENSIONS,
-            *((P.PACKAGES / "gt-coar-lab").rglob("*.py")),
+            *(P.LAB_PACKAGE.rglob("*.py")),
         ],
-        [P.CONDA_DIST / "noarch" / f"gt-coar-lab-{LAB_VERSION}-py_{LAB_BUILD}.tar.bz2"],
+        [CONDA_TARBALLS[P.LAB_NAME]],
     ],
-    installer=[[P.CONSTRUCT], [P.INSTALLER_DIST / INSTALLER_FILENAME]],
+    installer=[
+        [P.CONSTRUCT, CONDA_TARBALLS[P.LAB_NAME]],
+        [P.INSTALLER_DIST / INSTALLER_FILENAME],
+    ],
 )
 
-EXTRA_SPECS = [f"gt-coar-lab={LAB_VERSION}=py_{LAB_BUILD}"]
+EXTRA_SPECS = [f"{P.LAB_NAME}={LAB_VERSION}=py_{LAB_BUILD}"]
 
-
+# auditing and integrity
 YEAR = f"{datetime.today().year}"
 COPYRIGHT_HEADER = (
     f"{YEAR} University System of Georgia and {INSTALLER_NAME} Contributors"
 )
 LICENSE_HEADER = "Distributed under the terms of the BSD-3-Clause License"
+SAFETY_IGNORE_IDS = PROJ["variables"]["SAFETY_IGNORE_IDS"]["default"].strip().split()

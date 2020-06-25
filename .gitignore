@@ -2,6 +2,8 @@ __pycache__/
 .*cache/
 .doit.*
 .ipynb_checkpoints/
+anaconda-project-local.yml
+atest/output
 construct.yaml
 dask-worker-space/
 dist/

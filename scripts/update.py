@@ -31,7 +31,9 @@ def update():
 
     for name, spec in sorted(M.LOCK["env_specs"].items()):
         if spec["locked"]:
-            print("\nUpdating", name, "on", spec["platforms"], "\n")
+            print(
+                f"""\n`{name}` will be updated for: {", ".join(spec["platforms"])}\n"""
+            )
             project_ops.update(proj, name)
 
     U._([*P.APR, "lint", "prettier", "yaml"])
