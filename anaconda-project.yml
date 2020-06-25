@@ -4,7 +4,16 @@
 name: gt-coar-lab
 
 variables:
-  INSTALLER_VERSION: 2020.5.0
+  INSTALLER_VERSION: 2020.6.0
+  SAFETY_DB_URL:
+    default: https://github.com/pyupio/safety-db/archive/master.tar.gz
+    description: URL of safety-db tarball, since the pypi version lags
+  SAFETY_IGNORE_IDS:
+    default: >-
+      38038 37776
+    description: >
+      - 38038, 37776
+        These are tensorflow issues: hard to upgrade right now
 
 commands:
   postBuild:
@@ -88,16 +97,7 @@ env_specs:
       - https://repo.anaconda.com/pkgs/main
       - https://conda.anaconda.org/conda-forge
     packages:
-      - click >=6.0
-      # TODO: make dparse >=0.5.1 available
-      - dparse
-      - packaging
-      - pip
-      - requests
-      - setuptools
-      - pip:
-          - safety
-          - safety-db
+      - safety >=1.9
 
   qa:
     platforms:
