@@ -71,4 +71,7 @@ def task_binder():
 def task_audit():
     """ ensure as-installed python requirements are free of _known_ vulnerabilities
     """
-    return dict(file_dep=[*M.INSTALLED_REQS], actions=[[*P.APR, "audit"]])
+    return dict(
+        file_dep=[*M.INSTALLED_REQS, P.SCRIPTS / "audit.py"],
+        actions=[[*P.APR, "audit"]],
+    )
