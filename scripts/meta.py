@@ -70,9 +70,10 @@ BUILDERS = dict(
 
 EXTRA_SPECS = [f"{P.LAB_NAME}={LAB_VERSION}=py_{LAB_BUILD}"]
 
-
+# auditing and integrity
 YEAR = f"{datetime.today().year}"
 COPYRIGHT_HEADER = (
     f"{YEAR} University System of Georgia and {INSTALLER_NAME} Contributors"
 )
 LICENSE_HEADER = "Distributed under the terms of the BSD-3-Clause License"
+SAFETY_IGNORE_IDS = PROJ["variables"]["SAFETY_IGNORE_IDS"]["default"].strip().split()

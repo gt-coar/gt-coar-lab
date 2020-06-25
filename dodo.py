@@ -1,5 +1,6 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
+from doit.tools import config_changed
 from scripts import meta as M
 from scripts import paths as P
 from scripts import utils as U
@@ -72,6 +73,7 @@ def task_audit():
     """ ensure as-installed python requirements are free of _known_ vulnerabilities
     """
     return dict(
+        uptodate=[config_changed(dict(ignores=M.SAFETY_IGNORE_IDS))],
         file_dep=[*M.INSTALLED_REQS, P.SCRIPTS / "audit.py"],
         actions=[[*P.APR, "audit"]],
     )

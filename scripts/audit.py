@@ -17,7 +17,7 @@ import requests
 HERE = Path(__file__)
 ROOT = HERE.parent.parent
 ATEST_OUT = ROOT / "atest" / "output"
-IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
+SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
 SAFEY_DB_URL = os.environ["SAFETY_DB_URL"]
 SAFETY_PATH = ROOT / ".cache" / "safety-db"
 SAFETY_TARBALL = SAFETY_PATH / "safety-db.tar.gz"
@@ -40,7 +40,7 @@ def fetch_db():
 
 def find_conda_req(pip_req, conda_reqs):
     pip_name = pip_req.split("@")[0].strip()
-    print(f"{pip_name}\n > {pip_req}", flush=True)
+    print(f"\n{pip_name}\n > {pip_req}", flush=True)
     mapped_name = PIP_TO_CONDA.get(pip_name, pip_name)
     if mapped_name != pip_name:
         print(f" >> {mapped_name}", flush=True)
@@ -66,7 +66,6 @@ def fix_one_req_file(idx, req_file, tdp):
         else:
             reqs += [req]
 
-    print("\n".join(reqs), flush=True)
     req_out.write_text("\n".join(reqs))
 
 
@@ -83,7 +82,7 @@ def safety(req_files=None):
     assert req_files, "no requirements.txt found to audit"
 
     fetch_db()
-    ignores = sum([["--ignore", id_] for id_ in IGNORE_IDS], [])
+    ignores = sum([["--ignore", id_] for id_ in SAFETY_IGNORE_IDS], [])
     with tempfile.TemporaryDirectory() as td:
         tdp = Path(td)
         req_args = make_req_args(req_files, tdp)
