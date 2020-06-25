@@ -50,6 +50,8 @@ jobs:
           key:
             lab-${{ hashFiles('binder/*', 'recipes/gt-coar-lab/**/*',
             'packages/gt-coar-lab/**.*') }}
+          restore-keys: |
+            lab-
 
       - if: ${{ steps.cache-conda-lab.outputs.cache-hit != 'true' }}
         uses: goanpeca/setup-miniconda@v1.6.0
@@ -129,6 +131,8 @@ jobs:
         with:
           path: ~/.constructor
           key: ${{ runner.os }}-constructor-${{ hashFiles('installer/construct.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-constructor-
 
       # build
       - if: ${{ !contains(matrix.os, 'windows') }}
