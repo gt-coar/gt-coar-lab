@@ -21,6 +21,7 @@ Run the Installer
     Should Be Equal as Integers    ${rc}    0    msg=Couldn't complete installer, see ${INSTALL LOG}
     Wait Until Keyword Succeeds    5x    30s    Run Shell Script in Installation    conda info && conda list
     Run Shell Script in Installation    pip freeze > ${OUTPUT DIR}${/}requirements.txt
+    Run Shell Script in Installation    conda list --explicit > ${OUTPUT DIR}${/}conda-explicit.txt
 
 Run the Linux installer
     [Documentation]    Install on Linux

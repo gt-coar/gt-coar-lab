@@ -45,7 +45,7 @@ def task_atest():
         ),
         actions=[[*P.APR, "atest"]],
         task_dep=["lint_robot"],
-        targets=[M.INSTALLED_REQS],
+        targets=[*M.INSTALLED_REQS],
     )
 
 
@@ -71,4 +71,4 @@ def task_binder():
 def task_audit():
     """ ensure as-installed python requirements are free of _known_ vulnerabilities
     """
-    return dict(file_dep=[M.INSTALLED_REQS], actions=[[*P.APR, "audit"]])
+    return dict(file_dep=[*M.INSTALLED_REQS], actions=[[*P.APR, "audit"]])
