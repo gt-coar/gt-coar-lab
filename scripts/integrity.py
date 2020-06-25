@@ -18,9 +18,12 @@ addopts =
     --junitxml dist/xunit/integrity.xunit.xml
 """
 
-VERSIONS = {
+LAB_VERSIONS = {
     P.LAB_PACKAGE / "src" / P.LAB_MODULE / "_version.py": r"""__version__ = "(.*?)\"""",
     P.RECIPES / P.LAB_NAME / "meta.yaml": r"""{% set version = "(.*?)" %}""",
+    P.LAB_PACKAGE / "setup.cfg": r"version = (.*)",
+    P.PROJ: r"- jupyterlab ==(.*)",
+    P.BINDER / "environment.yml": r"- jupyterlab ==(.*)",
 }
 
 
@@ -29,7 +32,7 @@ def test_integrity_lab_versions():
     """
     versions = {
         path: re.findall(pattern, path.read_text())
-        for path, pattern in VERSIONS.items()
+        for path, pattern in LAB_VERSIONS.items()
     }
     for path, found_versions in versions.items():
         assert M.LAB_VERSION in found_versions, path

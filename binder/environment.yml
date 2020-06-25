@@ -29,7 +29,7 @@ dependencies:
   - ipython >=7.15.0
   - ipywidgets
   - jupyter_bokeh
-  - jupyterlab ==2.1.4
+  - jupyterlab ==2.1.5
   - jupyterlab-git
   - jupyterlab_server ==1.1.5
   - networkx

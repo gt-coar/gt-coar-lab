@@ -242,7 +242,7 @@ env_specs:
 
   _lab:
     packages:
-      - jupyterlab ==2.1.4
+      - jupyterlab ==2.1.5
       - jupyterlab_server ==1.1.5
       - ipython >=7.15.0
       - ipykernel >=5.3.0
