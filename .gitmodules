@@ -1,0 +1,3 @@
+[submodule "library/dennybritz/reinforcement-learning"]
+	path = library/dennybritz/reinforcement-learning
+	url = https://github.com/dennybritz/reinforcement-learning.git
