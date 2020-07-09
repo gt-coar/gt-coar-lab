@@ -23,10 +23,11 @@ SAFETY_PATH = ROOT / ".cache" / "safety-db"
 SAFETY_TARBALL = SAFETY_PATH / "safety-db.tar.gz"
 
 PIP_TO_CONDA = {
+    "GitPython": "gitpython",
     "jupyter-bokeh": "jupyter_bokeh",
+    "jupyter-client": "jupyter_client",
     "PyVirtualDisplay": "pyvirtualdisplay",
     "typing-extensions": "typing_extensions",
-    "GitPython": "gitpython"
 }
 
 
