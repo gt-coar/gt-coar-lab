@@ -26,6 +26,7 @@ PIP_TO_CONDA = {
     "jupyter-bokeh": "jupyter_bokeh",
     "PyVirtualDisplay": "pyvirtualdisplay",
     "typing-extensions": "typing_extensions",
+    "GitPython": "gitpython"
 }
 
 
