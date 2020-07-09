@@ -258,8 +258,8 @@ env_specs:
   _robot:
     description: plain-english automation and acceptance testing
     packages:
-      - firefox =68
-      - robotframework
+      - firefox =78
+      - robotframework >=3.2
       - robotframework-seleniumlibrary
       - geckodriver
 
