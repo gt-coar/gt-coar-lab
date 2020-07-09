@@ -86,3 +86,18 @@ def make_build_task(target, file_dep, targets):
     task.__doc__ = f"build {target}"
 
     return {task.__name__: task}
+
+
+def _ok(path, actions):
+    """ wrap a task in an sentiinel
+    """
+
+    def unok():
+        path.exists() and path.unlink()
+
+    def ok():
+        if not path.parent.is_dir():
+            path.parent.mkdir()
+        path.write_text("ok")
+
+    return [unok, *actions, ok]
