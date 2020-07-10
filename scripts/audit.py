@@ -56,6 +56,8 @@ def find_conda_req(pip_req, conda_reqs):
             print(f" >>> {conda_req}", flush=True)
             return f"{pip_name}=={matches[0]}"
 
+    print(f" >>>> NOT FOUND {pip_name}")
+
     with SAFETY_LOG.open("a+") as fpt:
         fpt.write_text(json.dumps({"missing_pip_req": pip_req}))
 
