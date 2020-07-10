@@ -10,9 +10,9 @@ variables:
     description: URL of safety-db tarball, since the pypi version lags
   SAFETY_IGNORE_IDS:
     default: >-
-      38038 37776 38039
+      38038 37776 38039 38461
     description: >
-      - 38038, 37776, 38039
+      - 38038, 37776, 38039, 38461
         These are tensorflow issues: hard to upgrade right now
 
 commands:
