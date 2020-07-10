@@ -235,6 +235,8 @@ env_specs:
       # headless rendering
       - pyopengl
       - pyopengl-accelerate
+      # pins from audit
+      - rsa >=4.3
 
   _demo:
     inherit_from:

@@ -49,6 +49,7 @@ dependencies:
   - ripgrep
   - robotframework >=3.2
   - robotframework-seleniumlibrary
+  - rsa >=4.3
   - scikit-image
   - sympy
   - tensorflow
