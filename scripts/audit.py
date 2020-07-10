@@ -4,6 +4,7 @@
 """ standalone script for running safety
 """
 
+import json
 import os
 import re
 import subprocess
@@ -16,17 +17,20 @@ import requests
 
 HERE = Path(__file__)
 ROOT = HERE.parent.parent
+SAFETY_LOG = HERE / "build" / "audit.safety.log"
 ATEST_OUT = ROOT / "atest" / "output"
 SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
 SAFEY_DB_URL = os.environ["SAFETY_DB_URL"]
 SAFETY_PATH = ROOT / ".cache" / "safety-db"
 SAFETY_TARBALL = SAFETY_PATH / "safety-db.tar.gz"
 
-PIP_TO_CONDA = {
-    "jupyter-bokeh": "jupyter_bokeh",
-    "PyVirtualDisplay": "pyvirtualdisplay",
-    "typing-extensions": "typing_extensions",
-}
+
+# packages that aren't trivially normalized
+PIP_TO_CONDA = {}
+
+
+def norm_name(pkg_name):
+    return pkg_name.strip().lower().replace("_", "-")
 
 
 def fetch_db():
@@ -41,18 +45,21 @@ def fetch_db():
 def find_conda_req(pip_req, conda_reqs):
     pip_name = pip_req.split("@")[0].strip()
     print(f"\n{pip_name}\n > {pip_req}", flush=True)
-    mapped_name = PIP_TO_CONDA.get(pip_name, pip_name)
+    mapped_name = norm_name(PIP_TO_CONDA.get(pip_name, pip_name))
     if mapped_name != pip_name:
         print(f" >> {mapped_name}", flush=True)
 
     for conda_req in conda_reqs:
         pattern = f"/{mapped_name}-(.*?)-"
-        matches = re.findall(pattern, conda_req)
+        matches = re.findall(pattern, norm_name(conda_req))
         if matches:
             print(f" >>> {conda_req}", flush=True)
             return f"{pip_name}=={matches[0]}"
 
-    raise Exception(f"could not be resolved pip requirement: {pip_req}")
+    print(f" >>>> NOT FOUND {pip_name}")
+
+    with SAFETY_LOG.open("a+") as fpt:
+        fpt.write_text(json.dumps({"missing_pip_req": pip_req}))
 
 
 def fix_one_req_file(idx, req_file, tdp):
@@ -86,6 +93,8 @@ def safety(req_files=None):
     with tempfile.TemporaryDirectory() as td:
         tdp = Path(td)
         req_args = make_req_args(req_files, tdp)
+        if SAFETY_LOG.exists():
+            print("safety log\n", SAFETY_LOG.read_text().strip())
         args = list(
             map(
                 str,
@@ -101,7 +110,8 @@ def safety(req_files=None):
             )
         )
         print("safety args\n", " ".join(args), flush=True)
-        return subprocess.check_call(args)
+        safety_rc = subprocess.check_call(args)
+        return safety_rc
 
 
 if __name__ == "__main__":

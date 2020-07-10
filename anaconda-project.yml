@@ -4,15 +4,15 @@
 name: gt-coar-lab
 
 variables:
-  INSTALLER_VERSION: 2020.6.0
+  INSTALLER_VERSION: 2020.7.0
   SAFETY_DB_URL:
     default: https://github.com/pyupio/safety-db/archive/master.tar.gz
     description: URL of safety-db tarball, since the pypi version lags
   SAFETY_IGNORE_IDS:
     default: >-
-      38038 37776 38039
+      38038 37776 38039 38461
     description: >
-      - 38038, 37776, 38039
+      - 38038, 37776, 38039, 38461
         These are tensorflow issues: hard to upgrade right now
 
 commands:
@@ -235,6 +235,8 @@ env_specs:
       # headless rendering
       - pyopengl
       - pyopengl-accelerate
+      # pins from audit
+      - rsa >=4.3
 
   _demo:
     inherit_from:
@@ -258,8 +260,8 @@ env_specs:
   _robot:
     description: plain-english automation and acceptance testing
     packages:
-      - firefox =68
-      - robotframework
+      - firefox =78
+      - robotframework >=3.2
       - robotframework-seleniumlibrary
       - geckodriver
 

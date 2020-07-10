@@ -16,7 +16,7 @@ dependencies:
   - dask_labextension
   - datashader
   - distributed
-  - firefox =68
+  - firefox =78
   - geckodriver
   - git
   - gym
@@ -47,8 +47,9 @@ dependencies:
   - pytorch-cpu
   - pyvirtualdisplay
   - ripgrep
-  - robotframework
+  - robotframework >=3.2
   - robotframework-seleniumlibrary
+  - rsa >=4.3
   - scikit-image
   - sympy
   - tensorflow

@@ -9,7 +9,14 @@ DOIT_CONFIG = {
     "backend": "sqlite3",
     "verbosity": 2,
     "par_type": "thread",
+    "default_tasks": ["ALL"],
 }
+
+# phonies
+def task_ALL():
+    """ do all the normal business
+    """
+    return dict(file_dep=[P.BINDER_ENV, P.OK.audit], actions=[["echo", "ALL DONE"]])
 
 
 # prepare envs
@@ -27,7 +34,8 @@ def task_integrity():
     """
     return dict(
         file_dep=sorted([*P.ALL_PRETTIER, *P.ALL_PY, P.PROJ, U.env_canary("qa")]),
-        actions=[[*P.APR, "integrity"]],
+        targets=[P.OK.integrity],
+        actions=U._ok(P.OK.integrity, [[*P.APR, "integrity"]]),
     )
 
 
@@ -75,5 +83,6 @@ def task_audit():
     return dict(
         uptodate=[config_changed(dict(ignores=M.SAFETY_IGNORE_IDS))],
         file_dep=[*M.INSTALLED_REQS, P.SCRIPTS / "audit.py"],
-        actions=[[*P.APR, "audit"]],
+        actions=U._ok(P.OK.audit, [[*P.APR, "audit"]]),
+        targets=[P.OK.audit],
     )

@@ -89,3 +89,11 @@ ALL_ROBOT = sorted(ATEST.rglob("*.robot"))
 LINTERS = dict(
     prettier=ALL_PRETTIER, py=ALL_PY, yaml=ALL_YAML, ipynb=ALL_IPYNB, robot=ALL_ROBOT
 )
+
+# logging
+BUILD = ROOT / "build"
+
+# simple ouputs for less-deterministic processes
+class OK:
+    audit = BUILD / "audit.ok"
+    integrity = BUILD / "integrity.ok"
