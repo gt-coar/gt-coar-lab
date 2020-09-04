@@ -16,6 +16,7 @@ ROOT = SCRIPTS.parent
 DODO = ROOT / "dodo.py"
 LOCK = ROOT / "anaconda-project-lock.yml"
 PROJ = ROOT / "anaconda-project.yml"
+CONDARC = ROOT / ".ci" / ".condarc"
 
 # folders
 BINDER = ROOT / "binder"
@@ -31,6 +32,8 @@ PACKAGES = ROOT / "packages"
 RECIPES = ROOT / "recipes"
 ATEST = ROOT / "atest"
 ATEST_LIBS = ATEST / "libraries"
+LOCKS = ROOT / "locks"
+CUSTOM_ENVS = ROOT / "custom-envs"
 
 LAB_NAME = "gt-coar-lab"
 LAB_MODULE = LAB_NAME.replace("-", "_")
@@ -71,6 +74,7 @@ ALL_YAML = sorted(
         ROOT / ".yamllint",
         ROOT / ".prettierrc",
         BINDER_ENV,
+        *CUSTOM_ENVS.glob("*.yml"),
         *CI_SUPPORT.glob("*.yml"),
         *GITHUB.rglob("*.yml"),
         *ROOT.glob("*.yml"),
@@ -93,7 +97,28 @@ LINTERS = dict(
 # logging
 BUILD = ROOT / "build"
 
+CONDA_LOCK_SRC = {
+    "cpu": {
+        "linux-64": [
+            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "unix.yml", CUSTOM_ENVS / "linux-64.yml"
+        ],
+        "osx-64": [
+            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "unix.yml", CUSTOM_ENVS / "linux-64.yml"
+        ],
+        "win-64": [
+            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "win-64.yml"
+        ],
+    }
+}
+
+
 # simple ouputs for less-deterministic processes
 class OK:
     audit = BUILD / "audit.ok"
     integrity = BUILD / "integrity.ok"
+    class LINT:
+        prettier = BUILD / "lint.prettier.ok"
+        ipynb = BUILD / "lint.ipynb.ok"
+        py = BUILD / "lint.py.ok"
+        robot = BUILD / "lint.robot.ok"
+        yaml = BUILD / "lint.yaml.ok"

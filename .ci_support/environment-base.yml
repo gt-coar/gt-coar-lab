@@ -4,10 +4,12 @@
 name: gt-coar-lab-base
 
 channels:
-  - https://repo.anaconda.com/pkgs/main
+  - https://conda.anaconda.org/conda-forge
 
 dependencies:
   - anaconda-project ==0.8.4
   - conda >=4.8.3,<4.9.0a0
+  - conda-lock
   - doit >=0.32,<0.33.0a0
+  - mamba
   - python >=3.7,<3.8.0a0

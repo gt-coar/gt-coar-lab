@@ -1,0 +1,4 @@
+name: osx-64
+channels: []
+dependencies:
+  - python.app

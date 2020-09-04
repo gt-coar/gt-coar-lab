@@ -12,6 +12,23 @@ DOIT_CONFIG = {
     "default_tasks": ["ALL"],
 }
 
+# locking
+def task_lock():
+    for prefix, platforms in P.CONDA_LOCK_SRC.items():
+        for platform, file_dep in platforms.items():
+            yield dict(
+                name=f"{prefix}:{platform}",
+                file_dep=[*file_dep, P.OK.LINT.prettier],
+                targets=[M.CONDA_LOCK_FILES[(prefix, platform)]],
+                actions=[[
+                    "python", "-m", "scripts.lock",
+                    "--output-folder", P.LOCKS / M.INSTALLER_VERSION,
+                    "--platform", platform,
+                    "--prefix", f"{prefix}-",
+                    "--file", *file_dep
+                ]]
+            )
+
 # phonies
 def task_ALL():
     """ do all the normal business

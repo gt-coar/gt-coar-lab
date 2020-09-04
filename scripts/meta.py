@@ -68,6 +68,13 @@ BUILDERS = dict(
     ],
 )
 
+CONDA_LOCK_FILES = {
+    (prefix, platform): P.LOCKS / INSTALLER_VERSION / f"{prefix}-{platform}.conda.lock"
+    for prefix, platforms in P.CONDA_LOCK_SRC.items()
+    for platform in platforms
+}
+
+
 EXTRA_SPECS = [f"{P.LAB_NAME}={LAB_VERSION}=py_{LAB_BUILD}"]
 
 # auditing and integrity

@@ -1,0 +1,49 @@
+name: core
+channels:
+  - https://conda.anaconda.org/anaconda
+  - https://conda.anaconda.org/conda-forge
+  - https://conda.anaconda.org/msys2
+dependencies:
+  # gym and friends
+  - gym
+  - gym-box2d
+  # interactive computing extensions
+  - jupyterlab-git
+  - dask_labextension
+  - importnb
+  - jupyter_bokeh
+  # numerical compute
+  - numpy
+  - pandas
+  # differentiable compute
+  - dask
+  - distributed
+  - pytorch-cpu
+  - tensorflow
+  # interactive visualization
+  - datashader
+  - hvplot
+  - ipywidgets
+  - python-graphviz
+  - ipycytoscape
+  - py2cytoscape
+  # computer algebra
+  - antlr-python-runtime >=4.7,<4.8
+  - sympy
+  # network manipulation
+  - networkx
+  # benchmarking
+  - asv
+  # computer vision
+  - py-opencv
+  - scikit-image
+  # software distribution pipeline
+  - conda-pack
+  # testing
+  - pytest
+  - pytest-asyncio
+  # headless rendering
+  - pyopengl
+  - pyopengl-accelerate
+  # pins from audit
+  - rsa >=4.3
