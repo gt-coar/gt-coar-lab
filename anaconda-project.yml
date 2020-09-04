@@ -18,13 +18,8 @@ variables:
 commands:
   postBuild:
     description: perform post-install steps, as on binder
-    unix: python binder/postBuild
-    env_spec: _binder
-
-  lab:
-    description: try out the interactive experience (needs postBuild)
-    unix: jupyter lab --no-browser --debug
-    env_spec: _binder
+    unix: cd binder && NB_PYTHON_PREFIX=$PROJECT_DIR/envs/binder bash binder/postBuild
+    env_spec: qa
 
   build:
     description: build the installer
@@ -62,29 +57,11 @@ commands:
     windows: yarn
     env_spec: qa
 
-  demo:
-    description: reproduce installer in demo env
-    unix: &demo python -m scripts.demo
-    windows: *demo
-    env_spec: _demo
-
-  demo:list:
-    description: list stuff in demo
-    unix: &demolist gt-coar-labextension list
-    windows: *demolist
-    env_spec: _demo
-
-  demo:lab:
-    description: run demo lab
-    unix: &demolab gt-coar-lab --no-browser --debug
-    windows: *demolab
-    env_spec: _demo
-
-  binder:
-    description: refresh binder assets
-    unix: &binder python -m scripts.binder
-    windows: *binder
-    env_spec: qa
+  lock:
+    description: refresh a lockfiles
+    unix: &lock python -m scripts.lock
+    windows: *lock
+    env_spec: build
 
 env_specs:
   audit:
@@ -115,7 +92,7 @@ env_specs:
     packages:
       - black
       - flake8
-      - isort
+      - isort <5
       - nbformat
       - pytest
       - robotframework-lint >=1.1
@@ -134,46 +111,10 @@ env_specs:
       - https://conda.anaconda.org/conda-forge
       - https://repo.anaconda.com/pkgs/msys2
     packages:
+      - conda-lock
       - jinja2
+      - mamba
       - pillow
-
-  # these become installers
-  gt-coar-lab-linux:
-    platforms:
-      - linux-64
-    inherit_from:
-      - _unix
-    channels:
-      - https://repo.anaconda.com/pkgs/main
-      - https://conda.anaconda.org/conda-forge
-    packages:
-      - pyvirtualdisplay
-
-  gt-coar-lab-macosx:
-    platforms:
-      - osx-64
-    inherit_from:
-      - _unix
-    channels:
-      - https://repo.anaconda.com/pkgs/main
-      - https://conda.anaconda.org/conda-forge
-    packages:
-      - python.app
-
-  gt-coar-lab-windows:
-    platforms:
-      - win-64
-    inherit_from:
-      - _core
-    channels:
-      - https://repo.anaconda.com/pkgs/main
-      - https://conda.anaconda.org/conda-forge
-      - https://repo.anaconda.com/pkgs/msys2
-
-  # these are for inheritance/testing only and are not locked
-  _binder:
-    inherit_from:
-      - gt-coar-lab-linux
 
   _conda:
     packages:
@@ -183,71 +124,7 @@ env_specs:
       - constructor >=3.0.2,<3.1.0a0
       - git
       - ripgrep
-
-  _core:
-    description: >
-      the core dependencies. include only lowest-common-denominator packages here
-    inherit_from:
-      - _py
-      - _node
-      - _lab
-      - _conda
-      - _robot
-    packages:
-      # gym and friends
-      - gym
-      - gym-box2d
-      # interactive computing extensions
-      - jupyterlab-git
-      - dask_labextension
-      - importnb
-      - jupyter_bokeh
-      # numerical compute
-      - numpy
-      - pandas
-      # differentiable compute
-      - dask
-      - distributed
-      - pytorch-cpu
-      - tensorflow
-      # interactive visualization
-      - datashader
-      - hvplot
-      - ipywidgets
-      - python-graphviz
-      - ipycytoscape
-      - py2cytoscape
-      # computer algebra
-      - antlr-python-runtime >=4.7,<4.8
-      - sympy
-      # network manipulation
-      - networkx
-      # benchmarking
-      - asv
-      # computer vision
-      - py-opencv
-      - scikit-image
-      # software distribution pipeline
-      - conda-pack
-      # testing
-      - pytest
-      - pytest-asyncio
-      # headless rendering
-      - pyopengl
-      - pyopengl-accelerate
-      # pins from audit
-      - rsa >=4.3
-
-  _demo:
-    inherit_from:
-      - _core
-
-  _lab:
-    packages:
-      - jupyterlab ==2.1.5
-      - jupyterlab_server ==1.1.5
-      - ipython >=7.15.0
-      - ipykernel >=5.3.0
+      - mamba
 
   _node:
     packages:
@@ -264,12 +141,6 @@ env_specs:
       - robotframework >=3.2
       - robotframework-seleniumlibrary
       - geckodriver
-
-  _unix:
-    inherit_from:
-      - _core
-    packages:
-      - gym-atari
 
   _yarn:
     packages:

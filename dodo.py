@@ -22,9 +22,8 @@ def task_lock():
                 targets=[M.CONDA_LOCK_FILES[(prefix, platform)]],
                 actions=[
                     [
-                        "python",
-                        "-m",
-                        "scripts.lock",
+                        *P.APR,
+                        "lock",
                         "--output-folder",
                         P.LOCKS / M.INSTALLER_VERSION,
                         "--platform",
@@ -42,7 +41,7 @@ def task_lock():
 def task_ALL():
     """ do all the normal business
     """
-    return dict(file_dep=[P.BINDER_ENV, P.OK.audit], actions=[["echo", "ALL DONE"]])
+    return dict(file_dep=[P.OK.audit], actions=[["echo", "ALL DONE"]])
 
 
 # prepare envs
@@ -93,12 +92,13 @@ def task_atest():
 
 # binding
 def task_binder():
-    """ ensure the binder env is up-to-date
+    """ ensure the binder requirements are up-to-date
     """
+    lock = M.CONDA_LOCK_FILES["cpu", "linux-64"]
     return dict(
-        file_dep=[P.PROJ, U.env_canary("qa")],
-        actions=[[*P.APR, "binder"]],
-        targets=[P.BINDER_ENV],
+        file_dep=[lock],
+        actions=[lambda x: P.BINDER_LOCK.write_text(lock.read_text())],
+        targets=[P.BINDER_LOCK],
     )
 
 

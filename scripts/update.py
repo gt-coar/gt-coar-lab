@@ -2,6 +2,7 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 import sys
+import os
 from pathlib import Path
 
 from anaconda_project import project_ops
@@ -27,6 +28,7 @@ project_ops._try_requirement_without_commit = _noop_true_
 
 
 def update():
+    os.environ["CONDARC"] = str(P.CONDARC)
     proj = load_project(str(Path.cwd()))
 
     for name, spec in sorted(M.LOCK["env_specs"].items()):

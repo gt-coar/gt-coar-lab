@@ -53,7 +53,7 @@ CONSTRUCTOR_CACHE = CACHE / "constructor"
 ATEST_OUT = ATEST / "output"
 
 # demoing
-BINDER_ENV = BINDER / "environment.yml"
+BINDER_LOCK = BINDER / "cpu-linux-64.conda.lock"
 POSTBUILD = BINDER / "postBuild"
 LABEXTENSIONS = BINDER / "labextensions.txt"
 
@@ -65,7 +65,6 @@ ALL_PY = sorted(
         *SCRIPTS.rglob("*.py"),
         *PACKAGES.rglob("*.py"),
         *RECIPES.rglob("*.py"),
-        POSTBUILD,
         DODO,
     ]
 )
@@ -73,7 +72,6 @@ ALL_YAML = sorted(
     [
         ROOT / ".yamllint",
         ROOT / ".prettierrc",
-        BINDER_ENV,
         *CUSTOM_ENVS.glob("*.yml"),
         *CI_SUPPORT.glob("*.yml"),
         *GITHUB.rglob("*.yml"),

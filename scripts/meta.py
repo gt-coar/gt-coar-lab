@@ -13,8 +13,6 @@ LOCK = yaml.safe_load(P.LOCK.read_text())
 
 QA_ENV_SPEC = "qa"
 BUILD_ENV_SPEC = "build"
-BINDER_ENV_SPEC = "_binder"
-
 
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
