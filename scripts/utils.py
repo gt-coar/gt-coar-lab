@@ -69,9 +69,9 @@ def make_lint_task(target, files):
             actions=[
                 lambda: [ok.unlink() if ok.exists() else None, None][-1],
                 [*P.APR, "lint", target],
-                lambda: [ok.parent.mkdir(exist_ok=True), ok.touch(), None][-1]
+                lambda: [ok.parent.mkdir(exist_ok=True), ok.touch(), None][-1],
             ],
-            targets=[ok]
+            targets=[ok],
         )
 
     task.__name__ = f"task_lint_{target}"

@@ -1,36 +1,43 @@
-from . import meta as M
-from argparse import ArgumentParser
-from pathlib import Path
-from ruamel_yaml import safe_load, safe_dump
-from conda.models.match_spec import MatchSpec
-import tempfile
+import os
 import shutil
 import sys
-import re
-import os
+import tempfile
+from argparse import ArgumentParser
+from pathlib import Path
+
+from conda.models.match_spec import MatchSpec
+from ruamel_yaml import safe_dump, safe_load
 
 from . import paths as P
 from . import utils as U
 
-RE_SPEC_NAME = r"^[^>=< !~]+"
 
 def make_parser() -> ArgumentParser:
-    parser = ArgumentParser(description='conda-pack from multiple env files')
-    parser.add_argument('--file', dest="env_files", metavar='FILE', nargs='+',
-                        help='a conda environment YAML file')
-    parser.add_argument('--prefix',
-                        help='prefix to add to file')
-    parser.add_argument('--platform', metavar='PLATFORM', nargs='+',
-                        help='platform to solve', dest="platforms")
-    parser.add_argument('--output-folder', default=".", help="where to put lock files")
+    parser = ArgumentParser(description="conda-pack from multiple env files")
+    parser.add_argument(
+        "--file",
+        dest="env_files",
+        metavar="FILE",
+        nargs="+",
+        help="a conda environment YAML file",
+    )
+    parser.add_argument("--prefix", help="prefix to add to file")
+    parser.add_argument(
+        "--platform",
+        metavar="PLATFORM",
+        nargs="+",
+        help="platform to solve",
+        dest="platforms",
+    )
+    parser.add_argument("--output-folder", default=".", help="where to put lock files")
     return parser
 
 
 def parse_specs(env):
-    specs = {}
     for dep in env["dependencies"]:
         spec = MatchSpec(dep)
         yield spec.name, dep
+
 
 def merge(env, composite):
     print(f"""\nmerging {env["name"]}""", flush=True)
@@ -55,10 +62,7 @@ def merge(env, composite):
 
 def lock(env_files, platforms, prefix, output_folder):
     output_folder = Path(output_folder).resolve()
-    envs = [
-        safe_load(Path(env).read_text(encoding="utf-8") )
-        for env in env_files
-    ]
+    envs = [safe_load(Path(env).read_text(encoding="utf-8")) for env in env_files]
 
     composite = envs[0]
 
@@ -73,11 +77,13 @@ def lock(env_files, platforms, prefix, output_folder):
         with tempfile.TemporaryDirectory() as td:
             tdp = Path(td)
             env = tdp / f"{prefix}{platform}-environment.yml"
-            env.write_text(safe_dump(composite, default_flow_style=False), encoding="utf-8")
+            env.write_text(
+                safe_dump(composite, default_flow_style=False), encoding="utf-8"
+            )
             U._(
                 ["conda-lock", "--platform", platform, "--file", env],
                 cwd=tdp,
-                env=environ
+                env=environ,
             )
 
             if not out.parent.exists():
@@ -90,6 +96,7 @@ def lock(env_files, platforms, prefix, output_folder):
 def main(argv=None):
     args = dict(**vars(make_parser().parse_args(argv)))
     return lock(**args)
+
 
 if __name__ == "__main__":
     sys.exit(main())

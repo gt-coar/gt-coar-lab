@@ -100,14 +100,16 @@ BUILD = ROOT / "build"
 CONDA_LOCK_SRC = {
     "cpu": {
         "linux-64": [
-            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "unix.yml", CUSTOM_ENVS / "linux-64.yml"
+            CUSTOM_ENVS / "core.yml",
+            CUSTOM_ENVS / "unix.yml",
+            CUSTOM_ENVS / "linux-64.yml",
         ],
         "osx-64": [
-            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "unix.yml", CUSTOM_ENVS / "linux-64.yml"
+            CUSTOM_ENVS / "core.yml",
+            CUSTOM_ENVS / "unix.yml",
+            CUSTOM_ENVS / "linux-64.yml",
         ],
-        "win-64": [
-            CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "win-64.yml"
-        ],
+        "win-64": [CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "win-64.yml"],
     }
 }
 
@@ -116,6 +118,7 @@ CONDA_LOCK_SRC = {
 class OK:
     audit = BUILD / "audit.ok"
     integrity = BUILD / "integrity.ok"
+
     class LINT:
         prettier = BUILD / "lint.prettier.ok"
         ipynb = BUILD / "lint.ipynb.ok"
