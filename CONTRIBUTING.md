@@ -6,7 +6,7 @@
 - Create the base environment, using the same environment/configuration as CI
 
 ```bash
-CONDARC=.github/.condarc mamba env update --file specs/ci.yml --prefix .env
+CONDARC=.github/.condarc mamba create --file locks/ci-linux-64.conda.lock --prefix .env
 ```
 
 - always run any commands with that environment activated
