@@ -74,6 +74,12 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
+      - name: apt clean (ubuntu)
+        run: |
+          df -h
+          sudo apt-get clean
+          df -h
+
       - uses: actions/checkout@v2
 
       - name: cache (conda)
@@ -107,7 +113,7 @@ jobs:
       - name: preflight (doit)
         run: doit list --all --status
 
-      - name: build installer
+      - name: build (constructor)
         run: |
           doit build:cpu:linux-64:sha256 || doit build:cpu:linux-64:sha256
 
@@ -126,7 +132,14 @@ jobs:
     needs: [build-cpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
+      - name: apt clean (ubuntu)
+        run: |
+          df -h
+          sudo apt-get clean
+          df -h
+
       - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         with:
           name: cpu-linux-64 ${{ github.run_number }}
@@ -170,7 +183,7 @@ jobs:
       - name: preflight (doit)
         run: doit list --all --status
 
-      - name: build installer
+      - name: build (constructor)
         run: |
           doit build:cpu:osx-64:sha256 || doit build:cpu:osx-64:sha256
 
@@ -190,6 +203,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         with:
           name: cpu-osx-64 ${{ github.run_number }}
@@ -238,7 +252,7 @@ jobs:
       - name: preflight (doit)
         run: doit list --all --status
 
-      - name: build installer
+      - name: build (constructor)
         run: |
           doit build:cpu:win-64:sha256 || doit build:cpu:win-64:sha256
 
@@ -263,6 +277,7 @@ jobs:
         shell: pwsh
 
       - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         with:
           name: cpu-win-64 ${{ github.run_number }}
@@ -273,6 +288,12 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
+      - name: apt clean (ubuntu)
+        run: |
+          df -h
+          sudo apt-get clean
+          df -h
+
       - uses: actions/checkout@v2
 
       - name: cache (conda)
@@ -306,7 +327,7 @@ jobs:
       - name: preflight (doit)
         run: doit list --all --status
 
-      - name: build installer
+      - name: build (constructor)
         run: |
           doit build:gpu:linux-64:sha256 || doit build:gpu:linux-64:sha256
 
@@ -325,7 +346,14 @@ jobs:
     needs: [build-gpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
+      - name: apt clean (ubuntu)
+        run: |
+          df -h
+          sudo apt-get clean
+          df -h
+
       - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         with:
           name: gpu-linux-64 ${{ github.run_number }}

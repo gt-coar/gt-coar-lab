@@ -33,11 +33,19 @@
           miniforge-version: latest
 {% endmacro %}
 
-{% macro long_paths() %}
+{% macro preflight(job) %}
+      {% if job.subdir == "win-64" %}
       - name: enable long paths (windows)
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
         shell: pwsh
+      {% elif job.subdir == "linux-64" %}
+      - name: apt clean (ubuntu)
+        run: |
+          df -h
+          sudo apt-get clean
+          df -h
+      {% endif %}
 {% endmacro %}
 
 {% raw %}
@@ -105,11 +113,10 @@ jobs:
     needs: [lint]
     runs-on: {{ job.vm }}
     steps:
-      {% if job.subdir == "win-64" %}
-      {{ long_paths() }}
-      {% endif %}
+      {{ preflight(job) }}
 
       - uses: actions/checkout@v2
+
       {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
       {{ cache_constructor(job.vm, 'build-' ~ job.name, [job.lockfile]) }}
       {{ setup_miniconda(job.ci_lockfile) }}
@@ -117,7 +124,7 @@ jobs:
       - name: preflight (doit)
         run: doit list --all --status
 
-      - name: build installer
+      - name: build (constructor)
         run: |
           doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
 
@@ -133,15 +140,14 @@ jobs:
           name: {{ job.name }} {{ "${{ github.run_number }}" }}
           path: ./dist
 
-  test-{{job.name }}:
+  test-{{ job.name }}:
     name: test {{ job.name }}
     needs: [build-{{ job.name }}]
     runs-on: {{ job.vm}}
     steps:
-      {% if job.subdir == "win-64" %}
-      {{ long_paths() }}
-      {% endif %}
+      {{ preflight(job) }}
       - uses: actions/checkout@v2
+
       - uses: actions/download-artifact@v2
         with:
           name: {{ job.name }} {{ "${{ github.run_number }}" }}

@@ -350,6 +350,7 @@ class U:
                     [
                         "constructor",
                         ".",
+                        "--debug",
                         "--output-dir",
                         P.DIST,
                         "--cache-dir",
