@@ -24,7 +24,7 @@ def _(args, _quiet=False, **kwargs):
 
 
 def project_channels():
-    return M.PROJ["env_specs"][M.INSTALLER_ENV_SPEC]["channels"]
+    return M.PROJ["env_specs"][M.BUILD_ENV_SPEC]["channels"]
 
 
 def channel_args(pre=None, post=None):

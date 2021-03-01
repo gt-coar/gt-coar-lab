@@ -1,8 +1,8 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-import sys
 import os
+import sys
 from pathlib import Path
 
 from anaconda_project import project_ops
@@ -32,7 +32,7 @@ def update():
     proj = load_project(str(Path.cwd()))
 
     for name, spec in sorted(M.LOCK["env_specs"].items()):
-        if spec["locked"]:
+        if spec["locked"] and not name.startswith("_"):
             print(
                 f"""\n`{name}` will be updated for: {", ".join(spec["platforms"])}\n"""
             )

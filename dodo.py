@@ -1,10 +1,30 @@
+""" automation scripts for building gt-coar-lab
+
+Roughly, the intent is:
+- on a contributor's machine
+  - derive conda-lock files from yml files
+  - derive constructor files from lock file
+  - update CI configuration from constructs
+- in CI, or a contributor's machine
+  - validate well-formedness of the source files
+  - build any novel conda packages
+  - build an installer
+  - test the installer
+  - gather test reports
+  - combine test reports
+  - generate documentation
+  - build a release candidate
+"""
+
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
-from doit.tools import config_changed
-from scripts import meta as M
-from scripts import paths as P
-from scripts import utils as U
+import os
+from pathlib import Path
 
+from doit import tools
+from ruamel_yaml import safe_load
+
+# see additional environment variable hacks at the end
 DOIT_CONFIG = {
     "backend": "sqlite3",
     "verbosity": 2,
@@ -12,103 +32,105 @@ DOIT_CONFIG = {
     "default_tasks": ["ALL"],
 }
 
-# locking
-def task_lock():
-    for prefix, platforms in P.CONDA_LOCK_SRC.items():
-        for platform, file_dep in platforms.items():
-            yield dict(
-                name=f"{prefix}:{platform}",
-                file_dep=[*file_dep, P.OK.LINT.prettier],
-                targets=[M.CONDA_LOCK_FILES[(prefix, platform)]],
-                actions=[
-                    [
-                        *P.APR,
-                        "lock",
-                        "--output-folder",
-                        P.LOCKS / M.INSTALLER_VERSION,
-                        "--platform",
-                        platform,
-                        "--prefix",
-                        f"{prefix}-",
-                        "--file",
-                        *file_dep,
-                    ]
-                ],
-            )
+# patch environment for all child tasks
+os.environ.update(
+    PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", MAMBA_NO_BANNER="1"
+)
 
 
-# phonies
-def task_ALL():
-    """ do all the normal business
-    """
-    return dict(file_dep=[P.OK.audit], actions=[["echo", "ALL DONE"]])
-
-
-# prepare envs
-[globals().update(U.make_prepare_task(env_spec)) for env_spec in M.ENVS_TO_PREPARE]
-
-# linting
-[
-    globals().update(U.make_lint_task(target, files))
-    for target, files in P.LINTERS.items()
-]
-
-
-def task_integrity():
-    """ ensure the repo is internally consistent
-    """
-    return dict(
-        file_dep=sorted([*P.ALL_PRETTIER, *P.ALL_PY, P.PROJ, U.env_canary("qa")]),
-        targets=[P.OK.integrity],
-        actions=U._ok(P.OK.integrity, [[*P.APR, "integrity"]]),
+def task_setup():
+    """handle non-conda setup tasks"""
+    yield dict(
+        name="yarn",
+        doc="install npm dependencies with yarn",
+        file_dep=[P.YARN_LOCK, P.PACKAGE_JSON, P.YARNRC],
+        actions=[
+            tools.CmdAction([*C.YARN], cwd=P.SCRIPTS)
+        ],
+        targets=[P.YARN_INTEGRITY],
     )
 
 
-# testing
-def task_atest():
-    """ run acceptance tests
-    """
-    return dict(
-        file_dep=sorted(
-            [
-                *P.ALL_ROBOT,
-                *P.ROBOT_PY,
-                P.INSTALLER_DIST / M.INSTALLER_FILENAME,
-                P.SCRIPTS / "atest.py",
-            ]
-        ),
-        actions=[[*P.APR, "atest"]],
-        task_dep=["lint_robot"],
-        targets=[*M.INSTALLED_REQS],
+def task_lint():
+    """ensure all files match expected style"""
+    yield dict(
+        name="prettier",
+        doc="format YAML, markdown, JSON, etc.",
+        file_dep=[*P.ALL_PRETTIER, P.YARN_INTEGRITY],
+        actions=[[*C.YARN, "prettier", "--list-different", "--write", *P.ALL_PRETTIER]],
+    )
+
+    yield dict(
+        name="black",
+        doc="format python source",
+        file_dep=[*P.ALL_PY, P.PYPROJECT],
+        actions=[["isort", *P.ALL_PY], ["black", "--quiet", *P.ALL_PY]],
+    )
+
+    yield dict(
+        name="yamllint",
+        doc="check yaml format",
+        task_dep=["lint:prettier"],
+        file_dep=[*P.ALL_YAML],
+        actions=[["yamllint", *P.ALL_YAML]],
     )
 
 
-# building
-[
-    globals().update(U.make_build_task(target, *files))
-    for target, files in M.BUILDERS.items()
-]
+# some namespaces for project-level stuff
+class C:
+    """constants"""
+
+    ENC = dict(encoding="utf-8")
+    YARN = ["yarn", "--silent"]
 
 
-# binding
-def task_binder():
-    """ ensure the binder requirements are up-to-date
-    """
-    lock = M.CONDA_LOCK_FILES["cpu", "linux-64"]
-    return dict(
-        file_dep=[lock],
-        actions=[lambda x: P.BINDER_LOCK.write_text(lock.read_text())],
-        targets=[P.BINDER_LOCK],
-    )
+class P:
+    """paths"""
+
+    DODO = Path(__file__)
+    ROOT = DODO.parent
+    SCRIPTS = ROOT / "_scripts"
+    CI = ROOT / ".github"
+
+    # checked in
+    CONDARC = CI / ".condarc"
+    PACKAGE_JSON = SCRIPTS / "package.json"
+    YARNRC = SCRIPTS / ".yarnrc"
+    PYPROJECT = SCRIPTS / "pyproject.toml"
+
+    # generated, but checked in
+    YARN_LOCK = SCRIPTS / "yarn.lock"
+    WORKFLOW = CI / "workflows/ci.yml"
+
+    # stuff we don't check in
+    BUILD = ROOT / "build"
+    DIST = ROOT / "dist"
+    NODE_MODULES = ROOT / "node_modules"
+    YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
+
+    # collections of things
+    ALL_PY = [DODO]
+    ALL_YAML = [
+        *ROOT.glob("*.yml"),
+        *ROOT.glob("*.yaml"),
+    ]
+    ALL_MD = [*ROOT.glob("*.md")]
+    ALL_PRETTIER = [
+        *ALL_YAML,
+        *ALL_MD,
+        *ROOT.glob("*.json"),
+        CONDARC,
+        PYPROJECT,
+    ]
 
 
-# auditing
-def task_audit():
-    """ ensure as-installed python requirements are free of _known_ vulnerabilities
-    """
-    return dict(
-        uptodate=[config_changed(dict(ignores=M.SAFETY_IGNORE_IDS))],
-        file_dep=[*M.INSTALLED_REQS, P.SCRIPTS / "audit.py"],
-        actions=U._ok(P.OK.audit, [[*P.APR, "audit"]]),
-        targets=[P.OK.audit],
-    )
+class D:
+    """data"""
+
+    WORKFLOW = safe_load(P.WORKFLOW.read_text(**C.ENC))
+
+
+# late environment patches
+os.environ.update(
+    CONDARC=str(P.CONDARC)
+)

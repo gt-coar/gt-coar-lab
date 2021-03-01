@@ -17,7 +17,7 @@ BUILD_ENV_SPEC = "build"
 ENVS_TO_PREPARE = [QA_ENV_SPEC, BUILD_ENV_SPEC]
 
 # building
-LAB_VERSION = "2.1.5"
+LAB_VERSION = "2.2.6"
 LAB_BUILD = "0"
 
 ALL_PLATFORMS = ["linux", "macosx", "windows"]
@@ -71,9 +71,6 @@ CONDA_LOCK_FILES = {
     for prefix, platforms in P.CONDA_LOCK_SRC.items()
     for platform in platforms
 }
-
-
-EXTRA_SPECS = [f"{P.LAB_NAME}={LAB_VERSION}=py_{LAB_BUILD}"]
 
 # auditing and integrity
 YEAR = f"{datetime.today().year}"

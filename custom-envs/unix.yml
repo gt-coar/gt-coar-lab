@@ -1,4 +1,0 @@
-name: unix
-channels: []
-dependencies:
-  - gym-atari

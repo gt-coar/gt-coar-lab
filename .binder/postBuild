@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -eux
-rm -rf ${NB_PYTHON_PREFIX}
-conda create --prefix ${NB_PYTHON_PREFIX} --file cpu-linux-64.conda.lock
-source deactivate
+conda info --json
+# rm -rf ${NB_PYTHON_PREFIX}
+# conda create --prefix ${NB_PYTHON_PREFIX} --file cpu-linux-64.conda.lock
+source deactivate || echo "didn't deactivate..."
 source ${NB_PYTHON_PREFIX}/bin/activate
 jupyter lab clean --all
 jupyter labextension install --debug --no-build $(cat labextensions.txt)

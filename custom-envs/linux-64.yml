@@ -1,4 +1,0 @@
-name: linux-64
-channels: []
-dependencies:
-  - pyvirtualdisplay

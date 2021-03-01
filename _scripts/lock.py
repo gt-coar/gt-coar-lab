@@ -1,3 +1,6 @@
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
 import os
 import shutil
 import sys
@@ -41,18 +44,19 @@ def parse_specs(env):
 
 def merge(env, composite):
     print(f"""\nmerging {env["name"]}""", flush=True)
-    print("> channels")
+    print("> channels", flush=True)
     for channel in env.get("channels", []):
         if channel not in composite["channels"]:
+            print("\t+ {channel}")
             composite["channels"] = [channel, *composite["channels"]]
 
     env_specs, comp_specs = dict(parse_specs(env)), dict(parse_specs(composite))
 
-    print("> dependencies")
+    print("> dependencies", flush=True)
     for name, dep in env_specs.items():
         if name in comp_specs:
-            print(f"""- {comp_specs[name]}""")
-        print(f"""+ {dep}""")
+            print(f"""\t- {comp_specs[name]}""", flush=True)
+        print(f"""\t+ {dep}""", flush=True)
         comp_specs[name] = dep
 
     composite["dependencies"] = [*comp_specs.values()]

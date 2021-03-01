@@ -11,26 +11,28 @@ from . import meta as M
 from . import paths as P
 from . import utils as U
 
-PLATFORMS = ["all", cc_platform]
+environ = dict(os.environ)
+environ["CONDARC"] = str(P.CONDARC)
 
-if not cc_platform.startswith("win-"):
-    PLATFORMS += ["unix"]
-
+THIS
 
 def build_template():
     """ Build a construct.yaml from the project file, lock file
     """
     U.conda_index(cc_platform)
     tmpl = jinja2.Template(P.INSTALLER_TMPL.read_text())
-    packages = M.LOCK["env_specs"][M.INSTALLER_ENV_SPEC]["packages"]
-    project_specs = sorted(sum([packages.get(p, []) for p in PLATFORMS], []))
+    # TODO: parametrize prefix
+    lock_file = P.LOCKS / M.INSTALLER_VERSION / f"cpu-{cc_platform}.conda.lock"
+    urls = [
+        line for line in lock_file.read_text().splitlines() if line.startswith("https")
+    ]
 
     context = dict(
         name=M.INSTALLER_NAME,
         version=M.INSTALLER_VERSION,
         build_channel=P.CONDA_DIST_URI,
         channels=U.project_channels(),
-        specs=project_specs + M.EXTRA_SPECS,
+        specs=urls + [p.as_uri() for p in M.CONDA_TARBALLS.values()],
     )
     P.CONSTRUCT.write_text(tmpl.render(**context))
     ruamel_yaml.safe_load(P.CONSTRUCT.read_text())
@@ -50,7 +52,10 @@ def build_conda_lab():
             P.CONDA_DIST.resolve(),
         ],
         cwd=P.RECIPES,
+        env=environ,
     )
+
+def build_cache():
 
 
 def build_installer():
@@ -68,6 +73,7 @@ def build_installer():
             os.environ.get("CONSTRUCTOR_CACHE", P.CONSTRUCTOR_CACHE.resolve()),
         ],
         cwd=P.INSTALLER,
+        env=environ,
     )
 
 

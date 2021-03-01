@@ -22,8 +22,7 @@ LAB_VERSIONS = {
     P.LAB_PACKAGE / "src" / P.LAB_MODULE / "_version.py": r"""__version__ = "(.*?)\"""",
     P.RECIPES / P.LAB_NAME / "meta.yaml": r"""{% set version = "(.*?)" %}""",
     P.LAB_PACKAGE / "setup.cfg": r"version = (.*)",
-    P.PROJ: r"- jupyterlab ==(.*)",
-    P.BINDER / "environment.yml": r"- jupyterlab ==(.*)",
+    P.CUSTOM_ENVS / "core.yml": r"- jupyterlab ==(.*)",
 }
 
 

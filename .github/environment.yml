@@ -1,0 +1,29 @@
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+name: gt-coar-lab-base
+
+channels:
+  - https://conda.anaconda.org/conda-forge
+  - https://conda.anaconda.org/nodefaults
+
+dependencies:
+  # the runstime
+  - python >=3.7.10,<3.8.0
+  - nodejs >=14,<15.0.0
+  - yarn <2
+  # conda and friends
+  - conda ==4.9.2
+  - conda-build ==3.21.4
+  - conda-lock >=0.8.0,<0.9
+  - conda-pack
+  - conda-suggest
+  - constructor >=3.2.0,<3.3
+  - grayskull
+  - mamba ==0.7.14
+  # automation and qa
+  - doit
+  - black
+  - pylint
+  - isort
+  - yamllint

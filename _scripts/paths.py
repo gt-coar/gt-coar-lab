@@ -5,8 +5,6 @@ import shutil
 import sys
 
 PY = pathlib.Path(sys.executable)
-AP = "anaconda-project"
-APR = [AP, "run"]
 NODE = shutil.which("node") or shutil.which("node.cmd") or shutil.which("node.exe")
 
 SCRIPTS = pathlib.Path(__file__).parent
@@ -14,9 +12,6 @@ ROOT = SCRIPTS.parent
 
 # files
 DODO = ROOT / "dodo.py"
-LOCK = ROOT / "anaconda-project-lock.yml"
-PROJ = ROOT / "anaconda-project.yml"
-CONDARC = ROOT / ".ci" / ".condarc"
 
 # folders
 BINDER = ROOT / "binder"
@@ -34,11 +29,7 @@ ATEST = ROOT / "atest"
 ATEST_LIBS = ATEST / "libraries"
 LOCKS = ROOT / "locks"
 CUSTOM_ENVS = ROOT / "custom-envs"
-
-LAB_NAME = "gt-coar-lab"
-LAB_MODULE = LAB_NAME.replace("-", "_")
-LAB_PACKAGE = PACKAGES / LAB_NAME
-
+CONDARC = GITHUB / ".condarc"
 
 CONDA_DIST = DIST / "conda-bld"
 CONDA_DIST_URI = CONDA_DIST.as_uri()
@@ -55,7 +46,6 @@ ATEST_OUT = ATEST / "output"
 # demoing
 BINDER_LOCK = BINDER / "cpu-linux-64.conda.lock"
 POSTBUILD = BINDER / "postBuild"
-LABEXTENSIONS = BINDER / "labextensions.txt"
 
 # linting
 ROBOT_PY = sorted((ATEST_LIBS).rglob("*.py"))
@@ -95,19 +85,20 @@ LINTERS = dict(
 # logging
 BUILD = ROOT / "build"
 
+CONDA_LOCK_BASELINE = [CUSTOM_ENVS / "base.yml", CUSTOM_ENVS / "core.yml"]
 CONDA_LOCK_SRC = {
     "cpu": {
         "linux-64": [
-            CUSTOM_ENVS / "core.yml",
+            *CONDA_LOCK_BASELINE,
             CUSTOM_ENVS / "unix.yml",
             CUSTOM_ENVS / "linux-64.yml",
         ],
         "osx-64": [
-            CUSTOM_ENVS / "core.yml",
+            *CONDA_LOCK_BASELINE,
             CUSTOM_ENVS / "unix.yml",
             CUSTOM_ENVS / "linux-64.yml",
         ],
-        "win-64": [CUSTOM_ENVS / "core.yml", CUSTOM_ENVS / "win-64.yml"],
+        "win-64": [*CONDA_LOCK_BASELINE, CUSTOM_ENVS / "win-64.yml"],
     }
 }
 

@@ -1,0 +1,13 @@
+# Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+name: _base
+
+channels:
+  - https://conda.anaconda.org/conda-forge
+  - https://conda.anaconda.org/nodefaults
+
+dependencies:
+  - conda ==4.9.2
+  - mamba ==0.7.14
+  - python >=3.7.10,<3.8.0
