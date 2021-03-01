@@ -21,7 +21,7 @@ Roughly, the intent is:
 import os
 from pathlib import Path
 
-from doit import tools
+from doit.tools import CmdAction, create_folder
 from ruamel_yaml import safe_load
 
 # see additional environment variable hacks at the end
@@ -33,9 +33,7 @@ DOIT_CONFIG = {
 }
 
 # patch environment for all child tasks
-os.environ.update(
-    PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", MAMBA_NO_BANNER="1"
-)
+os.environ.update(PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", MAMBA_NO_BANNER="1")
 
 
 def task_setup():
@@ -44,9 +42,7 @@ def task_setup():
         name="yarn",
         doc="install npm dependencies with yarn",
         file_dep=[P.YARN_LOCK, P.PACKAGE_JSON, P.YARNRC],
-        actions=[
-            tools.CmdAction([*C.YARN], cwd=P.SCRIPTS)
-        ],
+        actions=[U.script(C.YARN)],
         targets=[P.YARN_INTEGRITY],
     )
 
@@ -56,15 +52,30 @@ def task_lint():
     yield dict(
         name="prettier",
         doc="format YAML, markdown, JSON, etc.",
-        file_dep=[*P.ALL_PRETTIER, P.YARN_INTEGRITY],
-        actions=[[*C.YARN, "prettier", "--list-different", "--write", *P.ALL_PRETTIER]],
+        file_dep=[*P.ALL_PRETTIER, P.YARN_INTEGRITY, P.PRETTIERRC],
+        actions=[
+            U.script(
+                [
+                    *C.YARN,
+                    "prettier",
+                    "--config",
+                    P.PRETTIERRC,
+                    "--list-different",
+                    "--write",
+                    *P.ALL_PRETTIER,
+                ]
+            )
+        ],
     )
 
     yield dict(
         name="black",
         doc="format python source",
         file_dep=[*P.ALL_PY, P.PYPROJECT],
-        actions=[["isort", *P.ALL_PY], ["black", "--quiet", *P.ALL_PY]],
+        actions=[
+            U.script(["isort", *P.ALL_PY]),
+            U.script(["black", "--quiet", *P.ALL_PY]),
+        ],
     )
 
     yield dict(
@@ -72,8 +83,31 @@ def task_lint():
         doc="check yaml format",
         task_dep=["lint:prettier"],
         file_dep=[*P.ALL_YAML],
-        actions=[["yamllint", *P.ALL_YAML]],
+        actions=[U.script(["yamllint", *P.ALL_YAML])],
     )
+
+
+def task_lock():
+    """generate conda locks for all envs"""
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            args = ["--platform", subdir]
+            lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
+            specs = [*P.CORE_SPECS, P.SPECS / f"{subdir}.yml"]
+            variant_spec = P.SPECS / f"{subdir}-{variant}.yml"
+            specs += [variant_spec] if variant_spec.exists() else []
+            args += sum([["--file", spec] for spec in specs], [])
+            args += ["--filename-template", variant + "-{platform}.conda.lock"]
+
+            yield dict(
+                name=f"{variant}:{subdir}",
+                file_dep=specs,
+                actions=[
+                    create_folder(P.LOCKS),
+                    U.cmd(args),
+                ],
+                targets=[lockfile],
+            )
 
 
 # some namespaces for project-level stuff
@@ -82,6 +116,8 @@ class C:
 
     ENC = dict(encoding="utf-8")
     YARN = ["yarn", "--silent"]
+    SUBDIRS = ["linux-64", "osx-64", "win-64"]
+    VARIANTS = ["cpu"]  # ,"gpu"]
 
 
 class P:
@@ -97,28 +133,36 @@ class P:
     PACKAGE_JSON = SCRIPTS / "package.json"
     YARNRC = SCRIPTS / ".yarnrc"
     PYPROJECT = SCRIPTS / "pyproject.toml"
+    TEMPLATES = ROOT / "templates"
+    SPECS = ROOT / "SPECS"
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
     WORKFLOW = CI / "workflows/ci.yml"
+    LOCKS = ROOT / "locks"
 
     # stuff we don't check in
     BUILD = ROOT / "build"
     DIST = ROOT / "dist"
-    NODE_MODULES = ROOT / "node_modules"
+    NODE_MODULES = SCRIPTS / "node_modules"
     YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 
+    # config cruft
+    PRETTIERRC = SCRIPTS / ".prettierrc"
+
     # collections of things
+    CORE_SPECS = [SPECS / "_base.yml", SPECS / "core.yml"]
     ALL_PY = [DODO]
     ALL_YAML = [
-        *ROOT.glob("*.yml"),
-        *ROOT.glob("*.yaml"),
+        *SPECS.glob("*.yml"),
+        *CI.rglob("*.yml"),
     ]
     ALL_MD = [*ROOT.glob("*.md")]
     ALL_PRETTIER = [
         *ALL_YAML,
         *ALL_MD,
-        *ROOT.glob("*.json"),
+        *SCRIPTS.glob("*.json"),
+        *CI.glob("*.yml"),
         CONDARC,
         PYPROJECT,
     ]
@@ -130,7 +174,12 @@ class D:
     WORKFLOW = safe_load(P.WORKFLOW.read_text(**C.ENC))
 
 
+class U:
+    """utilities"""
+
+    cmd = lambda *args, **kwargs: CmdAction(*args, **kwargs, shell=False)
+    script = lambda *args, **kwargs: U.cmd(*args, **kwargs, cwd=str(P.SCRIPTS))
+
+
 # late environment patches
-os.environ.update(
-    CONDARC=str(P.CONDARC)
-)
+os.environ.update(CONDARC=str(P.CONDARC))

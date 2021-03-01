@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        locks: ["_base,qa"]
+        locks: ['_base,qa']
     steps:
       - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@master
@@ -39,14 +39,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "macos", "windows"]
+        os: ['ubuntu', 'macos', 'windows']
         include:
           - os: ubuntu
-            locks: "_base,core,unix,linux-64"
+            locks: '_base,core,unix,linux-64'
           - os: macos
-            locks: "_base,core,unix,osx-64"
+            locks: '_base,core,unix,osx-64'
           - os: windows
-            locks: "_base,core,win-64"
+            locks: '_base,core,win-64'
     steps:
       - uses: actions/checkout@v2
 

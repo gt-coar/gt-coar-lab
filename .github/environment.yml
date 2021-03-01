@@ -12,16 +12,17 @@ dependencies:
   - python >=3.7.10,<3.8.0
   - nodejs >=14,<15.0.0
   - yarn <2
-  # conda and friends
+  # conda and friends, hard-pinned
   - conda ==4.9.2
   - conda-build ==3.21.4
-  - conda-lock >=0.8.0,<0.9
-  - conda-pack
-  - conda-suggest
-  - constructor >=3.2.0,<3.3
-  - grayskull
+  - conda-lock ==0.8.0
+  - constructor ==3.2.0
   - mamba ==0.7.14
-  # automation and qa
+  # python build
+  - pip
+  - wheel
+  - twine
+  # automation and qa: just deal with churn
   - doit
   - black
   - pylint
