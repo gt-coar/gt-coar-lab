@@ -1,4 +1,4 @@
-# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
+{% raw %}# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
 # yamllint disable rule:truthy rule:line-length rule:comments-indentation
@@ -37,7 +37,9 @@ jobs:
           miniforge-version: latest
       - shell: bash -l {0}
         run: doit lint | doit lint
+{% endraw %}
 
+{% raw %}
   # build:
   #   name: Build ${{ matrix.os }}
   #   needs: [lint]
@@ -197,3 +199,4 @@ jobs:
 
   #     - shell: bash -l {0}
   #       run: anaconda-project run audit
+{% endraw %}

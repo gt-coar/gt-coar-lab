@@ -100,7 +100,7 @@ https://conda.anaconda.org/conda-forge/linux-64/freetype-2.10.4-h0708190_1.tar.b
 https://conda.anaconda.org/conda-forge/linux-64/krb5-1.17.2-h926e7f8_0.tar.bz2#926325c11478d6e781e76072c117763b
 https://conda.anaconda.org/conda-forge/linux-64/libarchive-3.5.1-h3f442fb_1.tar.bz2#1579ccb4f14593e95627bcdb29af953a
 https://conda.anaconda.org/conda-forge/linux-64/libclang-11.0.1-default_ha53f305_1.tar.bz2#8310b95b07c2316d7b30b65b7fdf2f1f
-https://conda.anaconda.org/conda-forge/linux-64/libglib-2.66.7-h1f3bc88_0.tar.bz2#ae90ea9eecc0ea7473cfaecc8ec2c259
+https://conda.anaconda.org/conda-forge/linux-64/libglib-2.66.7-h3e27bee_1.tar.bz2#dd273cc3560177ab37be0db469368bba
 https://conda.anaconda.org/conda-forge/linux-64/liblapacke-3.9.0-8_mkl.tar.bz2#cb5a220dcf52cbfefa5d80ab8ef35bd6
 https://conda.anaconda.org/conda-forge/linux-64/libtiff-4.2.0-hdc55705_0.tar.bz2#f1406324f1d02fa26447a0a0f2dd0107
 https://conda.anaconda.org/conda-forge/linux-64/libxkbcommon-1.0.3-he3ba5ed_0.tar.bz2#f9dbabc7e01c459ed7a1d1d64b206e9b
@@ -115,7 +115,7 @@ https://conda.anaconda.org/conda-forge/linux-64/atk-1.0-2.36.0-h3371d22_4.tar.bz
 https://conda.anaconda.org/conda-forge/linux-64/ffmpeg-4.3.1-hca11adc_2.tar.bz2#94b778570f9a32e630701de15e9c7abb
 https://conda.anaconda.org/conda-forge/linux-64/fontconfig-2.13.1-hba837de_1004.tar.bz2#bbe61e6ae39440dd101d77bf80ffc2cd
 https://conda.anaconda.org/conda-forge/linux-64/gdk-pixbuf-2.42.2-h0c95a7a_2.tar.bz2#410ae1c3754c839497194e0883eef596
-https://conda.anaconda.org/conda-forge/linux-64/glib-tools-2.66.7-h9c3ff4c_0.tar.bz2#a4da485261ba9a2959d93a3c28c4401d
+https://conda.anaconda.org/conda-forge/linux-64/glib-tools-2.66.7-h9c3ff4c_1.tar.bz2#7affb30431ec6fec334bd4b39cc1be39
 https://conda.anaconda.org/conda-forge/linux-64/gstreamer-1.18.3-h3560a44_0.tar.bz2#4bd4917d4d6399a2fe38609b697f3278
 https://conda.anaconda.org/conda-forge/linux-64/gts-0.7.6-h64030ff_2.tar.bz2#112eb9b5b93f0c02e59aea4fd1967363
 https://conda.anaconda.org/conda-forge/linux-64/lcms2-2.12-hddcbb42_0.tar.bz2#797117394a4aa588de6d741b06fad80f
@@ -150,7 +150,7 @@ https://conda.anaconda.org/conda-forge/noarch/escapism-1.0.1-pyh9f0ad1d_0.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/frozendict-1.2-pyh9f0ad1d_3.tar.bz2#6916a506e34f8f17382f5abf3e6368bb
 https://conda.anaconda.org/conda-forge/noarch/fsspec-0.8.7-pyhd8ed1ab_0.tar.bz2#b93ab5a4692ba685b455f0e8e5dc93e4
 https://conda.anaconda.org/conda-forge/noarch/gast-0.4.0-pyh9f0ad1d_0.tar.bz2#42323c77b73462199fca93bc8ac9279d
-https://conda.anaconda.org/conda-forge/linux-64/glib-2.66.7-h9c3ff4c_0.tar.bz2#71210befaeaf96a2409c135859dd7bce
+https://conda.anaconda.org/conda-forge/linux-64/glib-2.66.7-h9c3ff4c_1.tar.bz2#83a66185b0f99b33ba9de260fc0f51f4
 https://conda.anaconda.org/conda-forge/linux-64/gst-plugins-base-1.18.3-h04508c2_0.tar.bz2#62e72470334058fb045c1f8cc9d2367c
 https://conda.anaconda.org/conda-forge/linux-64/hdf5-1.10.6-nompi_h6a2412b_1114.tar.bz2#0a2984b78f51148d7ff6219abe73509e
 https://conda.anaconda.org/conda-forge/noarch/heapdict-1.0.1-py_0.tar.bz2#77242bfb1e74a627fb06319b5a2d3b95

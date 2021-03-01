@@ -1,27 +1,21 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: gt-coar-lab-base
+name: gt-coar-lab-dev
 
 channels:
   - https://conda.anaconda.org/conda-forge
-  - https://conda.anaconda.org/nodefaults
 
 dependencies:
   # the runstime
   - python >=3.7.10,<3.8.0
-  - nodejs >=14,<15.0.0
+  - nodejs >=10,!=11.*,!=13.*,<15
   - yarn <2
   # conda and friends, hard-pinned
-  - conda ==4.9.2
-  - conda-build ==3.21.4
-  - conda-lock ==0.8.0
-  - constructor ==3.2.0
-  - mamba ==0.7.14
-  # python build
-  - pip
-  - wheel
-  - twine
+  - conda >=4.9.2,<4.10
+  - conda-lock >=0.8.0,<0.9
+  - constructor >=3.2.0,<3.3
+  - mamba >=0.7.14,<0.8
   # automation and qa: just deal with churn
   - doit
   - black

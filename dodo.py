@@ -107,6 +107,22 @@ def task_lock():
                 targets=[lockfile],
             )
 
+    for subdir in C.SUBDIRS:
+        args = ["conda-lock", "--mamba", "--platform", subdir]
+        lockfile = P.LOCKS / f"ci-{subdir}.conda.lock"
+        specs = [P.SPECS / "ci.yml"]
+        args += sum([["--file", spec] for spec in specs], [])
+        args += ["--filename-template", "ci-{platform}.conda.lock"]
+        yield dict(
+            name=f"ci:{subdir}",
+            file_dep=specs,
+            actions=[
+                (create_folder, [P.LOCKS]),
+                U.cmd(args, cwd=str(P.LOCKS)),
+            ],
+            targets=[lockfile],
+        )
+
 
 def task_construct():
     """generate construct folders"""
@@ -114,6 +130,17 @@ def task_construct():
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
                 yield U.construct(variant, subdir)
+
+
+def task_ci():
+    """generate CI workflows"""
+    tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
+
+    def build():
+        P.WORKFLOW.write_text(Template(tmpl.read_text(**C.ENC)).render({}), **C.ENC)
+        U.script([*P.PRETTIER_ARGS, P.WORKFLOW]).execute()
+
+    yield dict(name="workflow", actions=[build], file_dep=[tmpl], targets=[P.WORKFLOW])
 
 
 def task_build():
@@ -203,12 +230,6 @@ class P:
         CONDARC,
         PYPROJECT,
     ]
-
-
-class D:
-    """data"""
-
-    WORKFLOW = safe_load(P.WORKFLOW.read_text(**C.ENC))
 
 
 class U:
