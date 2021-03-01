@@ -46,7 +46,8 @@ dependencies:
   - wxyz_yaml
   # code assistance
   - jupyterlab-lsp
-  - jupyter-lsp-python-plugins
+  # TODO: add when doesn't break ipython
+  # - jupyter-lsp-python-plugins
   - jupyter-lsp-latex
   # computer algebra
   - antlr-python-runtime >=4.7,<4.8

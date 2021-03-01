@@ -10,13 +10,34 @@
             ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
 {% endmacro %}
 
+{% macro cache_constructor(vm, job, locksfile) %}
+      - name: cache (constructor)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.cache/constructor
+          key: |
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-constructor-{{ job }}-${{'{{'}} hashFiles('{{ "', '".join(locksfile) }}') {{'}}'}}
+          restore-keys: |
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-constructor-{{ job }}-
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-constructor-
+{% endmacro %}
+
+
 {% macro setup_miniconda(lockfile) %}
-      - uses: conda-incubator/setup-miniconda@master
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: {{ lockfile }}
           miniforge-variant: Mambaforge
           miniforge-version: latest
+{% endmacro %}
+
+{% macro long_paths() %}
+      - name: enable long paths (windows)
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+        shell: pwsh
 {% endmacro %}
 
 {% raw %}
@@ -48,6 +69,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-20.04
+    env:
+      CI_LINTING: 1
     steps:
       - uses: actions/checkout@v2
       {% endraw %}
@@ -65,11 +88,14 @@ jobs:
             ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
             ${{ env.CACHE_EPOCH }}-yarn-
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit lint || doit lint || doit lint
+      - name: lint
+        run: doit lint || doit lint || doit lint
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 {% endraw %}
 
@@ -79,16 +105,25 @@ jobs:
     runs-on: {{ job.vm }}
     needs: [lint]
     steps:
+      {% if job.subdir == "win-64" %}
+      {{ long_paths() }}
+      {% endif %}
+
       - uses: actions/checkout@v2
-      {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile, job.lockfile]) }}
+      {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
+      {{ cache_constructor(job.vm, 'build-' ~ job.name, [job.lockfile]) }}
       {{ setup_miniconda(job.ci_lockfile) }}
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit -s build:{{ job.variant }}:{{ job.subdir }}
+      - name: build installer
+        run: |
+          doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
 
       {% raw %}
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
       {% endraw %}
 
@@ -97,5 +132,4 @@ jobs:
         with:
           name: {{ job.name }} {{ "${{ github.run_number }}" }}
           path: ./dist
-
 {% endfor %}

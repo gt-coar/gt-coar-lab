@@ -26,6 +26,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-20.04
+    env:
+      CI_LINTING: 1
     steps:
       - uses: actions/checkout@v2
 
@@ -39,7 +41,8 @@ jobs:
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
-      - uses: conda-incubator/setup-miniconda@master
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-linux-64.conda.lock
@@ -56,11 +59,14 @@ jobs:
             ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
             ${{ env.CACHE_EPOCH }}-yarn-
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit lint || doit lint || doit lint
+      - name: lint
+        run: doit lint || doit lint || doit lint
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 
   build-cpu-linux-64:
@@ -75,23 +81,38 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock', 'locks/cpu-linux-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
-      - uses: conda-incubator/setup-miniconda@master
+      - name: cache (constructor)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.cache/constructor
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-cpu-linux-64-${{ hashFiles('locks/cpu-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-cpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit -s build:cpu:linux-64
+      - name: build installer
+        run: |
+          doit build:cpu:linux-64:sha256 || doit build:cpu:linux-64:sha256
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 
       - name: publish dists
@@ -112,23 +133,38 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-${{ hashFiles('locks/ci-osx-64.conda.lock', 'locks/cpu-osx-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-${{ hashFiles('locks/ci-osx-64.conda.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-
 
-      - uses: conda-incubator/setup-miniconda@master
+      - name: cache (constructor)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.cache/constructor
+          key: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-build-cpu-osx-64-${{ hashFiles('locks/cpu-osx-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-build-cpu-osx-64-
+            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-osx-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit -s build:cpu:osx-64
+      - name: build installer
+        run: |
+          doit build:cpu:osx-64:sha256 || doit build:cpu:osx-64:sha256
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 
       - name: publish dists
@@ -142,6 +178,11 @@ jobs:
     runs-on: windows-latest
     needs: [lint]
     steps:
+      - name: enable long paths (windows)
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+        shell: pwsh
+
       - uses: actions/checkout@v2
 
       - name: cache (conda)
@@ -149,23 +190,38 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-${{ hashFiles('locks/ci-win-64.conda.lock', 'locks/cpu-win-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-${{ hashFiles('locks/ci-win-64.conda.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-
 
-      - uses: conda-incubator/setup-miniconda@master
+      - name: cache (constructor)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.cache/constructor
+          key: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-build-cpu-win-64-${{ hashFiles('locks/cpu-win-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-build-cpu-win-64-
+            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-win-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit -s build:cpu:win-64
+      - name: build installer
+        run: |
+          doit build:cpu:win-64:sha256 || doit build:cpu:win-64:sha256
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 
       - name: publish dists
@@ -186,23 +242,38 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock', 'locks/gpu-linux-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
-      - uses: conda-incubator/setup-miniconda@master
+      - name: cache (constructor)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.cache/constructor
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-gpu-linux-64-${{ hashFiles('locks/gpu-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-gpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
 
-      - run: doit list --all --status
+      - name: preflight (doit)
+        run: doit list --all --status
 
-      - run: doit -s build:gpu:linux-64
+      - name: build installer
+        run: |
+          doit build:gpu:linux-64:sha256 || doit build:gpu:linux-64:sha256
 
-      - if: always()
+      - name: postmortem (doit)
+        if: always()
         run: doit list --all --status
 
       - name: publish dists

@@ -20,6 +20,7 @@ Roughly, the intent is:
 # Distributed under the terms of the BSD-3-Clause License
 import os
 from datetime import datetime
+from hashlib import sha256
 from pathlib import Path
 
 from doit.tools import CmdAction, config_changed, create_folder
@@ -54,6 +55,8 @@ def task_setup():
 
 
 def task_lint():
+    if C.SKIP_LINT:
+        return
     """ensure all files match expected style"""
     yield dict(
         name="prettier",
@@ -89,6 +92,8 @@ def task_lint():
 
 
 def task_lock():
+    if C.SKIP_LOCKS:
+        return
     """generate conda locks for all envs"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
@@ -129,6 +134,8 @@ def task_lock():
 
 
 def task_construct():
+    if C.CI:
+        return
     """generate construct folders"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
@@ -137,6 +144,8 @@ def task_construct():
 
 
 def task_ci():
+    if C.CI:
+        return
     """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
@@ -177,7 +186,8 @@ def task_build():
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
-                yield U.build(variant, subdir)
+                for task in U.build(variant, subdir):
+                    yield task
 
 
 # some namespaces for project-level stuff
@@ -202,6 +212,10 @@ class C:
         "osx-64": "macos-latest",
         "win-64": "windows-latest",
     }
+    CI = bool(safe_load(os.environ.get("CI", "0")))
+    CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
+    SKIP_LOCKS = CI
+    SKIP_LINT = CI and not CI_LINTING
 
 
 class P:
@@ -220,6 +234,9 @@ class P:
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
     CACHE = SCRIPTS / ".cache"
+    CONSTRUCTOR_CACHE = Path(
+        os.environ.get("CONSTTRUCTOR_CACHE", CACHE / "constructor")
+    )
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
@@ -321,17 +338,46 @@ class U:
     @classmethod
     def build(cls, variant, subdir):
         construct = P.CONSTRUCTS / f"{variant}-{subdir}"
+        installer = U.installer(variant, subdir)
+        hashfile = installer.parent / f"{installer.name}.sha256"
+
         yield dict(
+            uptodate=[config_changed({installer.name: installer.exists()})],
             name=f"{variant}:{subdir}",
             actions=[
                 U.cmd(
-                    ["constructor", ".", "--output-dir", P.DIST],
+                    [
+                        "constructor",
+                        ".",
+                        "--output-dir",
+                        P.DIST,
+                        "--cache-dir",
+                        P.CONSTRUCTOR_CACHE,
+                    ],
                     cwd=str(construct),
                 )
             ],
             file_dep=[*construct.rglob("*")],
-            targets=[U.installer(variant, subdir)],
+            targets=[installer],
         )
+
+        yield dict(
+            name=f"{variant}:{subdir}:sha256",
+            actions=[(U.sha256, [hashfile, installer])],
+            file_dep=[installer],
+            targets=[hashfile],
+        )
+
+    @classmethod
+    def sha256(cls, hashfile, *paths):
+        with hashfile.open("w+") as fp:
+            for path in sorted(paths):
+                h = sha256()
+
+                for byte_block in iter(lambda: f.read(4096), b""):
+                    h.update(byte_block)
+
+                hashfile.write_text(sha256_hash.hexdigest())
 
 
 # late environment patches
