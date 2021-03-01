@@ -22,21 +22,20 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from doit import create_after
 from doit.tools import CmdAction, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
 
 # see additional environment variable hacks at the end
-DOIT_CONFIG = {
-    "backend": "sqlite3",
-    "verbosity": 2,
-    "par_type": "thread",
-    "default_tasks": ["ALL"],
-}
+DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
 
 # patch environment for all child tasks
-os.environ.update(PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", MAMBA_NO_BANNER="1")
+os.environ.update(
+    PYTHONIOENCODING="utf-8",
+    PYTHONUNBUFFERED="1",
+    MAMBA_NO_BANNER="1",
+    CONDA_EXE="mamba",
+)
 
 
 def task_setup():
@@ -85,13 +84,12 @@ def task_lint():
     )
 
 
-@create_after("lint")
 def task_lock():
     """generate conda locks for all envs"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
-            variant_spec = P.SPECS / f"{variant}-{subdir}.yml"
-            if not variant_spec.exists():
+            variant_spec = U.variant_spec(variant, subdir)
+            if variant_spec is None:
                 continue
             args = ["conda-lock", "--mamba", "--platform", subdir]
             lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
@@ -110,12 +108,20 @@ def task_lock():
             )
 
 
-@create_after("lock")
 def task_construct():
+    """generate construct folders"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
-            if (P.SPECS / f"{variant}-{subdir}.yml").exists():
+            if U.variant_spec(variant, subdir) is not None:
                 yield U.construct(variant, subdir)
+
+
+def task_build():
+    """build installers"""
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            if U.variant_spec(variant, subdir) is not None:
+                yield U.build(variant, subdir)
 
 
 # some namespaces for project-level stuff
@@ -130,6 +136,11 @@ class C:
     TODAY = datetime.today()
     VERSION = TODAY.strftime("%Y.%m")
     BUILD_NUMBER = "0"
+    CONSTRUCTOR_PLATFORM = {
+        "linux-64": ["Linux-x86_64", "sh"],
+        "osx-64": ["MacOSX-x86_64", "sh"],
+        "win-64": ["Windows-x86_64", "exe"],
+    }
 
 
 class P:
@@ -147,6 +158,10 @@ class P:
     PYPROJECT = SCRIPTS / "pyproject.toml"
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
+    CACHE = SCRIPTS / ".cache"
+    CONSTRUCTOR_CACHE = Path(
+        os.environ.get("CONSTRUCTOR_CACHE", CACHE / ".constructor")
+    )
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
@@ -203,6 +218,17 @@ class U:
     script = lambda *args, **kwargs: U.cmd(*args, **kwargs, cwd=str(P.SCRIPTS))
 
     @classmethod
+    def variant_spec(cls, variant, subdir):
+        spec = P.SPECS / f"{variant}-{subdir}.yml"
+        return spec if spec.exists() else None
+
+    @classmethod
+    def installer(cls, variant, subdir):
+        pf, ext = C.CONSTRUCTOR_PLATFORM[subdir]
+        name = f"{C.NAME}-{variant.upper()}-{C.VERSION}-{C.BUILD_NUMBER}-{pf}.{ext}"
+        return P.DIST / name
+
+    @classmethod
     def construct(cls, variant, subdir):
         construct = P.CONSTRUCTS / f"{variant}-{subdir}"
         lock = P.LOCKS / f"{variant}-{subdir}.conda.lock"
@@ -238,6 +264,28 @@ class U:
             actions=[construct],
             file_dep=[lock, *paths.keys()],
             targets=[*paths.values()],
+        )
+
+    @classmethod
+    def build(cls, variant, subdir):
+        construct = P.CONSTRUCTS / f"{variant}-{subdir}"
+        yield dict(
+            name=f"{variant}:{subdir}",
+            actions=[
+                U.cmd(
+                    [
+                        "constructor",
+                        ".",
+                        "--output-dir",
+                        P.DIST,
+                        "--cache-dir",
+                        P.CONSTRUCTOR_CACHE,
+                    ],
+                    cwd=str(construct),
+                )
+            ],
+            file_dep=[*construct.rglob("*")],
+            targets=[U.installer(variant, subdir)],
         )
 
 
