@@ -22,6 +22,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from doit import create_after
 from doit.tools import CmdAction, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
@@ -84,6 +85,7 @@ def task_lint():
     )
 
 
+@create_after("lint")
 def task_lock():
     """generate conda locks for all envs"""
     for variant in C.VARIANTS:
@@ -108,6 +110,7 @@ def task_lock():
             )
 
 
+@create_after("lock")
 def task_construct():
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
