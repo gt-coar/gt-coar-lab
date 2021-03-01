@@ -22,7 +22,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from doit.tools import CmdAction, create_folder
+from doit.tools import CmdAction, config_changed, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
 
@@ -140,13 +140,33 @@ def task_ci():
     """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
+    context = dict(build=[], test=[])
+
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            if U.variant_spec(variant, subdir) is not None:
+                lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
+                context["build"] += [
+                    dict(
+                        subdir=subdir,
+                        variant=variant,
+                        name=lockfile.stem.split(".")[0],
+                        ci_lockfile=str(
+                            (P.LOCKS / f"ci-{subdir}.conda.lock").relative_to(P.ROOT)
+                        ),
+                        lockfile=str(lockfile.relative_to(P.ROOT)),
+                        vm=C.VM[subdir],
+                    )
+                ]
+
     def build():
-        P.WORKFLOW.write_text(Template(tmpl.read_text(**C.ENC)).render({}), **C.ENC)
-        U.script([*P.PRETTIER_ARGS, P.WORKFLOW]).execute()
+        P.WORKFLOW.write_text(
+            Template(tmpl.read_text(**C.ENC)).render(**context), **C.ENC
+        )
 
     yield dict(
         name="workflow",
-        actions=[build],
+        actions=[build, U.script([*P.PRETTIER_ARGS, P.WORKFLOW])],
         file_dep=[tmpl, P.YARN_INTEGRITY],
         targets=[P.WORKFLOW],
     )
@@ -177,6 +197,11 @@ class C:
         "osx-64": ["MacOSX-x86_64", "sh"],
         "win-64": ["Windows-x86_64", "exe"],
     }
+    VM = {
+        "linux-64": "ubuntu-20.04",
+        "osx-64": "macos-latest",
+        "win-64": "windows-latest",
+    }
 
 
 class P:
@@ -195,9 +220,6 @@ class P:
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
     CACHE = SCRIPTS / ".cache"
-    CONSTRUCTOR_CACHE = Path(
-        os.environ.get("CONSTRUCTOR_CACHE", CACHE / ".constructor")
-    )
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
@@ -270,6 +292,7 @@ class U:
         context = dict(
             specs=lock.read_text(**C.ENC).split("@EXPLICIT")[1].strip().splitlines(),
             name=C.NAME,
+            subdir=subdir,
             variant=variant,
             build_number=C.BUILD_NUMBER,
             version=C.VERSION,
@@ -302,14 +325,7 @@ class U:
             name=f"{variant}:{subdir}",
             actions=[
                 U.cmd(
-                    [
-                        "constructor",
-                        ".",
-                        "--output-dir",
-                        P.DIST,
-                        "--cache-dir",
-                        P.CONSTRUCTOR_CACHE,
-                    ],
+                    ["constructor", ".", "--output-dir", P.DIST],
                     cwd=str(construct),
                 )
             ],

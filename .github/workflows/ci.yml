@@ -12,12 +12,11 @@ on:
     branches: [master, dev]
 
 env:
-  PIP_DISABLE_PIP_VERSION_CHECK: '1'
-  MAMBA_NO_BANNER: '1'
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+  MAMBA_NO_BANNER: 1
   # our stuff
-  CONSTRUCTOR_CACHE: ~/.constructor
-  ATEST_RETRIES: '1'
-  CACHE_EPOCH: '0'
+  ATEST_RETRIES: 1
+  CACHE_EPOCH: 0
 
 defaults:
   run:
@@ -35,9 +34,17 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ hashFiles('locks/ci-linux-64.yml') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-${{ hashFiles('locks/ci-linux-64.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/ci-linux-64.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
 
       - name: cache (yarn)
         uses: actions/cache@v1
@@ -49,6 +56,30 @@ jobs:
             ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
             ${{ env.CACHE_EPOCH }}-yarn-
 
+      - run: doit list --all --status
+
+      - run: doit lint || doit lint || doit lint
+
+      - if: always()
+        run: doit list --all --status
+
+  build-cpu-linux-64:
+    name: build cpu-linux-64
+    runs-on: ubuntu-20.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock', 'locks/cpu-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
       - uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -58,167 +89,124 @@ jobs:
 
       - run: doit list --all --status
 
-      - run: doit lint || doit lint || doit lint
+      - run: doit -s build:cpu:linux-64
 
-      - if: ${{ always() }}
+      - if: always()
         run: doit list --all --status
 
-  # build:
-  #   name: Build ${{ matrix.os }}
-  #   needs: [lint]
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       os: ['ubuntu', 'macos', 'windows']
-  #       include:
-  #         - os: ubuntu
-  #           locks: '_base,core,unix,linux-64'
-  #         - os: macos
-  #           locks: '_base,core,unix,osx-64'
-  #         - os: windows
-  #           locks: '_base,core,win-64'
-  #   steps:
-  #     - uses: actions/checkout@v2
+      - name: publish dists
+        uses: actions/upload-artifact@v2
+        with:
+          name: cpu-linux-64 ${{ github.run_number }}
+          path: ./dist
 
-  #     - uses: conda-incubator/setup-miniconda@master
-  #       with:
-  #         activate-environment: gt-coar-lab-base
-  #         auto-activate-base: false
-  #         condarc-file: .ci_support/.condarc
-  #         environment-file: .ci_support/environment.yml
+  build-cpu-osx-64:
+    name: build cpu-osx-64
+    runs-on: macos-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
 
-  #     # prepare
-  #     - if: ${{ !contains(matrix.os, 'windows') }}
-  #       shell: bash -l {0}
-  #       run: anaconda-project prepare --env-spec build
-  #     - if: ${{ contains(matrix.os, 'windows') }}
-  #       shell: cmd /C CALL {0}
-  #       run: anaconda-project prepare --env-spec build
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-${{ hashFiles('locks/ci-osx-64.conda.lock', 'locks/cpu-osx-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
 
-  #     # template
-  #     - if: ${{ !contains(matrix.os, 'windows') }}
-  #       shell: bash -l {0}
-  #       run: anaconda-project run build template
-  #     - if: ${{ contains(matrix.os, 'windows') }}
-  #       shell: cmd /C CALL {0}
-  #       run: anaconda-project run build template
+      - uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/ci-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
 
-  #     # cache downloaded constructor packages
-  #     - uses: actions/cache@v1
-  #       with:
-  #         path: ~/.constructor
-  #         key: |
-  #           ${{ runner.os }}-constructor-${{ hashFiles('installer/construct.yaml') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-constructor-
+      - run: doit list --all --status
 
-  #     # build
-  #     - if: ${{ !contains(matrix.os, 'windows') }}
-  #       shell: bash -l {0}
-  #       run: anaconda-project run build installer
-  #     - if: ${{ contains(matrix.os, 'windows') }}
-  #       shell: cmd /C CALL {0}
-  #       run: anaconda-project run build installer
+      - run: doit -s build:cpu:osx-64
 
-  #     # upload
-  #     - name: upload installer
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: installer-${{ matrix.os }}-${{ github.run_number }}
-  #         path: dist/installers
+      - if: always()
+        run: doit list --all --status
 
-  # test:
-  #   name: Test ${{ matrix.os }}
-  #   needs:
-  #     - construct
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       os:
-  #         - ubuntu-latest
-  #         - macos-latest
-  #         - windows-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: download installer
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: installer-${{ matrix.os }}-${{ github.run_number }}
-  #         path: dist/installers
+      - name: publish dists
+        uses: actions/upload-artifact@v2
+        with:
+          name: cpu-osx-64 ${{ github.run_number }}
+          path: ./dist
 
-  #     # conda
-  #     - uses: conda-incubator/setup-miniconda@master
-  #       with:
-  #         activate-environment: gt-coar-lab-base
-  #         auto-activate-base: false
-  #         condarc-file: .ci_support/.condarc
-  #         environment-file: .ci_support/environment-base.yml
-  #         show-channel-urls: true
-  #         use-only-tar-bz2: true
+  build-cpu-win-64:
+    name: build cpu-win-64
+    runs-on: windows-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
 
-  #     # prepare
-  #     - if: ${{ !contains(matrix.os, 'windows') }}
-  #       shell: bash -l {0}
-  #       run: anaconda-project prepare --env-spec qa
-  #     - if: ${{ contains(matrix.os, 'windows') }}
-  #       shell: cmd /C CALL {0}
-  #       run: anaconda-project prepare --env-spec qa
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-${{ hashFiles('locks/ci-win-64.conda.lock', 'locks/cpu-win-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
 
-  #     # test
-  #     - if: ${{ !contains(matrix.os, 'windows') }}
-  #       shell: bash -l {0}
-  #       run: anaconda-project run atest
-  #     - if: ${{ contains(matrix.os, 'windows') }}
-  #       shell: cmd /C CALL {0}
-  #       run: anaconda-project run atest
+      - uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/ci-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
 
-  #     # report
-  #     - if: ${{ always() }}
-  #       name: upload robot logs
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: atest-${{ matrix.os }}-${{ github.run_number }}
-  #         path: atest/output
+      - run: doit list --all --status
 
-  # audit:
-  #   name: Audit
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - test
-  #   steps:
-  #     - uses: actions/checkout@v2
+      - run: doit -s build:cpu:win-64
 
-  #     - name: download linux reports
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: atest-ubuntu-latest-${{ github.run_number }}
-  #         path: atest/output
+      - if: always()
+        run: doit list --all --status
 
-  #     - name: download macos reports
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: atest-macos-latest-${{ github.run_number }}
-  #         path: atest/output
+      - name: publish dists
+        uses: actions/upload-artifact@v2
+        with:
+          name: cpu-win-64 ${{ github.run_number }}
+          path: ./dist
 
-  #     - name: download windows reports
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: atest-windows-latest-${{ github.run_number }}
-  #         path: atest/output
+  build-gpu-linux-64:
+    name: build gpu-linux-64
+    runs-on: ubuntu-20.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: conda-incubator/setup-miniconda@master
-  #       with:
-  #         activate-environment: gt-coar-lab-base
-  #         auto-activate-base: false
-  #         condarc-file: .ci_support/.condarc
-  #         environment-file: .ci_support/environment-base.yml
-  #         show-channel-urls: true
-  #         use-only-tar-bz2: true
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock', 'locks/gpu-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
-  #     - shell: bash -l {0}
-  #       run: anaconda-project prepare --env-spec audit
+      - uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/ci-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
 
-  #     - shell: bash -l {0}
-  #       run: anaconda-project run audit
+      - run: doit list --all --status
+
+      - run: doit -s build:gpu:linux-64
+
+      - if: always()
+        run: doit list --all --status
+
+      - name: publish dists
+        uses: actions/upload-artifact@v2
+        with:
+          name: gpu-linux-64 ${{ github.run_number }}
+          path: ./dist
