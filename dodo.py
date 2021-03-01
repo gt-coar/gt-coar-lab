@@ -166,7 +166,7 @@ class C:
 
     NAME = "GTCoarLab"
     ENC = dict(encoding="utf-8")
-    YARN = ["yarn", "--silent"]
+    YARN = ["yarn"]
     VARIANTS = ["cpu", "gpu"]
     SUBDIRS = ["linux-64", "osx-64", "win-64"]
     TODAY = datetime.today()
