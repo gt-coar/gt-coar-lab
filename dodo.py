@@ -40,10 +40,16 @@ os.environ.update(
 
 def task_setup():
     """handle non-conda setup tasks"""
+
+    yarn_dep = [P.PACKAGE_JSON, P.YARNRC]
+
+    if P.YARN_LOCK.exists():
+        yarn_dep += [P.YARN_LOCK]
+
     yield dict(
         name="yarn",
         doc="install npm dependencies with yarn",
-        file_dep=[P.YARN_LOCK, P.PACKAGE_JSON, P.YARNRC],
+        file_dep=yarn_dep,
         actions=[U.script(C.YARN)],
         targets=[P.YARN_INTEGRITY],
     )
