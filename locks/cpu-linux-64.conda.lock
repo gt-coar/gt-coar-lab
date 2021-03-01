@@ -1,5 +1,5 @@
 # platform: linux-64
-# env_hash: e1353bb6bceeadb1df1f925fecf5c6aa6221c1d7f71874e6d6a5919d0a453dfc
+# env_hash: acac3fad8c78166ed3338851cb05357efd1044e92bd37f84c3c9447b8d6b683b
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
 https://conda.anaconda.org/conda-forge/linux-64/ca-certificates-2020.12.5-ha878542_0.tar.bz2#7eb5d4ffeee663caa1635cd67071bc1b
@@ -219,6 +219,7 @@ https://conda.anaconda.org/conda-forge/linux-64/conda-package-handling-1.7.2-py3
 https://conda.anaconda.org/conda-forge/noarch/cycler-0.10.0-py_2.tar.bz2#f6d7c7e6d8f42cbbec7e07a8d879f91c
 https://conda.anaconda.org/conda-forge/linux-64/cytoolz-0.11.0-py37h5e8e339_3.tar.bz2#2e89a6f3baf5eeb13763f61ea3d0601f
 https://conda.anaconda.org/conda-forge/linux-64/dbus-1.13.6-hfdff14a_1.tar.bz2#4caaca6356992ee545080c7d7193b5a3
+https://conda.anaconda.org/conda-forge/linux-64/dm-tree-0.1.5-py37hdc94413_2.tar.bz2#d697236e0dc818c0d3765816d4f2dfa3
 https://conda.anaconda.org/conda-forge/linux-64/easyprocess-0.3-py37hc8dfbb8_2.tar.bz2#ae9c1f8b45bfd5dbe6c14d0c360c0d3c
 https://conda.anaconda.org/conda-forge/linux-64/entrypoints-0.3-py37hc8dfbb8_1002.tar.bz2#1d8fad3ab1118f88aada03a56efa93d8
 https://conda.anaconda.org/conda-forge/linux-64/future-0.18.2-py37h89c1867_3.tar.bz2#1f5b95fabd80a6d0cd3e833e182cb6b9
@@ -284,6 +285,7 @@ https://conda.anaconda.org/conda-forge/linux-64/cryptography-3.4.4-py37hf1a17b8_
 https://conda.anaconda.org/conda-forge/noarch/dask-core-2021.2.0-pyhd8ed1ab_0.tar.bz2#55e9ec3fa2b40d163f062977c7fee870
 https://conda.anaconda.org/conda-forge/noarch/datashape-0.5.4-py_1.tar.bz2#50ddfce434ea596fc4497085f403a9d5
 https://conda.anaconda.org/conda-forge/noarch/deprecated-1.2.10-pyh9f0ad1d_0.tar.bz2#f8a0f3425a523903e86296072e267e13
+https://conda.anaconda.org/conda-forge/noarch/dm-env-1.4-pyhd8ed1ab_0.tar.bz2#47ef995beb4a8be55b0bc2890bff813b
 https://conda.anaconda.org/conda-forge/noarch/gitpython-3.1.14-pyhd8ed1ab_0.tar.bz2#4dca4262c5376a85ce02c517dc385041
 https://conda.anaconda.org/conda-forge/noarch/gpustat-0.6.0-pyhd8ed1ab_1.tar.bz2#0d44a95209f28f35158e42eb266c2880
 https://conda.anaconda.org/conda-forge/linux-64/h5py-3.1.0-nompi_py37h1e651dc_100.tar.bz2#b45bff851699e73b940c8d0684e5d2db
@@ -311,6 +313,7 @@ https://conda.anaconda.org/conda-forge/linux-64/asv-0.4.2-py37hcd2ae1e_2.tar.bz2
 https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.1-py_0.tar.bz2#d36df15eaef96549ce6231e3088fba54
 https://conda.anaconda.org/conda-forge/noarch/bleach-3.3.0-pyh44b312d_0.tar.bz2#abf6b76c39358ca36ca706c46f054f2a
 https://conda.anaconda.org/conda-forge/linux-64/distributed-2021.2.0-py37h89c1867_0.tar.bz2#3ac5c849147b24b8482e4baaa239761f
+https://conda.anaconda.org/conda-forge/noarch/dm-acme-0.2.0-pyhd8ed1ab_0.tar.bz2#40c47eb45c770be7ed99898d23976049
 https://conda.anaconda.org/conda-forge/noarch/flake8-3.8.4-py_0.tar.bz2#138b1704321c115bd10e1966320ac790
 https://conda.anaconda.org/conda-forge/noarch/googlesearch-3.0.0-pyh9f0ad1d_0.tar.bz2#91750655a246e69443b81cd7a91de82f
 https://conda.anaconda.org/conda-forge/linux-64/grpcio-1.36.0-py37hb27c1af_0.tar.bz2#4c8c216d2ecf218841308835e658a386

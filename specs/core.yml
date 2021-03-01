@@ -7,6 +7,8 @@ dependencies:
   # gym and friends
   - gym
   - gym-box2d
+  # deepmind
+  - dm-acme
   # interactive computing extensions
   - jupyterlab >=3.0.9
   # TODO: upstream
