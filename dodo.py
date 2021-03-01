@@ -146,7 +146,12 @@ def task_ci():
         P.WORKFLOW.write_text(Template(tmpl.read_text(**C.ENC)).render({}), **C.ENC)
         U.script([*P.PRETTIER_ARGS, P.WORKFLOW]).execute()
 
-    yield dict(name="workflow", actions=[build], file_dep=[tmpl], targets=[P.WORKFLOW])
+    yield dict(
+        name="workflow",
+        actions=[build],
+        file_dep=[tmpl, P.YARN_INTEGRITY],
+        targets=[P.WORKFLOW],
+    )
 
 
 def task_build():
@@ -234,7 +239,6 @@ class P:
         *SCRIPTS.glob("*.json"),
         *CI.glob("*.yml"),
         CONDARC,
-        PYPROJECT,
     ]
 
 
