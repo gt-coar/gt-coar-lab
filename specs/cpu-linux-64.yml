@@ -2,9 +2,4 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 dependencies:
-  - pyvirtualdisplay
-  # not available on windows
-  - coq
-  # broken on osx
-  - py2cytoscape
-  - gym-atari
+  - pytorch-cpu

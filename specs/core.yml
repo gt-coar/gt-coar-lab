@@ -1,29 +1,29 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: core
-channels: []
 dependencies:
+  # coar
+  - jupyterlab-gt-coar-theme
   # gym and friends
   - gym
   - gym-box2d
-  - gym-atari
   # interactive computing extensions
-  - jupyterlab >=3.0.6
-  - jupyterlab-git
+  - jupyterlab >=3.0.9
+  # TODO: upstream
+  # - jupyterlab-git
   - dask_labextension
   - importnb
   - jupyter_bokeh
   # collaboration and presentation
   - jupyter-videochat
-  - ipydrawio
+  # TODO: publish
+  # - ipydrawio
   # numerical compute
   - numpy
   - pandas
   # differentiable compute
   - dask
   - distributed
-  - pytorch
   - swifter
   - tensorflow
   # interactive visualization
@@ -32,8 +32,16 @@ dependencies:
   - ipycytoscape
   - ipyelk
   - ipywidgets >=7.6,<8
-  - py2cytoscape
   - python-graphviz
+  - wxyz_datagrid
+  - wxyz_dvcs
+  - wxyz_json_schema_form
+  - wxyz_json_e
+  - wxyz_jsonld
+  - wxyz_lab
+  - wxyz_svg
+  - wxyz_tpl_jinja
+  - wxyz_yaml
   # code assistance
   - jupyterlab-lsp
   - jupyter-lsp-python-plugins
@@ -45,14 +53,12 @@ dependencies:
   - networkx
   # benchmarking
   - asv
-  # computer vision
-  - py-opencv
-  - scikit-image
   # testing
   - pytest
   - pytest-asyncio
   # headless rendering
   - pyopengl
-  - pyopengl-accelerate
+  # TODO: conda-forge
+  # - pyopengl-accelerate
   # pins from audit
   - rsa >=4.3

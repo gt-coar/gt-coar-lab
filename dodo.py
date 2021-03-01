@@ -91,11 +91,12 @@ def task_lock():
     """generate conda locks for all envs"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
-            args = ["--platform", subdir]
+            variant_spec = P.SPECS / f"{variant}-{subdir}.yml"
+            if not variant_spec.exists():
+                continue
+            args = ["conda-lock", "--mamba", "--platform", subdir]
             lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
-            specs = [*P.CORE_SPECS, P.SPECS / f"{subdir}.yml"]
-            variant_spec = P.SPECS / f"{subdir}-{variant}.yml"
-            specs += [variant_spec] if variant_spec.exists() else []
+            specs = [*P.CORE_SPECS, P.SPECS / f"{subdir}.yml", variant_spec]
             args += sum([["--file", spec] for spec in specs], [])
             args += ["--filename-template", variant + "-{platform}.conda.lock"]
 
@@ -103,8 +104,8 @@ def task_lock():
                 name=f"{variant}:{subdir}",
                 file_dep=specs,
                 actions=[
-                    create_folder(P.LOCKS),
-                    U.cmd(args),
+                    (create_folder, [P.LOCKS]),
+                    U.cmd(args, cwd=str(P.LOCKS)),
                 ],
                 targets=[lockfile],
             )
@@ -116,8 +117,8 @@ class C:
 
     ENC = dict(encoding="utf-8")
     YARN = ["yarn", "--silent"]
+    VARIANTS = ["cpu", "gpu"]
     SUBDIRS = ["linux-64", "osx-64", "win-64"]
-    VARIANTS = ["cpu"]  # ,"gpu"]
 
 
 class P:
@@ -134,7 +135,7 @@ class P:
     YARNRC = SCRIPTS / ".yarnrc"
     PYPROJECT = SCRIPTS / "pyproject.toml"
     TEMPLATES = ROOT / "templates"
-    SPECS = ROOT / "SPECS"
+    SPECS = ROOT / "specs"
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
