@@ -51,8 +51,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       {% endraw %}
-      {{ cache_conda('ubuntu-20.04', 'lint', ['locks/ci-linux-64.lock']) }}
-      {{ setup_miniconda('locks/ci-linux-64.lock') }}
+      {{ cache_conda('ubuntu-20.04', 'lint', ['locks/ci-linux-64.conda.lock']) }}
+      {{ setup_miniconda('locks/ci-linux-64.conda.lock') }}
       {% raw %}
 
       - name: cache (yarn)

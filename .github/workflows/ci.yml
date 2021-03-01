@@ -34,7 +34,7 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-${{ hashFiles('locks/ci-linux-64.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
@@ -42,7 +42,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-linux-64.lock
+          environment-file: locks/ci-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
 
