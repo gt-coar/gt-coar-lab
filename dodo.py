@@ -216,6 +216,7 @@ class C:
     CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
     SKIP_LOCKS = CI
     SKIP_LINT = CI and not CI_LINTING
+    CHUNKSIZE = 8192
 
 
 class P:
@@ -370,14 +371,14 @@ class U:
 
     @classmethod
     def sha256(cls, hashfile, *paths):
-        with hashfile.open("w+") as fp:
+        with hashfile.open("w+") as hfp:
             for path in sorted(paths):
                 h = sha256()
+                with path.open("rb") as fp:
+                    for byte_block in iter(lambda: fp.read(C.CHUNKSIZE), b""):
+                        h.update(byte_block)
 
-                for byte_block in iter(lambda: f.read(4096), b""):
-                    h.update(byte_block)
-
-                hashfile.write_text(sha256_hash.hexdigest())
+                hfp.write(f"{h.hexdigest()}  {path.name}")
 
 
 # late environment patches

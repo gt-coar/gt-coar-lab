@@ -102,8 +102,8 @@ jobs:
 {% for job in build %}
   build-{{ job.name }}:
     name: build {{ job.name }}
-    runs-on: {{ job.vm }}
     needs: [lint]
+    runs-on: {{ job.vm }}
     steps:
       {% if job.subdir == "win-64" %}
       {{ long_paths() }}
@@ -129,6 +129,20 @@ jobs:
 
       - name: publish dists
         uses: actions/upload-artifact@v2
+        with:
+          name: {{ job.name }} {{ "${{ github.run_number }}" }}
+          path: ./dist
+
+  test-{{job.name }}:
+    name: test {{ job.name }}
+    needs: [build-{{ job.name }}]
+    runs-on: {{ job.vm}}
+    steps:
+      {% if job.subdir == "win-64" %}
+      {{ long_paths() }}
+      {% endif %}
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
         with:
           name: {{ job.name }} {{ "${{ github.run_number }}" }}
           path: ./dist
