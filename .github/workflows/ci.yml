@@ -35,8 +35,10 @@ jobs:
           environment-file: locks/ci-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
-      - shell: bash -l {0}
-        run: doit lint | doit lint
+      - run: doit list --all --status
+      - run: doit lint | doit lint | doit lint
+      - if: ${{ always() }}
+        run: doit list --all --status
 
   # build:
   #   name: Build ${{ matrix.os }}
