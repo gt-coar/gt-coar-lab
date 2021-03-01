@@ -164,7 +164,7 @@ def task_build():
 class C:
     """constants"""
 
-    NAME = "GTCoarLab"
+    NAME = "GTCOARLab"
     ENC = dict(encoding="utf-8")
     YARN = ["yarn"]
     VARIANTS = ["cpu", "gpu"]

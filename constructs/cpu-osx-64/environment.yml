@@ -1,9 +1,7 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: GTCoarLab-cpu-2021.03-0
-
-channels: []
+name: GTCOARLab-cpu-2021.03-0
 
 dependencies:
   - https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
@@ -225,7 +223,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/osx-64/jupyter_core-4.7.1-py37hf985489_0.tar.bz2#a49ae78b4a221744cca02dfed08a990f
   - https://conda.anaconda.org/conda-forge/noarch/markdown-3.3.4-pyhd8ed1ab_0.tar.bz2#b8054f74fbed2b282f032219f114421a
   - https://conda.anaconda.org/conda-forge/noarch/mypy-0.812-pyhd8ed1ab_0.tar.bz2#517ce8d8863ba1d315ea99854f9e8449
-  - https://conda.anaconda.org/conda-forge/osx-64/pandas-1.2.2-py37h7d02bce_0.tar.bz2#47cb87228263fec499761056d15fa977
+  - https://conda.anaconda.org/conda-forge/osx-64/pandas-1.1.4-py37h9b0e0a3_0.tar.bz2#6b6769d11de4562354817f0c1dd4dd65
   - https://conda.anaconda.org/conda-forge/osx-64/pyglet-1.5.15-py37hf985489_0.tar.bz2#9ab35829a25a3bb7590812ab56c0c581
   - https://conda.anaconda.org/conda-forge/noarch/python-jsonrpc-server-0.4.0-pyh9f0ad1d_0.tar.bz2#c39b1300b4380779816c2e6b7d0e8e1b
   - https://conda.anaconda.org/conda-forge/osx-64/pytorch-cpu-1.6.0-cpu_py37hdb6b5e6_1.tar.bz2#8dadf52a8ade880db3f14ead694dacab
@@ -284,6 +282,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/osx-64/tensorflow-base-1.14.0-py37hc8dfbb8_0.tar.bz2#c7b1e379e55801b98040afccbcfc786b
   - https://conda.anaconda.org/conda-forge/osx-64/conda-4.9.2-py37hf985489_0.tar.bz2#8ccd5a89558c8f7ffb5f077c79da3a36
   - https://conda.anaconda.org/conda-forge/osx-64/ipython-7.21.0-py37he01cfaa_0.tar.bz2#96627dad2914a0e3232587bacc1d5ad7
+  - https://conda.anaconda.org/conda-forge/osx-64/modin-0.8.3-py37hf985489_1.tar.bz2#b6545e401545e3e077ab86eb8226eca2
   - https://conda.anaconda.org/conda-forge/osx-64/nbconvert-6.0.7-py37hf985489_3.tar.bz2#cbf915c9d112392238f5ecc98555e132
   - https://conda.anaconda.org/conda-forge/osx-64/ocaml-findlib-1.8.1-0.tar.bz2#b29c90e5fa7f99fd397b5a225df87fcf
   - https://conda.anaconda.org/conda-forge/osx-64/ocaml-num-1.4-h694c41f_1.tar.bz2#62b5e3ab874451365af8277016e67274
@@ -322,7 +321,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/noarch/jupyter_bokeh-2.0.4-pyhd8ed1ab_0.tar.bz2#786edc783994a34ba052bb74b9f8c784
   - https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.2-pyhd8ed1ab_0.tar.bz2#99e2b9b7dac1c754b1b975cef35204fb
   - https://conda.anaconda.org/conda-forge/noarch/jupyterlab-lsp-3.4.1-pyhd8ed1ab_0.tar.bz2#d0cd920dfa2773cc89297d18655f499c
-  - https://conda.anaconda.org/conda-forge/osx-64/swifter-0.305-py37hc8dfbb8_0.tar.bz2#2cea88c1c8abf4e46b9d702f404097c1
+  - https://conda.anaconda.org/conda-forge/osx-64/swifter-1.0.6-py37hc8dfbb8_0.tar.bz2#db22ff6460916d3b5fba3be3868fecd0
   - https://conda.anaconda.org/conda-forge/noarch/wxyz_core-0.5.0-pyhd8ed1ab_0.tar.bz2#072e847646aa1e504b30c0730124c9ad
   - https://conda.anaconda.org/conda-forge/noarch/dask_labextension-5.0.0-hd8ed1ab_0.tar.bz2#76a917adf470e507f4bd58d660964aea
   - https://conda.anaconda.org/conda-forge/noarch/wxyz_dvcs-0.5.0-pyhd8ed1ab_0.tar.bz2#65a0a388728a52016324657bc614152e

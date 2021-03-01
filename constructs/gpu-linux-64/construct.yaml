@@ -1,7 +1,7 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: 'GTCoarLab-GPU'
+name: 'GTCOARLab-GPU'
 version: '2021.03-0'
 company: University System of Georgia
 license_file: LICENSE
@@ -33,3 +33,6 @@ condarc:
   show_sources: True
   unsatisfiable_hints_check_depth: 2
   use_only_tar_bz2: True
+
+channels:
+  - https://conda.anaconda.org/conda-forge

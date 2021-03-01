@@ -29,14 +29,37 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-${{ hashFiles('locks/ci-linux-64.yml') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-${{ runner.os }}-conda-
+
+      - name: cache (yarn)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.yarn-packages
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('_scripts/yarn.lock', '_scripts/.yarnrc') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
+
       - uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
           environment-file: locks/ci-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: latest
+
       - run: doit list --all --status
+
       - run: doit lint | doit lint | doit lint
+
       - if: ${{ always() }}
         run: doit list --all --status
 

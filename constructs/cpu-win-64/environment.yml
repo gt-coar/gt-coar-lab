@@ -1,9 +1,7 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: GTCoarLab-cpu-2021.03-0
-
-channels: []
+name: GTCOARLab-cpu-2021.03-0
 
 dependencies:
   - https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
@@ -65,7 +63,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/win-64/m2w64-gcc-libgfortran-5.3.0-6.tar.bz2#066552ac6b907ec6d72c0ddab29050dc
   - https://conda.anaconda.org/conda-forge/win-64/python-3.7.10-h7840368_100_cpython.tar.bz2#d1cd351219ab70e421897281ab05fecd
   - https://conda.anaconda.org/conda-forge/win-64/reproc-cpp-14.2.1-h0e60522_0.tar.bz2#225f0c12c0bb4f118be96b1766466347
-  - https://conda.anaconda.org/conda-forge/win-64/zeromq-4.3.3-h0e60522_3.tar.bz2#3f14354fbaa50a70595d6d1a54292996
+  - https://conda.anaconda.org/conda-forge/win-64/zeromq-4.3.4-h0e60522_0.tar.bz2#e9004ac5d24937850e9edff978c7e515
   - https://conda.anaconda.org/conda-forge/win-64/zstd-1.4.8-h4e2f164_1.tar.bz2#f8a86a17cb984eb3a5051e29dfb4168b
   - https://conda.anaconda.org/conda-forge/noarch/appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2#5f095bc6454094e96f146491fd03633b
   - https://conda.anaconda.org/conda-forge/noarch/astor-0.8.1-pyh9f0ad1d_0.tar.bz2#6ae770689be59dc391ef974d2e849b56
@@ -102,7 +100,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/noarch/jupyterlab_widgets-1.0.0-pyhd8ed1ab_1.tar.bz2#f8da92114c8fbe1d951b0efaf54dd14b
   - https://conda.anaconda.org/conda-forge/win-64/libarchive-3.5.1-hf621db8_1.tar.bz2#b41a022343bcc779afd13c6b9fb1b9fa
   - https://conda.anaconda.org/conda-forge/win-64/libcurl-7.71.1-h4b64cdc_8.tar.bz2#47468949c81228d0f8a492a124688221
-  - https://conda.anaconda.org/conda-forge/win-64/libglib-2.66.7-h8c8e623_0.tar.bz2#0e522931dde6669d69c34b909142a9bd
+  - https://conda.anaconda.org/conda-forge/win-64/libglib-2.66.7-h1e62bf3_1.tar.bz2#0eeb17066bc33db7e0fe3061feb0ceb2
   - https://conda.anaconda.org/conda-forge/win-64/liblapacke-3.9.0-8_mkl.tar.bz2#e44e57d67449738ff4833ef2b6e0ed30
   - https://conda.anaconda.org/conda-forge/win-64/libtiff-4.2.0-hc10be44_0.tar.bz2#7f2eeddf7e5a137f488377fc4aeec849
   - https://conda.anaconda.org/conda-forge/win-64/libxslt-1.1.33-h65864e5_2.tar.bz2#129a6bde176b51eaa52541e28fa52d5c
@@ -207,7 +205,7 @@ dependencies:
   - https://conda.anaconda.org/conda-forge/win-64/pywin32-300-py37hcc03f2d_0.tar.bz2#332665e8d4a64b4901c014bc09e63d64
   - https://conda.anaconda.org/conda-forge/win-64/pywinpty-0.5.7-py37hc8dfbb8_1.tar.bz2#444e46826f687355650f235b64e6a9a4
   - https://conda.anaconda.org/conda-forge/win-64/pyyaml-5.4.1-py37hcc03f2d_0.tar.bz2#e9ee64dc3e9e47410f46fda92664cfc6
-  - https://conda.anaconda.org/conda-forge/win-64/pyzmq-22.0.3-py37h0d95fc2_0.tar.bz2#876b8525c53a7fb659f0acb9d526092c
+  - https://conda.anaconda.org/conda-forge/win-64/pyzmq-22.0.3-py37hcce574b_1.tar.bz2#814ae1e0dcc1139520566fd070b61f94
   - https://conda.anaconda.org/conda-forge/win-64/regex-2020.11.13-py37hcc03f2d_1.tar.bz2#b894113bde1136f67ce52b4fa3c0a166
   - https://conda.anaconda.org/conda-forge/noarch/rsa-4.7.2-pyh44b312d_0.tar.bz2#3452ab3790dbb1df9508b3fa4ea2f806
   - https://conda.anaconda.org/conda-forge/win-64/ruamel_yaml-0.15.80-py37hcc03f2d_1004.tar.bz2#475705a2c2b9d62edba42705650b9d13
