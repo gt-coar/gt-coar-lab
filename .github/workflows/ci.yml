@@ -58,7 +58,7 @@ jobs:
 
       - run: doit list --all --status
 
-      - run: doit lint | doit lint | doit lint
+      - run: doit lint || doit lint || doit lint
 
       - if: ${{ always() }}
         run: doit list --all --status
