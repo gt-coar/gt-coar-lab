@@ -21,7 +21,8 @@ env:
   CACHE_EPOCH: '0'
 
 defaults:
-  shell: bash -l {0}
+  run:
+    shell: bash -l {0}
 
 jobs:
   lint:
