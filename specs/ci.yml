@@ -8,7 +8,7 @@ channels:
 
 dependencies:
   # the runstime
-  - python >=3.7.10,<3.8.0
+  - python >=3.8.8,<3.9
   - nodejs >=10,!=11.*,!=13.*,<15
   - yarn <2
   # conda and friends, hard-pinned

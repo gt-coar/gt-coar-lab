@@ -5,6 +5,8 @@ dependencies:
   - pyvirtualdisplay
   # not available on windows
   - coq
+  # not fully working on windows/osx
+  - sage
   # broken on osx
   - py2cytoscape
   - gym-atari
