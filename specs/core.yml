@@ -26,7 +26,7 @@ dependencies:
   # differentiable compute
   - dask
   - distributed
-  - swifter
+  - swifter >=1
   - tensorflow
   # interactive visualization
   - datashader
