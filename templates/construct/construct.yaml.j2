@@ -1,8 +1,8 @@
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 # metadata
-name: "{{ name }}"
-version: "{{ version }}"
+name: "{{ name }}-{{ variant.upper() }}"
+version: "{{ version }}-{{ build_number }}"
 company: University System of Georgia
 license_file: LICENSE
 
@@ -13,15 +13,19 @@ initialize_by_default: false
 register_python_default: false
 install_in_dependency_order: true
 
+{% if build_channel %}
 # TODO: get a real channel
 channels_remap:
   - src: {{ build_channel }}
     dest: {{ channels[0] }}
+{% endif %}
 
 channels:
+  - https://conda.anaconda.org/conda-forge
+  {% if build_channel %}
   - {{ build_channel }}
-  {% for channel in channels %}- {{ channel }}
-  {% endfor %}
+  {% endif %}
+
 
 specs:
   {% for spec in specs %}- {{ spec }}

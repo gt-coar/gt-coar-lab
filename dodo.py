@@ -19,9 +19,11 @@ Roughly, the intent is:
 # Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import os
+from datetime import datetime
 from pathlib import Path
 
 from doit.tools import CmdAction, create_folder
+from jinja2 import Template
 from ruamel_yaml import safe_load
 
 # see additional environment variable hacks at the end
@@ -56,12 +58,7 @@ def task_lint():
         actions=[
             U.script(
                 [
-                    *C.YARN,
-                    "prettier",
-                    "--config",
-                    P.PRETTIERRC,
-                    "--list-different",
-                    "--write",
+                    *P.PRETTIER_ARGS,
                     *P.ALL_PRETTIER,
                 ]
             )
@@ -111,14 +108,25 @@ def task_lock():
             )
 
 
+def task_construct():
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            if (P.SPECS / f"{variant}-{subdir}.yml").exists():
+                yield U.construct(variant, subdir)
+
+
 # some namespaces for project-level stuff
 class C:
     """constants"""
 
+    NAME = "GTCoarLab"
     ENC = dict(encoding="utf-8")
     YARN = ["yarn", "--silent"]
     VARIANTS = ["cpu", "gpu"]
     SUBDIRS = ["linux-64", "osx-64", "win-64"]
+    TODAY = datetime.today()
+    VERSION = TODAY.strftime("%Y.%m")
+    BUILD_NUMBER = "0"
 
 
 class P:
@@ -141,6 +149,7 @@ class P:
     YARN_LOCK = SCRIPTS / "yarn.lock"
     WORKFLOW = CI / "workflows/ci.yml"
     LOCKS = ROOT / "locks"
+    CONSTRUCTS = ROOT / "constructs"
 
     # stuff we don't check in
     BUILD = ROOT / "build"
@@ -149,7 +158,16 @@ class P:
     YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
 
     # config cruft
+    PRETTIER_SUFFIXES = [".yml", ".yaml", ".toml", ".json", ".md"]
     PRETTIERRC = SCRIPTS / ".prettierrc"
+    PRETTIER_ARGS = [
+        *C.YARN,
+        "prettier",
+        "--config",
+        PRETTIERRC,
+        "--list-different",
+        "--write",
+    ]
 
     # collections of things
     CORE_SPECS = [SPECS / "_base.yml", SPECS / "core.yml"]
@@ -180,6 +198,44 @@ class U:
 
     cmd = lambda *args, **kwargs: CmdAction(*args, **kwargs, shell=False)
     script = lambda *args, **kwargs: U.cmd(*args, **kwargs, cwd=str(P.SCRIPTS))
+
+    @classmethod
+    def construct(cls, variant, subdir):
+        construct = P.CONSTRUCTS / f"{variant}-{subdir}"
+        lock = P.LOCKS / f"{variant}-{subdir}.conda.lock"
+        tmpl_dir = P.TEMPLATES / "construct"
+        templates = tmpl_dir.rglob("*")
+        paths = {
+            t: construct / (str(t.relative_to(tmpl_dir)).replace(".j2", ""))
+            for t in templates
+        }
+        context = dict(
+            specs=lock.read_text(**C.ENC).split("@EXPLICIT")[1].strip().splitlines(),
+            name=C.NAME,
+            variant=variant,
+            build_number=C.BUILD_NUMBER,
+            version=C.VERSION,
+        )
+
+        def construct():
+            for src_path, dest_path in paths.items():
+                if not dest_path.parent.exists():
+                    dest_path.parent.mkdir(parents=True)
+                src = src_path.read_text(**C.ENC)
+                if src_path.name.endswith(".j2"):
+                    dest = Template(src).render(**context)
+                else:
+                    dest = src
+                dest_path.write_text(dest, **C.ENC)
+                if dest_path.suffix in P.PRETTIER_SUFFIXES:
+                    U.script([*P.PRETTIER_ARGS, dest_path]).execute()
+
+        yield dict(
+            name=f"{variant}:{subdir}",
+            actions=[construct],
+            file_dep=[lock, *paths.keys()],
+            targets=[*paths.values()],
+        )
 
 
 # late environment patches
