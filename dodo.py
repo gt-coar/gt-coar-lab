@@ -19,6 +19,7 @@ Roughly, the intent is:
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import os
+import shutil
 import subprocess
 from datetime import datetime
 from hashlib import sha256
@@ -80,6 +81,7 @@ def task_lint():
         actions=[
             U.script(["isort", *P.ALL_PY]),
             U.script(["black", "--quiet", *P.ALL_PY]),
+            U.script(["flake8", "--max-line-length=88", "--ignore=E731", *P.ALL_PY]),
         ],
     )
 
@@ -353,17 +355,27 @@ class U:
             P.CONSTRUCTOR_CACHE,
         ]
 
+        env = dict(os.environ)
+
+        env.update(CONDA_EXE="mamba", CONDARC=str(P.CONDARC))
+
         def build():
-            proc = subprocess.Popen(list(map(str, args)), cwd=str(construct))
+            proc = subprocess.Popen(list(map(str, args)), cwd=str(construct), env=env)
             rc = proc.wait()
 
-            for tarball in P.CONSTRUCTOR_CACHE.glob("*.tar.bz2"):
-                tarball.unlink()
+            for tarball in P.CONSTRUCTOR_CACHE.rglob("*.tar.bz2"):
+                unpacked = tarball.parent / tarball.name.replace(".tar.bz2", "")
+                if unpacked.exists():
+                    shutil.rmtree(unpacked)
 
             return rc == 0
 
         yield dict(
-            uptodate=[config_changed({installer.name: installer.exists()})],
+            uptodate=[
+                config_changed(
+                    {installer.name: [installer.exists(), hashfile.exists()]}
+                )
+            ],
             name=f"{variant}:{subdir}",
             actions=[build],
             file_dep=[*construct.rglob("*")],

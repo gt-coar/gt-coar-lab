@@ -1,5 +1,5 @@
 # platform: osx-64
-# env_hash: 6a11f2a2dfefbbdfe440b27bfee9e23b359e90314de84046b853b89a68ddbf47
+# env_hash: 89b9868f661cac61ad04c40902e1186d2ca4b17c7b9e85d8021ce210c6abdfe8
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
 https://conda.anaconda.org/conda-forge/osx-64/c-ares-1.17.1-hc929b4f_0.tar.bz2#24fc0b91a6eacc6753fef90514d67ce9
@@ -43,18 +43,21 @@ https://conda.anaconda.org/conda-forge/noarch/filelock-3.0.12-pyh9f0ad1d_0.tar.b
 https://conda.anaconda.org/conda-forge/noarch/idna-2.10-pyh9f0ad1d_0.tar.bz2#f95a12b4f435aae6680fe55ae2eb1b06
 https://conda.anaconda.org/conda-forge/noarch/mccabe-0.6.1-py_1.tar.bz2#a326cb400c1ccd91789f3e7d02124d61
 https://conda.anaconda.org/conda-forge/noarch/pathspec-0.8.1-pyhd3deb0d_0.tar.bz2#fcd2fbb062b55d14a77e664c89ee17a6
+https://conda.anaconda.org/conda-forge/noarch/pycodestyle-2.6.0-pyh9f0ad1d_0.tar.bz2#a08d6f5a610c7194da158add79f2b018
 https://conda.anaconda.org/conda-forge/noarch/pycparser-2.20-pyh9f0ad1d_2.tar.bz2#aa798d50ffd182a0f6f31478c7f434f6
+https://conda.anaconda.org/conda-forge/noarch/pyflakes-2.2.0-pyh9f0ad1d_0.tar.bz2#b13f3395d2eb4a2705629127a8a8cfaa
 https://conda.anaconda.org/conda-forge/osx-64/python_abi-3.8-1_cp38.tar.bz2#5fe7757fd743e1c2d14d6170d4f53365
 https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1eec421f0f1f39e579e44e4a5ce646a2
 https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2#f832c45a477c78bebd107098db465095
 https://conda.anaconda.org/conda-forge/noarch/tqdm-4.58.0-pyhd8ed1ab_0.tar.bz2#f92f0f1f03f39c011f89f7434e654dc5
 https://conda.anaconda.org/conda-forge/noarch/typing_extensions-3.7.4.3-py_0.tar.bz2#12b96e382730541a4b332420227055ae
+https://conda.anaconda.org/conda-forge/noarch/zipp-3.4.0-py_0.tar.bz2#0df927d2e46244cef8fd75d7ec2ba51c
 https://conda.anaconda.org/conda-forge/osx-64/certifi-2020.12.5-py38h50d1736_1.tar.bz2#fe528d606027dc2848f5a3577ab9b4eb
 https://conda.anaconda.org/conda-forge/osx-64/cffi-1.14.5-py38ha97d567_0.tar.bz2#e7e73148c3781ec81b23f02d7891f138
 https://conda.anaconda.org/conda-forge/osx-64/chardet-4.0.0-py38h50d1736_1.tar.bz2#78e43861bd8d39b948feaa1715b22851
 https://conda.anaconda.org/conda-forge/noarch/click-default-group-1.2.1-py_0.tar.bz2#64a66d3d4db54208496c4e2fa822eeee
 https://conda.anaconda.org/conda-forge/osx-64/conda-package-handling-1.7.2-py38h94c058a_0.tar.bz2#6ed4bdf4a65f2921c42742acfb7abdd0
-https://conda.anaconda.org/conda-forge/osx-64/lazy-object-proxy-1.5.2-py38h5406a74_1.tar.bz2#8f366eb0b53bb64e8b61ae868588be02
+https://conda.anaconda.org/conda-forge/osx-64/importlib-metadata-3.7.0-py38h50d1736_0.tar.bz2#07db9487c437193c74ad2fa7f763b3b8
 https://conda.anaconda.org/conda-forge/osx-64/macfsevents-0.8.1-py38h4d0b108_1001.tar.bz2#cf030199ecebc197ee1475efdf5ac965
 https://conda.anaconda.org/conda-forge/osx-64/markupsafe-1.1.1-py38h5406a74_3.tar.bz2#f1334fc4cf0a7c6a7defc63457a9771c
 https://conda.anaconda.org/conda-forge/osx-64/mypy_extensions-0.4.3-py38h50d1736_3.tar.bz2#ffac8711bd3ad114760e8773ba365240
@@ -64,18 +67,16 @@ https://conda.anaconda.org/conda-forge/osx-64/pyyaml-5.4.1-py38h5406a74_0.tar.bz
 https://conda.anaconda.org/conda-forge/osx-64/regex-2020.11.13-py38h5406a74_1.tar.bz2#28d710121f6fa20bb704c1131c7f48b1
 https://conda.anaconda.org/conda-forge/osx-64/ruamel_yaml-0.15.80-py38hca655e8_1004.tar.bz2#48808a6eab9c7929439eec643c176502
 https://conda.anaconda.org/conda-forge/osx-64/typed-ast-1.4.2-py38h5406a74_0.tar.bz2#50ecd62304129f73106a377498c3c41e
-https://conda.anaconda.org/conda-forge/osx-64/wrapt-1.12.1-py38h5406a74_3.tar.bz2#a73d419570fb126793dca6604fe7c4ef
 https://conda.anaconda.org/conda-forge/noarch/black-20.8b1-py_1.tar.bz2#e555d6b71ec916c3dc4e6e3793cc9796
 https://conda.anaconda.org/conda-forge/osx-64/brotlipy-0.7.0-py38h5406a74_1001.tar.bz2#67c7c3b7a69e581e3a611730c8ea94fc
 https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.4-py38h43df06b_0.tar.bz2#9aecd8376e7f66bb24a96bd8914d2a8a
 https://conda.anaconda.org/conda-forge/osx-64/doit-0.33.1-py38h32f6830_1.tar.bz2#15dba72dfa4453ebafe25a9fd526811a
 https://conda.anaconda.org/conda-forge/osx-64/setuptools-49.6.0-py38h50d1736_3.tar.bz2#af8a81ee7c2c09fc2884c800a044b616
-https://conda.anaconda.org/conda-forge/osx-64/astroid-2.5-py38h50d1736_1.tar.bz2#835069182e1c7c3d3b1a5e18069ff01a
+https://conda.anaconda.org/conda-forge/noarch/flake8-3.8.4-py_0.tar.bz2#138b1704321c115bd10e1966320ac790
 https://conda.anaconda.org/conda-forge/noarch/isort-5.7.0-pyhd8ed1ab_0.tar.bz2#073e46728e0d9a8722457cbf1c335c14
 https://conda.anaconda.org/conda-forge/noarch/jinja2-2.11.3-pyh44b312d_0.tar.bz2#1d4c3605d85a3655b1595e0694138eb6
 https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
 https://conda.anaconda.org/conda-forge/noarch/yamllint-1.26.0-pyhd8ed1ab_0.tar.bz2#79173ac1dce3e3ead3ab1455c588df4b
-https://conda.anaconda.org/conda-forge/osx-64/pylint-2.6.0-py38h50d1736_1.tar.bz2#59472ac7e31aea3d2f75dd724dda25f1
 https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.3-pyhd8ed1ab_0.tar.bz2#25573e57774dd54cfa848e5dd44503ed
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc
 https://conda.anaconda.org/conda-forge/osx-64/conda-4.9.2-py38h50d1736_0.tar.bz2#e3bfd08d796a2a152ac8ecc3c0f046fb
