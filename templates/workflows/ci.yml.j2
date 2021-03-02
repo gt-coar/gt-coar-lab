@@ -67,7 +67,7 @@ env:
   MAMBA_NO_BANNER: 1
   # our stuff
   ATEST_RETRIES: 1
-  CACHE_EPOCH: 2
+  CACHE_EPOCH: 3
 
 defaults:
   run:
@@ -118,6 +118,7 @@ jobs:
       - uses: actions/checkout@v2
 
       {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
+      {{ cache_constructor(job.vm, 'build-' ~ job.name, [job.lockfile]) }}
       {{ setup_miniconda(job.ci_lockfile) }}
 
       - name: preflight (doit)
