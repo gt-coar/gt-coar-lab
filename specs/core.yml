@@ -9,6 +9,11 @@ dependencies:
   - gym-box2d
   # deepmind
   - dm-acme
+  # kernels
+  # TODO: unpin once python-ls is a thing and works with jedi 0.18
+  - ipython <7.20
+  - jedi <0.18
+  - xeus-python
   # interactive computing extensions
   - jupyterlab >=3.0.9
   # TODO: upstream
@@ -46,8 +51,7 @@ dependencies:
   - wxyz_yaml
   # code assistance
   - jupyterlab-lsp
-  # TODO: add when doesn't break ipython
-  # - jupyter-lsp-python-plugins
+  - jupyter-lsp-python-plugins
   - jupyter-lsp-latex
   # computer algebra
   - antlr-python-runtime >=4.7,<4.8

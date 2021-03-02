@@ -19,6 +19,7 @@ Roughly, the intent is:
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import os
+import subprocess
 from datetime import datetime
 from hashlib import sha256
 from pathlib import Path
@@ -342,23 +343,29 @@ class U:
         installer = U.installer(variant, subdir)
         hashfile = installer.parent / f"{installer.name}.sha256"
 
+        args = [
+            "constructor",
+            ".",
+            "--debug",
+            "--output-dir",
+            P.DIST,
+            "--cache-dir",
+            P.CONSTRUCTOR_CACHE,
+        ]
+
+        def build():
+            proc = subprocess.Popen(list(map(str, args)), cwd=str(construct))
+            rc = proc.wait()
+
+            for tarball in P.CONSTRUCTOR_CACHE.glob("*.tar.bz2"):
+                tarball.unlink()
+
+            return rc == 0
+
         yield dict(
             uptodate=[config_changed({installer.name: installer.exists()})],
             name=f"{variant}:{subdir}",
-            actions=[
-                U.cmd(
-                    [
-                        "constructor",
-                        ".",
-                        "--debug",
-                        "--output-dir",
-                        P.DIST,
-                        "--cache-dir",
-                        P.CONSTRUCTOR_CACHE,
-                    ],
-                    cwd=str(construct),
-                )
-            ],
+            actions=[build],
             file_dep=[*construct.rglob("*")],
             targets=[installer],
         )

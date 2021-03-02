@@ -12,7 +12,6 @@ keep_pkgs: true
 initialize_by_default: false
 register_python_default: false
 check_path_length: true
-environment_file: environment.yml
 
 # populate the delivered condarc
 condarc:
@@ -46,3 +45,7 @@ channels:
   {% if build_channel %}
   - {{ build_channel }}
   {% endif %}
+
+specs:
+  {% for spec in specs %}- {{ spec }}
+  {% endfor %}
