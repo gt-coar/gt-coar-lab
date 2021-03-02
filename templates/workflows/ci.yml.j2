@@ -118,7 +118,6 @@ jobs:
       - uses: actions/checkout@v2
 
       {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
-      {{ cache_constructor(job.vm, 'build-' ~ job.name, [job.lockfile]) }}
       {{ setup_miniconda(job.ci_lockfile) }}
 
       - name: preflight (doit)

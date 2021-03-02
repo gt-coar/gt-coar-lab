@@ -92,16 +92,6 @@ jobs:
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
-      - name: cache (constructor)
-        uses: actions/cache@v1
-        with:
-          path: _scripts/.cache/constructor
-          key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-cpu-linux-64-${{ hashFiles('locks/cpu-linux-64.conda.lock') }}
-          restore-keys: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-cpu-linux-64-
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -162,16 +152,6 @@ jobs:
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-
 
-      - name: cache (constructor)
-        uses: actions/cache@v1
-        with:
-          path: _scripts/.cache/constructor
-          key: |
-            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-build-cpu-osx-64-${{ hashFiles('locks/cpu-osx-64.conda.lock') }}
-          restore-keys: |
-            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-build-cpu-osx-64-
-            ${{ env.CACHE_EPOCH }}-macos-latest-constructor-
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -230,16 +210,6 @@ jobs:
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-
-
-      - name: cache (constructor)
-        uses: actions/cache@v1
-        with:
-          path: _scripts/.cache/constructor
-          key: |
-            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-build-cpu-win-64-${{ hashFiles('locks/cpu-win-64.conda.lock') }}
-          restore-keys: |
-            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-build-cpu-win-64-
-            ${{ env.CACHE_EPOCH }}-windows-latest-constructor-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
@@ -305,16 +275,6 @@ jobs:
           restore-keys: |
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
-
-      - name: cache (constructor)
-        uses: actions/cache@v1
-        with:
-          path: _scripts/.cache/constructor
-          key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-gpu-linux-64-${{ hashFiles('locks/gpu-linux-64.conda.lock') }}
-          restore-keys: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-build-gpu-linux-64-
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-constructor-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
