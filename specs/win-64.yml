@@ -2,6 +2,8 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 dependencies:
+  - m2-git
+  - posix
   # broken on osx
   - py2cytoscape
   - gym-atari

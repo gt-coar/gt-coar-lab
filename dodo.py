@@ -19,7 +19,6 @@ Roughly, the intent is:
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import os
-import shutil
 import subprocess
 from datetime import datetime
 from hashlib import sha256
@@ -362,11 +361,6 @@ class U:
         def build():
             proc = subprocess.Popen(list(map(str, args)), cwd=str(construct), env=env)
             rc = proc.wait()
-
-            for tarball in P.CONSTRUCTOR_CACHE.rglob("*.tar.bz2"):
-                unpacked = tarball.parent / tarball.name.replace(".tar.bz2", "")
-                if unpacked.exists():
-                    shutil.rmtree(unpacked)
 
             return rc == 0
 
