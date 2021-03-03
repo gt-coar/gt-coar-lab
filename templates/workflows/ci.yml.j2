@@ -111,9 +111,9 @@ jobs:
     needs: [lint]
     runs-on: {{ job.vm }}
     steps:
-      {{ preflight(job) }}
-
       - uses: actions/checkout@v2
+
+      {{ preflight(job) }}
 
       {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
 

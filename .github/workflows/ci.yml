@@ -74,6 +74,8 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: apt clean (ubuntu)
         run: |
           set -eux
@@ -90,8 +92,6 @@ jobs:
             /var/lib/apt/lists/*
           apt list --installed
           df -h
-
-      - uses: actions/checkout@v2
 
       - name: cache (conda)
         uses: actions/cache@v1
@@ -218,12 +218,12 @@ jobs:
     needs: [lint]
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: enable long paths (windows)
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
         shell: pwsh
-
-      - uses: actions/checkout@v2
 
       - name: cache (conda)
         uses: actions/cache@v1
@@ -283,6 +283,8 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: apt clean (ubuntu)
         run: |
           set -eux
@@ -299,8 +301,6 @@ jobs:
             /var/lib/apt/lists/*
           apt list --installed
           df -h
-
-      - uses: actions/checkout@v2
 
       - name: cache (conda)
         uses: actions/cache@v1
