@@ -371,7 +371,7 @@ class U:
                 )
             ],
             name=f"{variant}:{subdir}",
-            actions=[build],
+            actions=[(create_folder, [P.DIST]), build],
             file_dep=[*construct.rglob("*")],
             targets=[installer],
         )

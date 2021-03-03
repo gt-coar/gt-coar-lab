@@ -30,6 +30,8 @@
       - name: apt clean (ubuntu)
         run: |
           df -h
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           sudo apt-get clean
           df -h
       {% endif %}
