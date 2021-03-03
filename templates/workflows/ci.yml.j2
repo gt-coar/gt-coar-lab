@@ -33,6 +33,11 @@
           df -h
           sudo apt-get -y remove \
             chromium-browser
+          sudo snap remove snap-store
+          sudo snap remove gtk-common-themes
+          sudo snap remove gnome-3-34-1804
+          sudo snap remove core18
+          sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
