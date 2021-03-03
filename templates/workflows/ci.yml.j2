@@ -31,6 +31,7 @@
         run: |
           set -eux
           df -h
+          sudo systemctl stop snapd.service
           sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
