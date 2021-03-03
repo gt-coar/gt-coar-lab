@@ -76,29 +76,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: apt clean (ubuntu)
-        run: |
-          set -eux
-          df -h
-          sudo apt-get -y remove \
-            chromium-browser
-          sudo snap remove snap-store
-          sudo snap remove chromium
-          sudo snap remove gtk-common-themes
-          sudo snap remove gnome-3-28-1804
-          sudo snap remove lxd
-          sudo snap remove core18
-          sudo snap remove snapd
-          sudo bash .github/scripts/clean_snaps.sh
-          sudo apt-get -y autoremove
-          sudo apt-get -y clean
-          sudo rm -rf \
-            "/usr/local/share/boost" \
-            "$AGENT_TOOLSDIRECTORY" \
-            /var/lib/apt/lists/*
-          apt list --installed
-          df -h
-
       - name: cache (conda)
         uses: actions/cache@v1
         with:
@@ -141,29 +118,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-
-      - name: apt clean (ubuntu)
-        run: |
-          set -eux
-          df -h
-          sudo apt-get -y remove \
-            chromium-browser
-          sudo snap remove snap-store
-          sudo snap remove chromium
-          sudo snap remove gtk-common-themes
-          sudo snap remove gnome-3-28-1804
-          sudo snap remove lxd
-          sudo snap remove core18
-          sudo snap remove snapd
-          sudo bash .github/scripts/clean_snaps.sh
-          sudo apt-get -y autoremove
-          sudo apt-get -y clean
-          sudo rm -rf \
-            "/usr/local/share/boost" \
-            "$AGENT_TOOLSDIRECTORY" \
-            /var/lib/apt/lists/*
-          apt list --installed
-          df -h
 
       - uses: actions/download-artifact@v2
         with:
@@ -301,9 +255,6 @@ jobs:
         run: |
           set -eux
           df -h
-          sudo apt-get -y remove \
-            chromium-browser
-          sudo snap remove snap-store
           sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
@@ -367,9 +318,6 @@ jobs:
         run: |
           set -eux
           df -h
-          sudo apt-get -y remove \
-            chromium-browser
-          sudo snap remove snap-store
           sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804

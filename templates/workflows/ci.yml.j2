@@ -26,14 +26,12 @@
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
         shell: pwsh
-      {% elif job.subdir == "linux-64" %}
+      {% elif job.subdir == "linux-64" and job.variant == "gpu" %}
       - name: apt clean (ubuntu)
         run: |
           set -eux
           df -h
-          sudo apt-get -y remove \
-            chromium-browser
-          sudo snap remove snap-store
+          sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
           sudo snap remove lxd
