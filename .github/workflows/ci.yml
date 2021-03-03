@@ -77,9 +77,13 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           df -h
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo apt-get clean
+          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y autoremove
+          sudo apt-get -y clean
+          sudo rm -rf \
+            "/usr/local/share/boost" \
+            "$AGENT_TOOLSDIRECTORY" \
+            /var/lib/apt/lists/*
           df -h
 
       - uses: actions/checkout@v2
@@ -127,9 +131,13 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           df -h
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo apt-get clean
+          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y autoremove
+          sudo apt-get -y clean
+          sudo rm -rf \
+            "/usr/local/share/boost" \
+            "$AGENT_TOOLSDIRECTORY" \
+            /var/lib/apt/lists/*
           df -h
 
       - uses: actions/checkout@v2
@@ -265,9 +273,13 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           df -h
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo apt-get clean
+          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y autoremove
+          sudo apt-get -y clean
+          sudo rm -rf \
+            "/usr/local/share/boost" \
+            "$AGENT_TOOLSDIRECTORY" \
+            /var/lib/apt/lists/*
           df -h
 
       - uses: actions/checkout@v2
@@ -315,9 +327,13 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           df -h
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo apt-get clean
+          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y autoremove
+          sudo apt-get -y clean
+          sudo rm -rf \
+            "/usr/local/share/boost" \
+            "$AGENT_TOOLSDIRECTORY" \
+            /var/lib/apt/lists/*
           df -h
 
       - uses: actions/checkout@v2
