@@ -83,6 +83,7 @@ jobs:
           sudo apt-get -y remove \
             chromium-browser
           sudo snap remove snap-store
+          sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
           sudo snap remove lxd
@@ -148,6 +149,7 @@ jobs:
           sudo apt-get -y remove \
             chromium-browser
           sudo snap remove snap-store
+          sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
           sudo snap remove lxd
@@ -302,6 +304,7 @@ jobs:
           sudo apt-get -y remove \
             chromium-browser
           sudo snap remove snap-store
+          sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
           sudo snap remove lxd
@@ -367,6 +370,7 @@ jobs:
           sudo apt-get -y remove \
             chromium-browser
           sudo snap remove snap-store
+          sudo snap remove chromium
           sudo snap remove gtk-common-themes
           sudo snap remove gnome-3-28-1804
           sudo snap remove lxd
