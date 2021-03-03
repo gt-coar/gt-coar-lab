@@ -76,14 +76,19 @@ jobs:
     steps:
       - name: apt clean (ubuntu)
         run: |
+          set -eux
           df -h
-          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y remove \
+            chromium-browser \
+            lxd
+          bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
             "/usr/local/share/boost" \
             "$AGENT_TOOLSDIRECTORY" \
             /var/lib/apt/lists/*
+          apt list --installed
           df -h
 
       - uses: actions/checkout@v2
@@ -111,6 +116,7 @@ jobs:
 
       - name: build (constructor)
         run: |
+          set -eux
           doit build:cpu:linux-64:sha256 || doit build:cpu:linux-64:sha256
 
       - name: postmortem (doit)
@@ -130,14 +136,19 @@ jobs:
     steps:
       - name: apt clean (ubuntu)
         run: |
+          set -eux
           df -h
-          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y remove \
+            chromium-browser \
+            lxd
+          bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
             "/usr/local/share/boost" \
             "$AGENT_TOOLSDIRECTORY" \
             /var/lib/apt/lists/*
+          apt list --installed
           df -h
 
       - uses: actions/checkout@v2
@@ -177,6 +188,7 @@ jobs:
 
       - name: build (constructor)
         run: |
+          set -eux
           doit build:cpu:osx-64:sha256 || doit build:cpu:osx-64:sha256
 
       - name: postmortem (doit)
@@ -236,6 +248,7 @@ jobs:
 
       - name: build (constructor)
         run: |
+          set -eux
           doit build:cpu:win-64:sha256 || doit build:cpu:win-64:sha256
 
       - name: postmortem (doit)
@@ -272,14 +285,19 @@ jobs:
     steps:
       - name: apt clean (ubuntu)
         run: |
+          set -eux
           df -h
-          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y remove \
+            chromium-browser \
+            lxd
+          bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
             "/usr/local/share/boost" \
             "$AGENT_TOOLSDIRECTORY" \
             /var/lib/apt/lists/*
+          apt list --installed
           df -h
 
       - uses: actions/checkout@v2
@@ -307,6 +325,7 @@ jobs:
 
       - name: build (constructor)
         run: |
+          set -eux
           doit build:gpu:linux-64:sha256 || doit build:gpu:linux-64:sha256
 
       - name: postmortem (doit)
@@ -326,14 +345,19 @@ jobs:
     steps:
       - name: apt clean (ubuntu)
         run: |
+          set -eux
           df -h
-          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y remove \
+            chromium-browser \
+            lxd
+          bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
             "/usr/local/share/boost" \
             "$AGENT_TOOLSDIRECTORY" \
             /var/lib/apt/lists/*
+          apt list --installed
           df -h
 
       - uses: actions/checkout@v2

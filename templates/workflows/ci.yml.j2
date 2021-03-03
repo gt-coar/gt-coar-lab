@@ -29,14 +29,19 @@
       {% elif job.subdir == "linux-64" %}
       - name: apt clean (ubuntu)
         run: |
+          set -eux
           df -h
-          sudo apt purge -y --remove chromium-browser
+          sudo apt-get -y remove \
+            chromium-browser \
+            lxd
+          bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
             "/usr/local/share/boost" \
             "$AGENT_TOOLSDIRECTORY" \
             /var/lib/apt/lists/*
+          apt list --installed
           df -h
       {% endif %}
 {% endmacro %}
@@ -119,6 +124,7 @@ jobs:
 
       - name: build (constructor)
         run: |
+          set -eux
           doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
 
       {% raw %}
