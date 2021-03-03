@@ -81,9 +81,8 @@ jobs:
           set -eux
           df -h
           sudo apt-get -y remove \
-            chromium-browser \
-            lxd
-          bash .github/scripts/clean_snaps.sh
+            chromium-browser
+          sudo bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
@@ -139,9 +138,8 @@ jobs:
           set -eux
           df -h
           sudo apt-get -y remove \
-            chromium-browser \
-            lxd
-          bash .github/scripts/clean_snaps.sh
+            chromium-browser
+          sudo bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
@@ -290,9 +288,8 @@ jobs:
           set -eux
           df -h
           sudo apt-get -y remove \
-            chromium-browser \
-            lxd
-          bash .github/scripts/clean_snaps.sh
+            chromium-browser
+          sudo bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
@@ -348,9 +345,8 @@ jobs:
           set -eux
           df -h
           sudo apt-get -y remove \
-            chromium-browser \
-            lxd
-          bash .github/scripts/clean_snaps.sh
+            chromium-browser
+          sudo bash .github/scripts/clean_snaps.sh
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
