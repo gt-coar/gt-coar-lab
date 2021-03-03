@@ -143,8 +143,9 @@ jobs:
     needs: [build-{{ job.name }}]
     runs-on: {{ job.vm}}
     steps:
-      {{ preflight(job) }}
       - uses: actions/checkout@v2
+
+      {{ preflight(job) }}
 
       - uses: actions/download-artifact@v2
         with:

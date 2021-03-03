@@ -133,6 +133,8 @@ jobs:
     needs: [build-cpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: apt clean (ubuntu)
         run: |
           set -eux
@@ -148,8 +150,6 @@ jobs:
             /var/lib/apt/lists/*
           apt list --installed
           df -h
-
-      - uses: actions/checkout@v2
 
       - uses: actions/download-artifact@v2
         with:
@@ -264,12 +264,12 @@ jobs:
     needs: [build-cpu-win-64]
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: enable long paths (windows)
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
         shell: pwsh
-
-      - uses: actions/checkout@v2
 
       - uses: actions/download-artifact@v2
         with:
@@ -340,6 +340,8 @@ jobs:
     needs: [build-gpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: apt clean (ubuntu)
         run: |
           set -eux
@@ -355,8 +357,6 @@ jobs:
             /var/lib/apt/lists/*
           apt list --installed
           df -h
-
-      - uses: actions/checkout@v2
 
       - uses: actions/download-artifact@v2
         with:
