@@ -3,5 +3,11 @@ Documentation     Variables used in more than one places
 
 *** Variables ***
 ${INSTALL LOG}    ${OUTPUT DIR}${/}00_installer.log
-&{GECKODRIVER}    linux=bin${/}geckodriver    darwin=bin${/}geckodriver    windows=Scripts${/}geckodriver.exe
-&{FIREFOX}        linux=bin${/}firefox    darwin=bin${/}firefox    windows=Library${/}bin${/}firefox.exe
+&{GECKODRIVER}
+...     Darwin=bin${/}geckodriver
+...     Linux=bin${/}geckodriver
+...     Windows=Scripts${/}geckodriver.exe
+&{FIREFOX}
+...     Darwin=bin${/}firefox
+...     Linux=bin${/}firefox
+...     Windows=Library${/}bin${/}firefox.exe

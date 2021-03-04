@@ -16,7 +16,7 @@ Run the Installer
     Set Global Variable    ${HOME}    ${path}${/}home
     ${rc} =    Run Keyword If    "${OS}" == "Linux"    Run the Linux Installer
     ...    ELSE IF    "${OS}" == "Windows"    Run the Windows Installer
-    ...    ELSE IF    "${OS}" == "MacOSX"    Run the MacOSX Installer
+    ...    ELSE IF    "${OS}" == "Darwin"    Run the MacOSX Installer
     ...    ELSE    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0    msg=Couldn't complete installer, see ${INSTALL LOG}
     Wait Until Keyword Succeeds    5x    30s    Run Shell Script in Installation    conda info && conda list

@@ -19,6 +19,8 @@ Roughly, the intent is:
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 import os
+import platform
+import shutil
 import subprocess
 from datetime import datetime
 from hashlib import sha256
@@ -192,6 +194,20 @@ def task_build():
                     yield task
 
 
+def task_test():
+    """test installers"""
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            if subdir != C.THIS_SUBDIR:
+                continue
+            yield dict(
+                name=f"{variant}:{subdir}",
+                file_dep=[U.installer(variant, subdir), *P.ALL_ATEST],
+                actions=[(U.atest, [variant, subdir])],
+                targets=[P.ATEST_OUT / f"{variant}-{subdir}.robot.xml"],
+            )
+
+
 # some namespaces for project-level stuff
 class C:
     """constants"""
@@ -201,6 +217,9 @@ class C:
     YARN = ["yarn"]
     VARIANTS = ["cpu", "gpu"]
     SUBDIRS = ["linux-64", "osx-64", "win-64"]
+    THIS_SUBDIR = {"Linux": "linux-64", "Darwin": "osx-64", "Windows": "win-64"}[
+        platform.system()
+    ]
     TODAY = datetime.today()
     VERSION = TODAY.strftime("%Y.%m")
     BUILD_NUMBER = "0"
@@ -220,6 +239,9 @@ class C:
     SKIP_LINT = CI and not CI_LINTING
     CHUNKSIZE = 8192
 
+    ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES", "0"))
+    ATEST_ARGS = safe_load(os.environ.get("ATEST_ARGS", "[]"))
+
 
 class P:
     """paths"""
@@ -236,10 +258,8 @@ class P:
     PYPROJECT = SCRIPTS / "pyproject.toml"
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
-    CACHE = SCRIPTS / ".cache"
-    CONSTRUCTOR_CACHE = Path(
-        os.environ.get("CONSTTRUCTOR_CACHE", CACHE / "constructor")
-    )
+    ATEST = ROOT / "atest"
+    ALL_ATEST = [*ATEST.rglob("*.robot")]
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
@@ -249,9 +269,14 @@ class P:
 
     # stuff we don't check in
     BUILD = ROOT / "build"
+    ATEST_OUT = BUILD / "atest"
     DIST = ROOT / "dist"
     NODE_MODULES = SCRIPTS / "node_modules"
     YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
+    CACHE = SCRIPTS / ".cache"
+    CONSTRUCTOR_CACHE = Path(
+        os.environ.get("CONSTTRUCTOR_CACHE", CACHE / "constructor")
+    )
 
     # config cruft
     PRETTIER_SUFFIXES = [".yml", ".yaml", ".toml", ".json", ".md"]
@@ -360,7 +385,11 @@ class U:
 
         def build():
             proc = subprocess.Popen(list(map(str, args)), cwd=str(construct), env=env)
-            rc = proc.wait()
+            try:
+                rc = proc.wait()
+            except KeyboardInterrupt:
+                proc.terminate()
+                rc = 1
 
             return rc == 0
 
@@ -393,6 +422,107 @@ class U:
                         h.update(byte_block)
 
                 hfp.write(f"{h.hexdigest()}  {path.name}")
+
+    @classmethod
+    def atest(cls, variant, subdir):
+        return_code = 1
+        for attempt in range(C.ATEST_RETRIES + 1):
+            return_code = U.atest_attempt(variant, subdir, attempt)
+            if return_code == 0:
+                break
+        U.rebot()
+        return return_code == 0
+
+    @classmethod
+    def atest_attempt(cls, variant, subdir, attempt):
+        extra_args = []
+
+        installer = U.installer(variant, subdir)
+        stem = f"{variant}-{subdir}-{attempt}"
+        out_dir = P.ATEST_OUT / stem
+
+        if out_dir.exists():
+            try:
+                shutil.rmtree(out_dir)
+            except Exception as err:
+                print(err)
+
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        if attempt:
+            extra_args += ["--loglevel", "TRACE"]
+            previous = P.ATEST_OUT / f"{variant}-{subdir}-{attempt - 1}.robot.xml"
+            if previous.exists():
+                extra_args += ["--rerunfailed", str(previous)]
+
+        extra_args += C.ATEST_ARGS
+
+        args = [
+            "--name",
+            f"{C.NAME} {variant} {subdir}",
+            "--outputdir",
+            out_dir,
+            "--output",
+            P.ATEST_OUT / f"{stem}.robot.xml",
+            "--log",
+            P.ATEST_OUT / f"{stem}.log.html",
+            "--report",
+            P.ATEST_OUT / f"{stem}.report.html",
+            "--xunit",
+            P.ATEST_OUT / f"{stem}.xunit.xml",
+            "--variable",
+            f"NAME:{installer.name}",
+            "--variable",
+            f"ATTEMPT:{attempt}",
+            "--variable",
+            f"OS:{platform.system()}",
+            "--variable",
+            f"INSTALLER:{installer}",
+            "--variable",
+            f"VERSION:{C.VERSION}",
+            "--variable",
+            f"BUILD:{C.BUILD_NUMBER}",
+            "--randomize",
+            f"VARIANT:{variant}",
+            "--randomize",
+            "all",
+            *(extra_args or []),
+            P.ATEST,
+        ]
+
+        str_args = ["python", "-m", "robot", *map(str, args)]
+        print(">>> ", " ".join(str_args), flush=True)
+        proc = subprocess.Popen(str_args, cwd=P.ATEST)
+
+        try:
+            return proc.wait()
+        except KeyboardInterrupt:
+            proc.kill()
+            return 1
+
+    @classmethod
+    def rebot(cls):
+        args = [
+            "python",
+            "-m",
+            "robot.rebot",
+            "--name",
+            "🤖",
+            "--nostatusrc",
+            "--merge",
+        ] + sorted(P.ATEST_OUT.glob("*.robot.xml"))
+
+        str_args = [*map(str, args)]
+
+        print(">>> rebot args: ", " ".join(str_args), flush=True)
+
+        proc = subprocess.Popen(str_args)
+
+        try:
+            return proc.wait()
+        except KeyboardInterrupt:
+            proc.kill()
+            return 1
 
 
 # late environment patches
