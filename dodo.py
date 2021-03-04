@@ -193,7 +193,7 @@ def task_test():
                 name=f"{variant}:{subdir}",
                 file_dep=[U.installer(variant, subdir), *P.ALL_ROBOT],
                 actions=[(U.atest, [variant, subdir])],
-                targets=[P.ATEST_OUT / f"{variant}-{subdir}.robot.xml"],
+                targets=[P.ATEST_OUT / f"{variant}-{subdir}-0.robot.xml"],
             )
 
 

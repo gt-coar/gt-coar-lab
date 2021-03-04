@@ -10,8 +10,9 @@ Resource          ./Shell.robot
 Maybe Run the Installer
     [Documentation]    Run the installer, if not already installed
     ${installed} =    Evaluate    __import__('os.path').path.exists("${INST DIR}")
-    Run Keyword If    not ${installed}    Run The Installer
-    Run Keyword If    ${installed}    Log    Already installed!
+    Run Keyword If
+    ...    ${installed}    Log    Already installed!
+    ...    ELSE    Run The Installer
     Validate the Installation
 
 Run the Installer
