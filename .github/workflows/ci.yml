@@ -344,7 +344,7 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           set -eux
-          sudo bash .github/scripts/clean_snaps.sh
+          sudo bash .github/scripts/clean_ubuntu.sh
 
       - name: cache (conda)
         uses: actions/cache@v1
@@ -392,7 +392,7 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           set -eux
-          sudo bash .github/scripts/clean_snaps.sh
+          sudo bash .github/scripts/clean_ubuntu.sh
 
       - uses: actions/download-artifact@v2
         with:
