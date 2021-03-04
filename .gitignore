@@ -1,7 +1,7 @@
 __pycache__/
 .*cache/
 .doit.*
-.env/
+.venv/
 .ipynb_checkpoints/
 .yarn-packages/
 atest/output/

@@ -161,11 +161,12 @@ def task_ci():
 
 def task_build():
     """build installers"""
-    for variant in C.VARIANTS:
-        for subdir in C.SUBDIRS:
-            if U.variant_spec(variant, subdir) is not None:
-                for task in U.build(variant, subdir):
-                    yield task
+    for subdir in C.SUBDIRS:
+        if subdir == C.THIS_SUBDIR:
+            for variant in C.VARIANTS:
+                if U.variant_spec(variant, subdir) is not None:
+                    for task in U.build(variant, subdir):
+                        yield task
 
 
 def task_test():

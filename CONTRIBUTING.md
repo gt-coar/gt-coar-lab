@@ -3,16 +3,16 @@
 ## Set Up
 
 - Install [Mambaforge](https://github.com/conda-forge/miniforge/releases)
-- Create the base environment, using the same environment/configuration as CI
+- Create the base environment
 
 ```bash
-CONDARC=.github/.condarc mamba create --file locks/ci-linux-64.conda.lock --prefix .env
+CONDARC=.github/.condarc mamba create --file locks/dev-linux-64.conda.lock --prefix .venv
 ```
 
 - always run any commands with that environment activated
 
 ```bash
-source .env/bin/activate
+source .venv/bin/activate
 ```
 
 ## doit
