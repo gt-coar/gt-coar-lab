@@ -7,10 +7,12 @@ channels:
   - https://conda.anaconda.org/conda-forge
 
 dependencies:
-  - nodejs >=10,!=11.*,!=13.*,<15
-  - yarn <2
-  - doit
   - black
+  - doit
   - flake8
   - isort
+  - nodejs >=10,!=11.*,!=13.*,<15
+  - robotframework-jupyterlibrary
+  - robotframework-lint
   - yamllint
+  - yarn <2

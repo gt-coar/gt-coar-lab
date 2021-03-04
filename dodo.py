@@ -94,6 +94,16 @@ def task_lint():
         actions=[U.script(["yamllint", *P.ALL_YAML])],
     )
 
+    yield dict(
+        name="robot",
+        doc="format and lint robot",
+        file_dep=[*P.ALL_ROBOT],
+        actions=[
+            ["python", "-m", "robot.tidy", "-r", P.ATEST],
+            ["python", "-m", "rflint", *P.ALL_ROBOT],
+        ],
+    )
+
 
 def task_lock():
     if C.SKIP_LOCKS:
@@ -176,7 +186,7 @@ def task_test():
                 continue
             yield dict(
                 name=f"{variant}:{subdir}",
-                file_dep=[U.installer(variant, subdir), *P.ALL_ATEST],
+                file_dep=[U.installer(variant, subdir), *P.ALL_ROBOT],
                 actions=[(U.atest, [variant, subdir])],
                 targets=[P.ATEST_OUT / f"{variant}-{subdir}.robot.xml"],
             )
@@ -233,7 +243,7 @@ class P:
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
     ATEST = ROOT / "atest"
-    ALL_ATEST = [*ATEST.rglob("*.robot")]
+    ALL_ROBOT = [*ATEST.rglob("*.robot")]
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
