@@ -42,13 +42,15 @@ dependencies:
   - datashader
   - hvplot
   - ipycytoscape
+  - ipydatagrid
   - ipyelk
   - ipywidgets >=7.6,<8
   - python-graphviz
+  - pythreejs
   - wxyz_datagrid
   - wxyz_dvcs
-  - wxyz_json_schema_form
   - wxyz_json_e
+  - wxyz_json_schema_form
   - wxyz_jsonld
   - wxyz_lab
   - wxyz_svg
