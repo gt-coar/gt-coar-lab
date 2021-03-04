@@ -15,7 +15,7 @@ Run Shell Script in Installation
     ${log} =    Set Variable    ${logs}${/}${NEXT CLI LOG}-${cmd.split()[0]}
     Set Global Variable    ${NEXT CLI LOG}    ${NEXT CLI LOG.__add__(1)}
     Create File    ${log}.args    ${cmd}
-    ${proc} =    Run Process    conda run -p "${INST DIR}" --live-stream ${cmd}
+    ${proc} =    Run Process    conda run -p "${INST DIR}" --no-capture-output ${cmd}
     ...    shell=True    cwd=${OUTPUT DIR}    stdout=${log}.log    stderr=STDOUT
     ...    env:PS1=[gtc]
     Should Be Equal As Numbers    ${proc.rc}    ${rc}

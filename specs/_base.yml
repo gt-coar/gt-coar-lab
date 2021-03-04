@@ -12,5 +12,6 @@ dependencies:
   - doit
   - jinja2
   - mamba >=0.7.14,<0.8
+  - pip
   - python >=3.7.10,<3.8.0
   - ruamel_yaml

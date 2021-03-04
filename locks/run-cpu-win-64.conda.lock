@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 62b14731cd3283e60460c8895c031435d5aa9ac5414bb09983a1e874d62fa6ab
+# env_hash: 26e2c86bf5d3536373477ef3152f4c020a14fb949fedd503b68453e667279165
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#39626bb9350110a075f8be857850695f
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
@@ -180,6 +180,7 @@ https://conda.anaconda.org/conda-forge/noarch/typing_extensions-3.7.4.3-py_0.tar
 https://conda.anaconda.org/conda-forge/noarch/watchgod-0.7-pyhd8ed1ab_0.tar.bz2#579cdbf560b3d891212227eb1576948e
 https://conda.anaconda.org/conda-forge/noarch/webencodings-0.5.1-py_1.tar.bz2#3563be4c5611a44210d9ba0c16113136
 https://conda.anaconda.org/conda-forge/noarch/werkzeug-1.0.1-pyh9f0ad1d_0.tar.bz2#a9f0ed0e6ba014c4e42543bda09e0035
+https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
 https://conda.anaconda.org/conda-forge/win-64/xeus-1.0.1-h50e1b43_1.tar.bz2#9a2ee6ad9001411fbd47e79bcb32dab5
 https://conda.anaconda.org/conda-forge/noarch/yapf-0.30.0-pyh9f0ad1d_0.tar.bz2#175a8ce5a94eaa57cb5a6560cac21713
 https://conda.anaconda.org/conda-forge/noarch/zipp-3.4.0-py_0.tar.bz2#0df927d2e46244cef8fd75d7ec2ba51c
@@ -355,6 +356,7 @@ https://conda.anaconda.org/conda-forge/win-64/matplotlib-base-3.3.4-py37h3379fd5
 https://conda.anaconda.org/conda-forge/noarch/networkx-2.5-py_0.tar.bz2#d836ad8453c22192357707026ca21653
 https://conda.anaconda.org/conda-forge/win-64/numba-0.52.0-py37h08fd248_0.tar.bz2#edccdfb7ceb445f94e197ead537a8839
 https://conda.anaconda.org/conda-forge/win-64/opencv-4.5.1-py37h03978a9_0.tar.bz2#4319e21fe1935e5d49644266879039ba
+https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
 https://conda.anaconda.org/conda-forge/win-64/pluggy-0.13.1-py37h03978a9_4.tar.bz2#5f4cfa7e8c6b5cb40cf71cb1730e62d4
 https://conda.anaconda.org/conda-forge/win-64/protobuf-3.15.4-py37hf2a7229_0.tar.bz2#09b143a39b12a9be78b3f0746fb7417c
 https://conda.anaconda.org/conda-forge/noarch/pygments-2.8.0-pyhd8ed1ab_0.tar.bz2#226cd14ba0554ca2648fecd11090f473

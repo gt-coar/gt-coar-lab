@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 2089aad8ff1bcd5ff2624ecd6cd4b75dec69f1defdf6ca91f9e37effeeed147d
+# env_hash: 4e9c4efe99dbdad44849cba069fe84b36e06f495d52f8aa1cf2278851a2c4eb5
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/nodejs-14.15.4-h57928b3_1.tar.bz2#5b09be096b135eea885ba5855b3450c1
@@ -48,6 +48,7 @@ https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1e
 https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2#f832c45a477c78bebd107098db465095
 https://conda.anaconda.org/conda-forge/noarch/tqdm-4.58.0-pyhd8ed1ab_0.tar.bz2#f92f0f1f03f39c011f89f7434e654dc5
 https://conda.anaconda.org/conda-forge/noarch/typing_extensions-3.7.4.3-py_0.tar.bz2#12b96e382730541a4b332420227055ae
+https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
 https://conda.anaconda.org/conda-forge/noarch/zipp-3.4.0-py_0.tar.bz2#0df927d2e46244cef8fd75d7ec2ba51c
 https://conda.anaconda.org/conda-forge/win-64/certifi-2020.12.5-py37h03978a9_1.tar.bz2#1051015def01978c43d8bcbb3f6dc143
 https://conda.anaconda.org/conda-forge/win-64/cffi-1.14.5-py37hd8e9650_0.tar.bz2#5686156c1bcc7039cb3e41438380d0d5
@@ -80,6 +81,7 @@ https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.
 https://conda.anaconda.org/conda-forge/noarch/flake8-3.8.4-py_0.tar.bz2#138b1704321c115bd10e1966320ac790
 https://conda.anaconda.org/conda-forge/noarch/isort-5.7.0-pyhd8ed1ab_0.tar.bz2#073e46728e0d9a8722457cbf1c335c14
 https://conda.anaconda.org/conda-forge/noarch/jinja2-2.11.3-pyh44b312d_0.tar.bz2#1d4c3605d85a3655b1595e0694138eb6
+https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
 https://conda.anaconda.org/conda-forge/noarch/pygments-2.8.0-pyhd8ed1ab_0.tar.bz2#226cd14ba0554ca2648fecd11090f473
 https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
 https://conda.anaconda.org/conda-forge/noarch/yamllint-1.26.0-pyhd8ed1ab_0.tar.bz2#79173ac1dce3e3ead3ab1455c588df4b

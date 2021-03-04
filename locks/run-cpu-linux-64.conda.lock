@@ -1,5 +1,5 @@
 # platform: linux-64
-# env_hash: bbb71af6690f80de5faf6bb502a17ecdcfed815e8509d8b273bc59cb006ade2a
+# env_hash: a726a4903fecbfc947d3cc7b7bff4b4f886ad502fc3e53260e121f4f7e72d07b
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
 https://conda.anaconda.org/conda-forge/linux-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#23b8f98a355030331f40d0245492f715
@@ -418,7 +418,7 @@ https://conda.anaconda.org/conda-forge/noarch/flake8-3.8.4-py_0.tar.bz2#138b1704
 https://conda.anaconda.org/conda-forge/linux-64/grpcio-1.36.1-py37hb27c1af_0.tar.bz2#5a5b12f5f28f37f4826fe5488b9d3080
 https://conda.anaconda.org/conda-forge/linux-64/gtk2-2.24.33-hab0c2f8_0.tar.bz2#8acbef87761a4b90f090168737822611
 https://conda.anaconda.org/conda-forge/linux-64/gym-0.18.0-py37h888b3d9_0.tar.bz2#42c1883dcdf18ac15c87a451948f2fd9
-https://conda.anaconda.org/conda-forge/linux-64/importlib_resources-5.1.1-py37h89c1867_0.tar.bz2#13a69110536563dd84f3ce8b4f6d8a79
+https://conda.anaconda.org/conda-forge/linux-64/importlib_resources-5.1.2-py37h89c1867_0.tar.bz2#5c62476a1e0b5febe52e1250735b1679
 https://conda.anaconda.org/conda-forge/noarch/isort-5.7.0-pyhd8ed1ab_0.tar.bz2#073e46728e0d9a8722457cbf1c335c14
 https://conda.anaconda.org/conda-forge/noarch/jinja2-2.10.3-py_0.tar.bz2#3e5bb7e93590ee2fc291aea5ff70a8a2
 https://conda.anaconda.org/conda-forge/linux-64/jmol-14.31.3-0.tar.bz2#396dccb5e4a61a9f342fed280cd93fe6

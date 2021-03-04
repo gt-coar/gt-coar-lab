@@ -178,6 +178,7 @@ specs:
   - https://conda.anaconda.org/conda-forge/noarch/watchgod-0.7-pyhd8ed1ab_0.tar.bz2#579cdbf560b3d891212227eb1576948e
   - https://conda.anaconda.org/conda-forge/noarch/webencodings-0.5.1-py_1.tar.bz2#3563be4c5611a44210d9ba0c16113136
   - https://conda.anaconda.org/conda-forge/noarch/werkzeug-1.0.1-pyh9f0ad1d_0.tar.bz2#a9f0ed0e6ba014c4e42543bda09e0035
+  - https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
   - https://conda.anaconda.org/conda-forge/noarch/yapf-0.30.0-pyh9f0ad1d_0.tar.bz2#175a8ce5a94eaa57cb5a6560cac21713
   - https://conda.anaconda.org/conda-forge/noarch/zipp-3.4.0-py_0.tar.bz2#0df927d2e46244cef8fd75d7ec2ba51c
   - https://conda.anaconda.org/conda-forge/osx-64/absl-py-0.11.0-py37hf985489_0.tar.bz2#028271cf1001ef82726b66d9b5f30891
@@ -292,6 +293,7 @@ specs:
   - https://conda.anaconda.org/conda-forge/noarch/networkx-2.5-py_0.tar.bz2#d836ad8453c22192357707026ca21653
   - https://conda.anaconda.org/conda-forge/osx-64/numba-0.52.0-py37h53bd85b_0.tar.bz2#5c55e467cd430a58418086a4a25a5b78
   - https://conda.anaconda.org/conda-forge/osx-64/pandas-1.2.3-py37hff173d8_0.tar.bz2#8f5f0e92193334705d4336d772680edf
+  - https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
   - https://conda.anaconda.org/conda-forge/osx-64/pluggy-0.13.1-py37hf985489_4.tar.bz2#c06bd6917e033778e6c2f1a66dd7e159
   - https://conda.anaconda.org/conda-forge/osx-64/protobuf-3.15.4-py37hd8d24ac_0.tar.bz2#785cda35839cf97b567857ae81b799b8
   - https://conda.anaconda.org/conda-forge/noarch/pygments-2.8.0-pyhd8ed1ab_0.tar.bz2#226cd14ba0554ca2648fecd11090f473

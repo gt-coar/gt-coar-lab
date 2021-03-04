@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: d30673ceb24585877a89a0334667e2135affafa88fb8b7943c57eaffd1a51b70
+# env_hash: 9fee9ceead3c10d49aef1c3c84de88758a4794b2c678e1dd0579ba2606e75947
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/conda-standalone-4.9.2-h57928b3_2.tar.bz2#c9a878f103381243dbbb9d8bae593a90
@@ -44,6 +44,7 @@ https://conda.anaconda.org/conda-forge/win-64/python_abi-3.7-1_cp37m.tar.bz2#bb3
 https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1eec421f0f1f39e579e44e4a5ce646a2
 https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2#f832c45a477c78bebd107098db465095
 https://conda.anaconda.org/conda-forge/noarch/tqdm-4.58.0-pyhd8ed1ab_0.tar.bz2#f92f0f1f03f39c011f89f7434e654dc5
+https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
 https://conda.anaconda.org/conda-forge/win-64/certifi-2020.12.5-py37h03978a9_1.tar.bz2#1051015def01978c43d8bcbb3f6dc143
 https://conda.anaconda.org/conda-forge/win-64/cffi-1.14.5-py37hd8e9650_0.tar.bz2#5686156c1bcc7039cb3e41438380d0d5
 https://conda.anaconda.org/conda-forge/win-64/chardet-4.0.0-py37h03978a9_1.tar.bz2#566dbd28c78bb886e678e61893d249ba
@@ -65,6 +66,7 @@ https://conda.anaconda.org/conda-forge/win-64/pillow-8.1.1-py37h96663a1_0.tar.bz
 https://conda.anaconda.org/conda-forge/win-64/pysocks-1.7.1-py37h03978a9_3.tar.bz2#57ff67171877b6aa4575b3e9a183b92a
 https://conda.anaconda.org/conda-forge/win-64/setuptools-49.6.0-py37h03978a9_3.tar.bz2#1b72c1d232d3bb820f9c129448a5f7ae
 https://conda.anaconda.org/conda-forge/noarch/jinja2-2.11.3-pyh44b312d_0.tar.bz2#1d4c3605d85a3655b1595e0694138eb6
+https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
 https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
 https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.3-pyhd8ed1ab_0.tar.bz2#25573e57774dd54cfa848e5dd44503ed
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc

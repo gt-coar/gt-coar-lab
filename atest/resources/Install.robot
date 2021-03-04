@@ -12,6 +12,7 @@ Maybe Run the Installer
     ${installed} =    Evaluate    __import__('os.path').path.exists("${INST DIR}")
     Run Keyword If    not ${installed}    Run The Installer
     Run Keyword If    ${installed}    Log    Already installed!
+    Validate the Installation
 
 Run the Installer
     [Documentation]    Run the platform-specific installer
@@ -24,13 +25,19 @@ Run the Installer
     ...    ELSE    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
+
+Validate the Installation
+    [Documentation]    Ensure some baseline commands work
     Wait Until Keyword Succeeds    5x    30s
     ...    Run Shell Script in Installation
-    ...    mamba info && mamba list
+    ...    mamba info
+    Wait Until Keyword Succeeds    5x    30s
+    ...    Run Shell Script in Installation
+    ...    mamba list
     Run Shell Script in Installation
-    ...    pip freeze > ${OUTPUT DIR}${/}requirements.txt
+    ...    pip freeze
     Run Shell Script in Installation
-    ...    mamba list --explicit > ${OUTPUT DIR}${/}mamba-explicit.txt
+    ...    mamba list --explicit
 
 Run the Linux installer
     [Documentation]    Install on Linux
