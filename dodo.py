@@ -486,7 +486,7 @@ class U:
         ]
 
         str_args = ["python", "-m", "robot", *map(str, args)]
-        print(">>> ", " ".join(str_args), flush=True, **C.ENC)
+        print(">>> ", " ".join(str_args), flush=True)
         proc = subprocess.Popen(str_args, cwd=P.ATEST)
 
         try:
@@ -546,7 +546,7 @@ class U:
 
         str_args = [*map(str, args)]
 
-        print(">>> rebot args: ", " ".join(str_args), flush=True, **C.ENC)
+        print(">>> rebot args: ", " ".join(str_args), flush=True)
 
         proc = subprocess.Popen(str_args)
 
