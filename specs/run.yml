@@ -16,6 +16,7 @@ dependencies:
   - xeus-python
   # interactive computing extensions
   - jupyterlab >=3.0.9
+  - jupyter-book >=0.10
   # TODO: upstream
   # - jupyterlab-git
   - dask_labextension
