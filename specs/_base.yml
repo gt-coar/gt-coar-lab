@@ -7,6 +7,7 @@ channels:
   - https://conda.anaconda.org/conda-forge
 
 dependencies:
+  - colorama
   - conda >=4.9.2,<4.10
   - doit
   - jinja2

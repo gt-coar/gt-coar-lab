@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: c7b0dc9ed7cf00ef197894518b18297a6f925ccf653180cc0c9ff8b0da36c423
+# env_hash: 2089aad8ff1bcd5ff2624ecd6cd4b75dec69f1defdf6ca91f9e37effeeed147d
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/nodejs-14.15.4-h57928b3_1.tar.bz2#5b09be096b135eea885ba5855b3450c1

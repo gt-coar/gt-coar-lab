@@ -1,5 +1,5 @@
 # platform: osx-64
-# env_hash: 7d7e861c86d90f910e8daf2bb93a94fe1dba9b154ad31d70d51ea2e372b1735b
+# env_hash: 5f10617c94a54c6b473f7f8381577d4a7ab31c092477aae5521adc6d63d730c0
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
 https://conda.anaconda.org/conda-forge/osx-64/c-ares-1.17.1-hc929b4f_0.tar.bz2#24fc0b91a6eacc6753fef90514d67ce9
@@ -47,6 +47,7 @@ https://conda.anaconda.org/conda-forge/noarch/backcall-0.2.0-pyh9f0ad1d_0.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/backports-1.0-py_2.tar.bz2#0da16b293affa6ac31812376f8eb79dd
 https://conda.anaconda.org/conda-forge/noarch/click-7.1.2-pyh9f0ad1d_0.tar.bz2#bd50a970ce07e660c319fdc4d730d3f1
 https://conda.anaconda.org/conda-forge/noarch/cloudpickle-1.6.0-py_0.tar.bz2#76d764d8881719e305f6fa368dc2b65e
+https://conda.anaconda.org/conda-forge/noarch/colorama-0.4.4-pyh9f0ad1d_0.tar.bz2#c08b4c1326b880ed44f3ffb04803332f
 https://conda.anaconda.org/conda-forge/osx-64/dataclasses-0.7-py37_0.tar.bz2#ee9dffd6fd9408ea733560f40a11dc4d
 https://conda.anaconda.org/conda-forge/noarch/decorator-4.4.2-py_0.tar.bz2#d2eabb9cabd212e1ec6a9463bd846243
 https://conda.anaconda.org/conda-forge/noarch/defusedxml-0.6.0-py_0.tar.bz2#37e1033daee0e2edaa5ff42584c52b21

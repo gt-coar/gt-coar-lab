@@ -26,6 +26,7 @@ from datetime import datetime
 from hashlib import sha256
 from pathlib import Path
 
+import colorama
 from doit.tools import CmdAction, config_changed, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
@@ -37,7 +38,12 @@ DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
 os.environ.update(
     MAMBA_NO_BANNER="1",
     CONDA_EXE="mamba",
+    PYTHONUNBUFFERED="1",
+    PYTHONIOENCODING="utf-8",
 )
+
+# for windows, mostly, but whatever
+colorama.init()
 
 
 def task_setup():
@@ -480,7 +486,7 @@ class U:
         ]
 
         str_args = ["python", "-m", "robot", *map(str, args)]
-        print(">>> ", " ".join(str_args), flush=True)
+        print(">>> ", " ".join(str_args), flush=True, **C.ENC)
         proc = subprocess.Popen(str_args, cwd=P.ATEST)
 
         try:
@@ -540,7 +546,7 @@ class U:
 
         str_args = [*map(str, args)]
 
-        print(">>> rebot args: ", " ".join(str_args), flush=True)
+        print(">>> rebot args: ", " ".join(str_args), flush=True, **C.ENC)
 
         proc = subprocess.Popen(str_args)
 

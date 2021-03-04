@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: e5f3da7db262c219f3694ef3c6833314bce7fc0929ef722dfcdae77128dc7004
+# env_hash: d30673ceb24585877a89a0334667e2135affafa88fb8b7943c57eaffd1a51b70
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/conda-standalone-4.9.2-h57928b3_2.tar.bz2#c9a878f103381243dbbb9d8bae593a90
@@ -31,6 +31,7 @@ https://conda.anaconda.org/conda-forge/win-64/zstd-1.4.9-h6255e5f_0.tar.bz2#f90b
 https://conda.anaconda.org/conda-forge/noarch/appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2#5f095bc6454094e96f146491fd03633b
 https://conda.anaconda.org/conda-forge/noarch/click-7.1.2-pyh9f0ad1d_0.tar.bz2#bd50a970ce07e660c319fdc4d730d3f1
 https://conda.anaconda.org/conda-forge/noarch/cloudpickle-1.6.0-py_0.tar.bz2#76d764d8881719e305f6fa368dc2b65e
+https://conda.anaconda.org/conda-forge/noarch/colorama-0.4.4-pyh9f0ad1d_0.tar.bz2#c08b4c1326b880ed44f3ffb04803332f
 https://conda.anaconda.org/conda-forge/noarch/filelock-3.0.12-pyh9f0ad1d_0.tar.bz2#7544ed05bbbe9bb687bc9bcbe4d6cb46
 https://conda.anaconda.org/conda-forge/win-64/freetype-2.10.4-h546665d_1.tar.bz2#1215a2e49d23da91c28d97cff8de35ea
 https://conda.anaconda.org/conda-forge/noarch/idna-2.10-pyh9f0ad1d_0.tar.bz2#f95a12b4f435aae6680fe55ae2eb1b06
