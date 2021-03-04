@@ -7,16 +7,8 @@ channels:
   - https://conda.anaconda.org/conda-forge
 
 dependencies:
-  # the runstime
-  - python >=3.8.8,<3.9
   - nodejs >=10,!=11.*,!=13.*,<15
   - yarn <2
-  # conda and friends
-  - conda >=4.9.2,<4.10
-  - conda-lock >=0.8.0,<0.9
-  - constructor >=3.2.0,<3.3
-  - mamba >=0.7.14,<0.8
-  # automation and qa: just deal with churn
   - doit
   - black
   - flake8

@@ -99,42 +99,14 @@ def task_lock():
     if C.SKIP_LOCKS:
         return
     """generate conda locks for all envs"""
-    for variant in C.VARIANTS:
-        for subdir in C.SUBDIRS:
-            variant_spec = U.variant_spec(variant, subdir)
-            if variant_spec is None:
-                continue
-            args = ["conda-lock", "--mamba", "--platform", subdir]
-            lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
-            specs = [*P.CORE_SPECS, P.SPECS / f"{subdir}.yml", variant_spec]
-            args += sum([["--file", spec] for spec in specs], [])
-            args += ["--filename-template", variant + "-{platform}.conda.lock"]
-
-            yield dict(
-                name=f"{variant}:{subdir}",
-                file_dep=specs,
-                actions=[
-                    (create_folder, [P.LOCKS]),
-                    U.cmd(args, cwd=str(P.LOCKS)),
-                ],
-                targets=[lockfile],
-            )
-
     for subdir in C.SUBDIRS:
-        args = ["conda-lock", "--mamba", "--platform", subdir]
-        lockfile = P.LOCKS / f"ci-{subdir}.conda.lock"
-        specs = [P.SPECS / "ci.yml"]
-        args += sum([["--file", spec] for spec in specs], [])
-        args += ["--filename-template", "ci-{platform}.conda.lock"]
-        yield dict(
-            name=f"ci:{subdir}",
-            file_dep=specs,
-            actions=[
-                (create_folder, [P.LOCKS]),
-                U.cmd(args, cwd=str(P.LOCKS)),
-            ],
-            targets=[lockfile],
-        )
+        for variant in C.VARIANTS:
+            if U.variant_spec(variant, subdir):
+                yield U.lock("run", variant, subdir)
+        yield U.lock("build", None, subdir)
+        yield U.lock("atest", None, subdir)
+        yield U.lock("lint", None, subdir)
+        yield U.lock("dev", None, subdir, ["build", "lint", "atest"])
 
 
 def task_construct():
@@ -158,14 +130,14 @@ def task_ci():
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
-                lockfile = P.LOCKS / f"{variant}-{subdir}.conda.lock"
+                lockfile = P.LOCKS / f"run-{variant}-{subdir}.conda.lock"
                 context["build"] += [
                     dict(
                         subdir=subdir,
                         variant=variant,
                         name=lockfile.stem.split(".")[0],
                         ci_lockfile=str(
-                            (P.LOCKS / f"ci-{subdir}.conda.lock").relative_to(P.ROOT)
+                            (P.LOCKS / f"build-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
                         lockfile=str(lockfile.relative_to(P.ROOT)),
                         vm=C.VM[subdir],
@@ -291,7 +263,6 @@ class P:
     ]
 
     # collections of things
-    CORE_SPECS = [SPECS / "_base.yml", SPECS / "core.yml"]
     ALL_PY = [DODO]
     ALL_YAML = [
         *SPECS.glob("*.yml"),
@@ -315,7 +286,7 @@ class U:
 
     @classmethod
     def variant_spec(cls, variant, subdir):
-        spec = P.SPECS / f"{variant}-{subdir}.yml"
+        spec = P.SPECS / f"run-{variant}-{subdir}.yml"
         return spec if spec.exists() else None
 
     @classmethod
@@ -334,16 +305,19 @@ class U:
             t: construct / (str(t.relative_to(tmpl_dir)).replace(".j2", ""))
             for t in templates
         }
-        context = dict(
-            specs=lock.read_text(**C.ENC).split("@EXPLICIT")[1].strip().splitlines(),
-            name=C.NAME,
-            subdir=subdir,
-            variant=variant,
-            build_number=C.BUILD_NUMBER,
-            version=C.VERSION,
-        )
 
         def construct():
+            context = dict(
+                specs=lock.read_text(**C.ENC)
+                .split("@EXPLICIT")[1]
+                .strip()
+                .splitlines(),
+                name=C.NAME,
+                subdir=subdir,
+                variant=variant,
+                build_number=C.BUILD_NUMBER,
+                version=C.VERSION,
+            )
             for src_path, dest_path in paths.items():
                 if not dest_path.parent.exists():
                     dest_path.parent.mkdir(parents=True)
@@ -499,6 +473,35 @@ class U:
         except KeyboardInterrupt:
             proc.kill()
             return 1
+
+    @classmethod
+    def lock(cls, env_name, variant, subdir, extra_env_names=[]):
+        args = ["conda-lock", "--mamba", "--platform", subdir]
+        stem = env_name + (f"-{variant}-" if variant else "-") + subdir
+        lockfile = P.LOCKS / f"{stem}.conda.lock"
+
+        specs = [P.SPECS / "_base.yml"]
+
+        for env in [env_name, *extra_env_names]:
+            for fname in [f"{env}", f"{env}-{subdir}", f"{env}-{variant}-{subdir}"]:
+                spec = P.SPECS / f"{fname}.yml"
+                if spec.exists():
+                    specs += [spec]
+
+        args += sum([["--file", spec] for spec in specs], [])
+        args += [
+            "--filename-template",
+            env_name + (f"-{variant}-" if variant else "-") + "{platform}.conda.lock",
+        ]
+        return dict(
+            name=f"""{env_name}:{variant or ""}:{subdir}""",
+            file_dep=specs,
+            actions=[
+                (create_folder, [P.LOCKS]),
+                U.cmd(args, cwd=str(P.LOCKS)),
+            ],
+            targets=[lockfile],
+        )
 
     @classmethod
     def rebot(cls):
