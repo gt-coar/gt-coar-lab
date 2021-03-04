@@ -35,7 +35,7 @@ Validate the Installation
     ...    Run Shell Script in Installation
     ...    mamba list
     Run Shell Script in Installation
-    ...    pip freeze
+    ...    python -m pip freeze
     Run Shell Script in Installation
     ...    mamba list --explicit
 

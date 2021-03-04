@@ -37,7 +37,6 @@ DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
 # patch environment for all child tasks
 os.environ.update(
     MAMBA_NO_BANNER="1",
-    CONDA_EXE="mamba",
     PYTHONUNBUFFERED="1",
     PYTHONIOENCODING="utf-8",
 )
