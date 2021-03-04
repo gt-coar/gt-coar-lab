@@ -93,9 +93,9 @@ jobs:
         run: doit list --all --status
 {% endraw %}
 
-{% for job in build %}
-  build-{{ job.name }}:
-    name: build {{ job.name }}
+{% for job in jobs %}
+  build-{{ job.variant }}-{{ job.subdir }}:
+    name: build {{ job.variant }} {{ job.subdir }}
     needs: [lint]
     runs-on: {{ job.vm }}
     steps:
@@ -121,15 +121,15 @@ jobs:
         run: doit list --all --status
       {% endraw %}
 
-      - name: publish dists
+      - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: {{ job.name }} {{ "${{ github.run_number }}" }}
+          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
           path: ./dist
 
-  test-{{ job.name }}:
-    name: test {{ job.name }}
-    needs: [build-{{ job.name }}]
+  test-{{ job.variant }}-{{ job.subdir }}:
+    name: test {{ job.variant }} {{ job.subdir }}
+    needs: [build-{{ job.variant }}-{{ job.subdir }}]
     runs-on: {{ job.vm}}
     steps:
       - uses: actions/checkout@v2
@@ -138,11 +138,23 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: {{ job.name }} {{ "${{ github.run_number }}" }}
+          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
           path: ./dist
 
       {{ cache_conda(job.vm, job.atest_lockfile) }}
 
       {{ setup_miniconda(job.atest_lockfile) }}
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:{{ job.variant }}:{{ job.subdir }}
+
+      - name: publish (atest)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          path: ./build/atest
 
 {% endfor %}

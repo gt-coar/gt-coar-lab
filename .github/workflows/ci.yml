@@ -70,7 +70,7 @@ jobs:
         run: doit list --all --status
 
   build-cpu-linux-64:
-    name: build cpu-linux-64
+    name: build cpu linux-64
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
@@ -106,14 +106,14 @@ jobs:
         if: always()
         run: doit list --all --status
 
-      - name: publish dists
+      - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: cpu-linux-64 ${{ github.run_number }}
+          name: dist cpu linux-64 ${{ github.run_number }}
           path: ./dist
 
   test-cpu-linux-64:
-    name: test cpu-linux-64
+    name: test cpu linux-64
     needs: [build-cpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
@@ -121,7 +121,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: cpu-linux-64 ${{ github.run_number }}
+          name: dist cpu linux-64 ${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -142,8 +142,20 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
 
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:linux-64
+
+      - name: publish (atest)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu linux-64 ${{ github.run_number }}
+          path: ./build/atest
+
   build-cpu-osx-64:
-    name: build cpu-osx-64
+    name: build cpu osx-64
     needs: [lint]
     runs-on: macos-latest
     steps:
@@ -179,14 +191,14 @@ jobs:
         if: always()
         run: doit list --all --status
 
-      - name: publish dists
+      - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: cpu-osx-64 ${{ github.run_number }}
+          name: dist cpu osx-64 ${{ github.run_number }}
           path: ./dist
 
   test-cpu-osx-64:
-    name: test cpu-osx-64
+    name: test cpu osx-64
     needs: [build-cpu-osx-64]
     runs-on: macos-latest
     steps:
@@ -194,7 +206,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: cpu-osx-64 ${{ github.run_number }}
+          name: dist cpu osx-64 ${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -215,8 +227,20 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
 
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:osx-64
+
+      - name: publish (atest)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu osx-64 ${{ github.run_number }}
+          path: ./build/atest
+
   build-cpu-win-64:
-    name: build cpu-win-64
+    name: build cpu win-64
     needs: [lint]
     runs-on: windows-latest
     steps:
@@ -257,14 +281,14 @@ jobs:
         if: always()
         run: doit list --all --status
 
-      - name: publish dists
+      - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: cpu-win-64 ${{ github.run_number }}
+          name: dist cpu win-64 ${{ github.run_number }}
           path: ./dist
 
   test-cpu-win-64:
-    name: test cpu-win-64
+    name: test cpu win-64
     needs: [build-cpu-win-64]
     runs-on: windows-latest
     steps:
@@ -277,7 +301,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: cpu-win-64 ${{ github.run_number }}
+          name: dist cpu win-64 ${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -298,8 +322,20 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
 
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:win-64
+
+      - name: publish (atest)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu win-64 ${{ github.run_number }}
+          path: ./build/atest
+
   build-gpu-linux-64:
-    name: build gpu-linux-64
+    name: build gpu linux-64
     needs: [lint]
     runs-on: ubuntu-20.04
     steps:
@@ -340,14 +376,14 @@ jobs:
         if: always()
         run: doit list --all --status
 
-      - name: publish dists
+      - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: gpu-linux-64 ${{ github.run_number }}
+          name: dist gpu linux-64 ${{ github.run_number }}
           path: ./dist
 
   test-gpu-linux-64:
-    name: test gpu-linux-64
+    name: test gpu linux-64
     needs: [build-gpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
@@ -360,7 +396,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: gpu-linux-64 ${{ github.run_number }}
+          name: dist gpu linux-64 ${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -380,3 +416,15 @@ jobs:
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:gpu:linux-64
+
+      - name: publish (atest)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest gpu linux-64 ${{ github.run_number }}
+          path: ./build/atest

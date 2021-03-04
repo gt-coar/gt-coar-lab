@@ -126,16 +126,15 @@ def task_ci():
     """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
-    context = dict(build=[], test=[])
+    context = dict(jobs=[])
 
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
-                context["build"] += [
+                context["jobs"] += [
                     dict(
                         subdir=subdir,
                         variant=variant,
-                        name=f"{variant}-{subdir}",
                         build_lockfile=str(
                             (P.LOCKS / f"build-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
