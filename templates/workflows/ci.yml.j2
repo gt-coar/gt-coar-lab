@@ -1,12 +1,12 @@
-{% macro cache_conda(vm, job, locksfile) %}
+{% macro cache_conda(vm, lockfile) %}
       - name: cache (conda)
         uses: actions/cache@v1
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-{{ job }}-${{'{{'}} hashFiles('{{ "', '".join(locksfile) }}') {{'}}'}}
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-${{'{{'}} hashFiles('{{ lockfile }}') {{'}}'}}
           restore-keys: |
-            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-{{ job }}-
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
             ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
 {% endmacro %}
 
@@ -17,7 +17,7 @@
           condarc-file: .github/.condarc
           environment-file: {{ lockfile }}
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 {% endmacro %}
 
 {% macro preflight(job) %}
@@ -30,33 +30,7 @@
       - name: apt clean (ubuntu)
         run: |
           set -eux
-          df -h
-          sudo systemctl stop snapd.service
-          sudo snap remove chromium
-          sudo snap remove gtk-common-themes
-          sudo snap remove gnome-3-28-1804
-          sudo snap remove lxd
-          sudo snap remove core18
-          sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
-          sudo apt-get purge \
-            r-* \
-            php* \
-            mono-* \
-            mysql* \
-            dotnet-* \
-            mongodb* \
-            *openjdk* \
-            google-chrome*
-          sudo apt-get -y autoclean
-          sudo apt-get -y autoremove
-          sudo apt-get -y clean
-          sudo rm -rf \
-            "/usr/local/share/boost" \
-            "$AGENT_TOOLSDIRECTORY" \
-            /var/lib/apt/lists/*
-          apt list --installed
-          df -h
       {% endif %}
 {% endmacro %}
 
@@ -79,7 +53,7 @@ env:
   MAMBA_NO_BANNER: 1
   # our stuff
   ATEST_RETRIES: 1
-  CACHE_EPOCH: 3
+  CACHE_EPOCH: 4
 
 defaults:
   run:
@@ -94,8 +68,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       {% endraw %}
-      {{ cache_conda('ubuntu-20.04', 'lint', ['locks/ci-linux-64.conda.lock']) }}
-      {{ setup_miniconda('locks/ci-linux-64.conda.lock') }}
+      {{ cache_conda('ubuntu-20.04', 'locks/lint-linux-64.conda.lock') }}
+      {{ setup_miniconda('locks/lint-linux-64.conda.lock') }}
       {% raw %}
 
       - name: cache (yarn)
@@ -129,9 +103,9 @@ jobs:
 
       {{ preflight(job) }}
 
-      {{ cache_conda(job.vm, 'build-' ~ job.name, [job.ci_lockfile]) }}
+      {{ cache_conda(job.vm, job.build_lockfile) }}
 
-      {{ setup_miniconda(job.ci_lockfile) }}
+      {{ setup_miniconda(job.build_lockfile) }}
 
       - name: preflight (doit)
         run: doit list --all --status
@@ -166,4 +140,9 @@ jobs:
         with:
           name: {{ job.name }} {{ "${{ github.run_number }}" }}
           path: ./dist
+
+      {{ cache_conda(job.vm, job.atest_lockfile) }}
+
+      {{ setup_miniconda(job.atest_lockfile) }}
+
 {% endfor %}

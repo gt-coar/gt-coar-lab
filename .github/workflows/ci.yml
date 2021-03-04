@@ -16,7 +16,7 @@ env:
   MAMBA_NO_BANNER: 1
   # our stuff
   ATEST_RETRIES: 1
-  CACHE_EPOCH: 3
+  CACHE_EPOCH: 4
 
 defaults:
   run:
@@ -36,18 +36,18 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/lint-linux-64.conda.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-lint-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-linux-64.conda.lock
+          environment-file: locks/lint-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 
       - name: cache (yarn)
         uses: actions/cache@v1
@@ -81,18 +81,18 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/build-linux-64.conda.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-cpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-linux-64.conda.lock
+          environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 
       - name: preflight (doit)
         run: doit list --all --status
@@ -124,6 +124,24 @@ jobs:
           name: cpu-linux-64 ${{ github.run_number }}
           path: ./dist
 
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/atest-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
   build-cpu-osx-64:
     name: build cpu-osx-64
     needs: [lint]
@@ -136,18 +154,18 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-${{ hashFiles('locks/ci-osx-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-${{ hashFiles('locks/build-osx-64.conda.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-macos-latest-conda-build-cpu-osx-64-
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-osx-64.conda.lock
+          environment-file: locks/build-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 
       - name: preflight (doit)
         run: doit list --all --status
@@ -179,6 +197,24 @@ jobs:
           name: cpu-osx-64 ${{ github.run_number }}
           path: ./dist
 
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-${{ hashFiles('locks/atest-osx-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
   build-cpu-win-64:
     name: build cpu-win-64
     needs: [lint]
@@ -196,18 +232,18 @@ jobs:
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-${{ hashFiles('locks/ci-win-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-${{ hashFiles('locks/build-win-64.conda.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-windows-latest-conda-build-cpu-win-64-
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-win-64.conda.lock
+          environment-file: locks/build-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 
       - name: preflight (doit)
         run: doit list --all --status
@@ -244,6 +280,24 @@ jobs:
           name: cpu-win-64 ${{ github.run_number }}
           path: ./dist
 
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-${{ hashFiles('locks/atest-win-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
   build-gpu-linux-64:
     name: build gpu-linux-64
     needs: [lint]
@@ -254,51 +308,25 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           set -eux
-          df -h
-          sudo systemctl stop snapd.service
-          sudo snap remove chromium
-          sudo snap remove gtk-common-themes
-          sudo snap remove gnome-3-28-1804
-          sudo snap remove lxd
-          sudo snap remove core18
-          sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
-          sudo apt-get purge \
-            r-* \
-            php* \
-            mono-* \
-            mysql* \
-            dotnet-* \
-            mongodb* \
-            *openjdk* \
-            google-chrome*
-          sudo apt-get -y autoclean
-          sudo apt-get -y autoremove
-          sudo apt-get -y clean
-          sudo rm -rf \
-            "/usr/local/share/boost" \
-            "$AGENT_TOOLSDIRECTORY" \
-            /var/lib/apt/lists/*
-          apt list --installed
-          df -h
 
       - name: cache (conda)
         uses: actions/cache@v1
         with:
           path: ~/conda_pkgs_dir
           key: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-${{ hashFiles('locks/ci-linux-64.conda.lock') }}
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/build-linux-64.conda.lock') }}
           restore-keys: |
-            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-build-gpu-linux-64-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
-          environment-file: locks/ci-linux-64.conda.lock
+          environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: latest
+          miniforge-version: 4.9.2-7
 
       - name: preflight (doit)
         run: doit list --all --status
@@ -328,35 +356,27 @@ jobs:
       - name: apt clean (ubuntu)
         run: |
           set -eux
-          df -h
-          sudo systemctl stop snapd.service
-          sudo snap remove chromium
-          sudo snap remove gtk-common-themes
-          sudo snap remove gnome-3-28-1804
-          sudo snap remove lxd
-          sudo snap remove core18
-          sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
-          sudo apt-get purge \
-            r-* \
-            php* \
-            mono-* \
-            mysql* \
-            dotnet-* \
-            mongodb* \
-            *openjdk* \
-            google-chrome*
-          sudo apt-get -y autoclean
-          sudo apt-get -y autoremove
-          sudo apt-get -y clean
-          sudo rm -rf \
-            "/usr/local/share/boost" \
-            "$AGENT_TOOLSDIRECTORY" \
-            /var/lib/apt/lists/*
-          apt list --installed
-          df -h
 
       - uses: actions/download-artifact@v2
         with:
           name: gpu-linux-64 ${{ github.run_number }}
           path: ./dist
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/atest-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7

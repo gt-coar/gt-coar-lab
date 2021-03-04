@@ -101,7 +101,8 @@ def task_lock():
     """generate conda locks for all envs"""
     for subdir in C.SUBDIRS:
         for variant in C.VARIANTS:
-            if U.variant_spec(variant, subdir):
+            variant_spec = U.variant_spec(variant, subdir)
+            if variant_spec:
                 yield U.lock("run", variant, subdir)
         yield U.lock("build", None, subdir)
         yield U.lock("atest", None, subdir)
@@ -130,16 +131,17 @@ def task_ci():
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
-                lockfile = P.LOCKS / f"run-{variant}-{subdir}.conda.lock"
                 context["build"] += [
                     dict(
                         subdir=subdir,
                         variant=variant,
-                        name=lockfile.stem.split(".")[0],
-                        ci_lockfile=str(
+                        name=f"{variant}-{subdir}",
+                        build_lockfile=str(
                             (P.LOCKS / f"build-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
-                        lockfile=str(lockfile.relative_to(P.ROOT)),
+                        atest_lockfile=str(
+                            (P.LOCKS / f"atest-{subdir}.conda.lock").relative_to(P.ROOT)
+                        ),
                         vm=C.VM[subdir],
                     )
                 ]
@@ -298,7 +300,7 @@ class U:
     @classmethod
     def construct(cls, variant, subdir):
         construct = P.CONSTRUCTS / f"{variant}-{subdir}"
-        lock = P.LOCKS / f"{variant}-{subdir}.conda.lock"
+        lock = P.LOCKS / f"run-{variant}-{subdir}.conda.lock"
         tmpl_dir = P.TEMPLATES / "construct"
         templates = tmpl_dir.rglob("*")
         paths = {
