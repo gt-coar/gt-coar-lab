@@ -3,3 +3,4 @@
 
 dependencies:
   - pytorch-gpu
+  - swifter >=1

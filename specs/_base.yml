@@ -8,6 +8,8 @@ channels:
 
 dependencies:
   - conda >=4.9.2,<4.10
+  - doit
+  - jinja2
   - mamba >=0.7.14,<0.8
   - python >=3.7.10,<3.8.0
-  - doit
+  - ruamel_yaml

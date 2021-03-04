@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 1b024301563884895a80c3ca610b89cfde0764c31fc46a8348c8a19fb2892348
+# env_hash: b92945f5512a5282b0d096a5ee9217f24f09ba21cd18310b1b6b2b0cad88e135
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/vs2015_runtime-14.28.29325-h5e1d092_4.tar.bz2#e89bf06003c46c09ee8628eb76aa9520
@@ -45,6 +45,7 @@ https://conda.anaconda.org/conda-forge/win-64/chardet-4.0.0-py37h03978a9_1.tar.b
 https://conda.anaconda.org/conda-forge/win-64/conda-package-handling-1.7.2-py37h6dbccfb_0.tar.bz2#34ec2ca194aacdae7b8b43682a4e898d
 https://conda.anaconda.org/conda-forge/win-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#2b0ff32acf084c8f0c7039c152415b80
 https://conda.anaconda.org/conda-forge/win-64/jedi-0.18.0-py37h03978a9_2.tar.bz2#071560e0cb1e1cad66ec740ef69eb541
+https://conda.anaconda.org/conda-forge/win-64/markupsafe-1.1.1-py37hcc03f2d_3.tar.bz2#9d7dcdff8c2cee50345867aed8916813
 https://conda.anaconda.org/conda-forge/win-64/pickleshare-0.7.5-py37hc8dfbb8_1002.tar.bz2#b633ace65bb92a673748ce48c2c24839
 https://conda.anaconda.org/conda-forge/win-64/pycosat-0.6.3-py37hcc03f2d_1006.tar.bz2#9eab0ecb5234233d6d119e3a3b17dd50
 https://conda.anaconda.org/conda-forge/win-64/pywin32-300-py37hcc03f2d_0.tar.bz2#332665e8d4a64b4901c014bc09e63d64
@@ -59,6 +60,7 @@ https://conda.anaconda.org/conda-forge/win-64/menuinst-1.4.16-py37hc8dfbb8_1.tar
 https://conda.anaconda.org/conda-forge/win-64/pysocks-1.7.1-py37h03978a9_3.tar.bz2#57ff67171877b6aa4575b3e9a183b92a
 https://conda.anaconda.org/conda-forge/win-64/setuptools-49.6.0-py37h03978a9_3.tar.bz2#1b72c1d232d3bb820f9c129448a5f7ae
 https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.1-py_0.tar.bz2#d36df15eaef96549ce6231e3088fba54
+https://conda.anaconda.org/conda-forge/noarch/jinja2-2.11.3-pyh44b312d_0.tar.bz2#1d4c3605d85a3655b1595e0694138eb6
 https://conda.anaconda.org/conda-forge/noarch/pygments-2.8.0-pyhd8ed1ab_0.tar.bz2#226cd14ba0554ca2648fecd11090f473
 https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
 https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.3-pyhd8ed1ab_0.tar.bz2#25573e57774dd54cfa848e5dd44503ed

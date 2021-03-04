@@ -3,6 +3,7 @@
 
 dependencies:
   - python.app
+  - swifter <1
   # not available on windows
   - coq
   # TODO: upstream

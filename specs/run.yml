@@ -30,9 +30,14 @@ dependencies:
   - pandas
   # differentiable compute
   - dask
+  - dask-ml
   - distributed
-  - swifter >=1
   - tensorflow
+  - tpot
+  - py-xgboost
+  - py-xgboost
+  - scikit-mdr
+  - skrebate
   # interactive visualization
   - datashader
   - hvplot
