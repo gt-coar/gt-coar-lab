@@ -263,6 +263,16 @@ jobs:
           sudo snap remove core18
           sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
+          sudo apt-get purge \
+            r-* \
+            php* \
+            mono-* \
+            mysql* \
+            dotnet-* \
+            mongodb* \
+            *openjdk* \
+            google-chrome*
+          sudo apt-get -y autoclean
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
@@ -327,6 +337,16 @@ jobs:
           sudo snap remove core18
           sudo snap remove snapd
           sudo bash .github/scripts/clean_snaps.sh
+          sudo apt-get purge \
+            r-* \
+            php* \
+            mono-* \
+            mysql* \
+            dotnet-* \
+            mongodb* \
+            *openjdk* \
+            google-chrome*
+          sudo apt-get -y autoclean
           sudo apt-get -y autoremove
           sudo apt-get -y clean
           sudo rm -rf \
