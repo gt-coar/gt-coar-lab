@@ -426,6 +426,7 @@ class U:
         installer = U.installer(variant, subdir)
         stem = f"{variant}-{subdir}-{attempt}"
         out_dir = P.ATEST_OUT / stem
+        inst_dir = P.BUILD / f"{variant}-{subdir}"
 
         if out_dir.exists():
             try:
@@ -462,6 +463,8 @@ class U:
             f"ATTEMPT:{attempt}",
             "--variable",
             f"OS:{platform.system()}",
+            "--variable",
+            f"INST DIR:{inst_dir}",
             "--variable",
             f"INSTALLER:{installer}",
             "--variable",
@@ -525,6 +528,14 @@ class U:
             "🤖",
             "--nostatusrc",
             "--merge",
+            "--output",
+            P.ATEST_OUT / "robot.xml",
+            "--log",
+            P.ATEST_OUT / "log.html",
+            "--report",
+            P.ATEST_OUT / "report.html",
+            "--xunit",
+            P.ATEST_OUT / "xunit.xml",
         ] + sorted(P.ATEST_OUT.glob("*.robot.xml"))
 
         str_args = [*map(str, args)]

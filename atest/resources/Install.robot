@@ -7,12 +7,16 @@ Resource          ./Variables.robot
 Resource          ./Shell.robot
 
 *** Keywords ***
+Maybe Run the Installer
+    [Documentation]    Run the installer, if not already installed
+    ${installed} =    Evaluate    __import__('os.path').path.exists("${INST DIR}")
+    Run Keyword If    not ${installed}    Run The Installer
+    Run Keyword If    ${installed}    Log    Already installed!
+
 Run the Installer
     [Documentation]    Run the platform-specific installer
     File Should Exist    ${INSTALLER}
-    ${installation} =    Normalize Path    ${CURDIR}${/}..${/}..${/}tmp${/}${NAME}_${ATTEMPT}
     ${path} =    Set Variable    ${OUTPUT DIR}
-    Set Global Variable    ${INST DIR}    ${installation}
     Set Global Variable    ${HOME}    ${path}${/}home
     ${rc} =    Run Keyword If    "${OS}" == "Linux"    Run the Linux Installer
     ...    ELSE IF    "${OS}" == "Windows"    Run the Windows Installer
@@ -21,9 +25,12 @@ Run the Installer
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
     Wait Until Keyword Succeeds    5x    30s
-    ...    Run Shell Script in Installation    conda info && conda list
-    Run Shell Script in Installation    pip freeze > ${OUTPUT DIR}${/}requirements.txt
-    Run Shell Script in Installation    conda list --explicit > ${OUTPUT DIR}${/}conda-explicit.txt
+    ...    Run Shell Script in Installation
+    ...    mamba info && mamba list
+    Run Shell Script in Installation
+    ...    pip freeze > ${OUTPUT DIR}${/}requirements.txt
+    Run Shell Script in Installation
+    ...    mamba list --explicit > ${OUTPUT DIR}${/}mamba-explicit.txt
 
 Run the Linux installer
     [Documentation]    Install on Linux
