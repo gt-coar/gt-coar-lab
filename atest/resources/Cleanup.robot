@@ -9,6 +9,6 @@ Clean up the Installation
     Sleep    5s
     Terminate All Processes    kill=True
     Sleep    5s
-    Remove Directory    ${INSTALLATION}    recursive=True
+    Remove Directory    ${INST DIR}    recursive=True
     Sleep    5s
-    Remove Directory    ${INSTALLATION}    recursive=True
+    Remove Directory    ${INST DIR}    recursive=True
