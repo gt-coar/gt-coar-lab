@@ -5,6 +5,8 @@ name: "{{ name }}-{{ variant.upper() }}"
 version: "{{ version }}-{{ build_number }}"
 company: University System of Georgia
 license_file: LICENSE
+post_install: post_install.sh   # [unix]
+post_install: post_install.bat  # [win]
 
 # constructor config
 ignore_duplicate_files: true

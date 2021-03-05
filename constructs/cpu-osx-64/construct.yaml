@@ -1,10 +1,12 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
-name: 'GTCOARLab-CPU'
-version: '2021.03-0'
+name: "GTCOARLab-CPU"
+version: "2021.03-0"
 company: University System of Georgia
 license_file: LICENSE
+post_install: post_install.sh   # [unix]
+post_install: post_install.bat  # [win]
 
 # constructor config
 ignore_duplicate_files: true
@@ -17,24 +19,27 @@ check_path_length: true
 condarc:
   add_anaconda_token: False
   channels:
-    - conda-forge
+  - conda-forge
   add_pip_as_python_dependency: False
   auto_update_conda: False
   default_channels:
-    - conda-forge
+  - conda-forge
   local_repodata_ttl: 600
   remote_connect_timeout_secs: 600.0
   remote_max_retries: 10
   remote_read_timeout_secs: 600.0
   repodata_fns:
-    - repodata.json
+  - repodata.json
   show_channel_urls: True
   show_sources: True
   unsatisfiable_hints_check_depth: 2
   use_only_tar_bz2: True
 
+
+
 channels:
   - https://conda.anaconda.org/conda-forge
+  
 
 specs:
   - https://conda.anaconda.org/conda-forge/osx-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#96dd44c2471a638fb9cdc40aa2573d1b
@@ -439,3 +444,4 @@ specs:
   - https://conda.anaconda.org/conda-forge/noarch/mdit-py-plugins-0.2.5-pyhd8ed1ab_0.tar.bz2#8843c122b4f50190eb090853f54c9162
   - https://conda.anaconda.org/conda-forge/noarch/myst-parser-0.13.5-pyhd8ed1ab_0.tar.bz2#0f5ea9ad4e797a731fabaec67f78cf47
   - https://conda.anaconda.org/conda-forge/noarch/myst-nb-0.12.0-pyhd8ed1ab_0.tar.bz2#eea9159e9f2b053b8e4dadad35a83df9
+  
