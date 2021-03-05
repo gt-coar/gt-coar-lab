@@ -249,9 +249,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: enable long paths (windows)
+        shell: pwsh
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
         shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
 
       - name: cache (conda)
         uses: actions/cache@v1
@@ -297,9 +303,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: enable long paths (windows)
+        shell: pwsh
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
         shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
 
       - uses: actions/download-artifact@v2
         with:
