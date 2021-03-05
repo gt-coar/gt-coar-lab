@@ -5,10 +5,14 @@
 ::
 @ECHO ON
 
-SET PY_SCRIPT=                                                                   ^
-    import os, json, pathlib.Path as P;                                          ^
-    overrides = P(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json';  ^
-    overrides.parent.mkdir(parents=True, exist_ok=True);                         ^
-    overrides.write_text(json.dumps({{ overrides }}));                           ^
+SET PY_SCRIPT=^
+    import os, json, pathlib; ^
+    overrides = pathlib.Path(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json'; ^
+    overrides.parent.mkdir(parents=True, exist_ok=True); ^
+    overrides.write_text(json.dumps({{ overrides }})); ^
+    print('ok'); ^
 
+
+
+:: some of that whitespace is important
 call %PREFIX%\python.exe -c %PY_SCRIPT%  || ECHO 'whatever, we tried'

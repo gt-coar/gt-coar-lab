@@ -6,8 +6,9 @@
 set -x
 
 $PREFIX/bin/python - <<'____HERE'
-import os, json, pathlib.Path as P;
-overrides = P(os.environ['PREFIX']) / 'share/jupyter/lab/settings/overrides.json';
-overrides.parent.mkdir(parents=True, exist_ok=True); 
+import os, json, pathlib;
+overrides = pathlib.Path(os.environ['PREFIX']) / 'share/jupyter/lab/settings/overrides.json';
+overrides.parent.mkdir(parents=True, exist_ok=True);
 overrides.write_text(json.dumps({'@jupyterlab/apputils-extension:themes': {'theme': 'GT COAR Dark', 'theme-scrollbars': True}, 'jupyterlab/terminal-extension:plugin': {'fontFamily': "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", 'fontSize': 14}, '@jupyterlab/filebrowser-extension:browser': {'navigateToCurrentDirectory': True}}));
+print('ok');
 ____HERE
