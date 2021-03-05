@@ -471,7 +471,7 @@ class U:
             f"VERSION:{C.VERSION}",
             "--variable",
             f"BUILD:{C.BUILD_NUMBER}",
-            "--randomize",
+            "--variable",
             f"VARIANT:{variant}",
             "--randomize",
             "all",

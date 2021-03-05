@@ -36,16 +36,13 @@ Run the Installer
 
 Validate the Installation
     [Documentation]    Ensure some baseline commands work
-    Wait Until Keyword Succeeds    5x    30s
+    Wait Until Keyword Succeeds    5x    10s
     ...    Run Shell Script in Installation
     ...    mamba info
-    Wait Until Keyword Succeeds    5x    30s
-    ...    Run Shell Script in Installation
-    ...    mamba list
-    Run Shell Script in Installation
-    ...    python -m pip freeze
     Run Shell Script in Installation
     ...    mamba list --explicit
+    Run Shell Script in Installation
+    ...    python -m pip freeze
 
 Run the Linux installer
     [Documentation]    Install on Linux
