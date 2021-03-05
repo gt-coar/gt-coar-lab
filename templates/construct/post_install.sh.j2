@@ -5,9 +5,9 @@
 #
 set -x
 
-python -c "\
-    import os, json, pathlib.Path as P;                                         \
-    overrides = P(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json'; \
-    overrides.parent.mkdir(parents=True, exist_ok=True);                        \
-    overrides.write_text(json.dumps({{ overrides }}));                          \
-"
+$PREFIX/bin/python - <<'____HERE'
+import os, json, pathlib.Path as P;
+overrides = P(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json';
+overrides.parent.mkdir(parents=True, exist_ok=True); 
+overrides.write_text(json.dumps({{ overrides }}));
+____HERE
