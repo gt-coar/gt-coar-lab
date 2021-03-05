@@ -1,15 +1,13 @@
-# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
-# Distributed under the terms of the BSD-3-Clause License
+# {{ copyright }}
+# {{ license }}
 #
 # {{ name }}-{{ variant.upper() }} {{ version }}-{{ build_number }} defaults
 #
 set -x
 
-export settings="$PREFIX/{{ settings_path }}"
-export overrides="$settings/overrides.json"
-
-mkdir -p $settings
-
-cat << EOF > "$overrides"
-{{ overrides }}
-EOF
+python -c "\
+    import os, json, pathlib.Path as P;                                         \
+    overrides = P(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json'; \
+    overrides.parent.mkdir(parents=True, exist_ok=True);                        \
+    overrides.write_text(json.dumps({{ overrides }}));                          \
+"

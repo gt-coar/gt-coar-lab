@@ -146,7 +146,7 @@ def task_ci():
     """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
-    context = dict(jobs=[])
+    context = dict(copyright=C.COPYRIGHT_HEADER, license=C.LICENSE_HEADER, jobs=[])
 
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
@@ -313,7 +313,7 @@ class P:
         *SCRIPTS.glob("*.json"),
         CONDARC,
     ]
-    ALL_HEADER_FILES = [*ALL_MD, *ALL_YAML, *ALL_PY, *ALL_ROBOT, *ALL_SH]
+    ALL_HEADER_FILES = [*ALL_MD, *ALL_YAML, *ALL_PY, *ALL_ROBOT, *ALL_SH, *ALL_BAT]
 
 
 class U:
@@ -356,6 +356,8 @@ class U:
                 variant=variant,
                 build_number=C.BUILD_NUMBER,
                 version=C.VERSION,
+                copyright=C.COPYRIGHT_HEADER,
+                license=C.LICENSE_HEADER,
                 # we _want_ python-compatible, single quotes,
                 settings_path="share/jupyter/lab/settings",
                 overrides=str(safe_load(overrides.read_text())),

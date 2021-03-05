@@ -1,3 +1,8 @@
+# {{ copyright }}
+# {{ license }}
+
+# yamllint disable rule:truthy rule:line-length rule:comments-indentation
+
 {% macro cache_conda(vm, lockfile) %}
       - name: cache (conda)
         uses: actions/cache@v1
@@ -41,11 +46,6 @@
 {% endmacro %}
 
 {% raw %}
-# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
-# Distributed under the terms of the BSD-3-Clause License
-
-# yamllint disable rule:truthy rule:line-length rule:comments-indentation
-
 name: CI
 
 on:
