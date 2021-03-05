@@ -1,8 +1,0 @@
-@bokeh/jupyter_bokeh@2.0.1
-@jupyter-widgets/jupyterlab-manager@2.0.0
-@jupyterlab/git@0.20.0
-@jupyterlab/toc@3.0.0
-@pyviz/jupyterlab_pyviz@1.0.4
-dask-labextension@2.0.2
-jupyter-cytoscape@0.2.2
-nbdime-jupyterlab@2.0.0

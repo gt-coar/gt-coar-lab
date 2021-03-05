@@ -107,6 +107,13 @@ def task_lint():
         ],
     )
 
+    for path in P.ALL_HEADER_FILES:
+        yield dict(
+            name=f"headers:{path.relative_to(P.ROOT)}",
+            file_dep=[path],
+            actions=[(U.headers, [path])],
+        )
+
 
 def task_lock():
     if C.SKIP_LOCKS:
@@ -210,6 +217,7 @@ class C:
         platform.system()
     ]
     TODAY = datetime.today()
+    YEAR = TODAY.strftime("%Y")
     VERSION = TODAY.strftime("%Y.%m")
     BUILD_NUMBER = "0"
     CONSTRUCTOR_PLATFORM = {
@@ -230,6 +238,10 @@ class C:
 
     ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES", "0"))
     ATEST_ARGS = safe_load(os.environ.get("ATEST_ARGS", "[]"))
+    AUTHORS = "University System of Georgia and GTCOARLab Contributors"
+    COPYRIGHT_HEADER = f"Copyright (c) {YEAR} {AUTHORS}"
+    LICENSE = "BSD-3-Clause"
+    LICENSE_HEADER = f"Distributed under the terms of the {LICENSE} License"
 
 
 class P:
@@ -237,18 +249,19 @@ class P:
 
     DODO = Path(__file__)
     ROOT = DODO.parent
-    SCRIPTS = ROOT / "_scripts"
-    CI = ROOT / ".github"
 
     # checked in
+    CI = ROOT / ".github"
+    TEMPLATES = ROOT / "templates"
+    SPECS = ROOT / "specs"
+    ATEST = ROOT / "atest"
+    BINDER = ROOT / ".binder"
+    SCRIPTS = ROOT / "_scripts"
+
     CONDARC = CI / ".condarc"
     PACKAGE_JSON = SCRIPTS / "package.json"
     YARNRC = SCRIPTS / ".yarnrc"
     PYPROJECT = SCRIPTS / "pyproject.toml"
-    TEMPLATES = ROOT / "templates"
-    SPECS = ROOT / "specs"
-    ATEST = ROOT / "atest"
-    ALL_ROBOT = [*ATEST.rglob("*.robot")]
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
@@ -281,10 +294,15 @@ class P:
 
     # collections of things
     ALL_PY = [DODO]
+    ALL_ROBOT = [*ATEST.rglob("*.robot")]
     ALL_YAML = [
         *SPECS.glob("*.yml"),
         *CI.rglob("*.yml"),
+        *CONSTRUCTS.glob("*.yaml"),
+        *BINDER.glob("*.yml"),
     ]
+    ALL_SH = [*BINDER.glob("*.sh"), *CONSTRUCTS.glob("*/*.sh")]
+    ALL_BAT = [*CONSTRUCTS.glob("*/*.bat")]
     ALL_MD = [*ROOT.glob("*.md")]
     ALL_JSON = [*TEMPLATES.rglob("*.json"), *SCRIPTS.glob("*.js")]
     ALL_PRETTIER = [
@@ -295,6 +313,7 @@ class P:
         *SCRIPTS.glob("*.json"),
         CONDARC,
     ]
+    ALL_HEADER_FILES = [*ALL_MD, *ALL_YAML, *ALL_PY, *ALL_ROBOT, *ALL_SH]
 
 
 class U:
@@ -555,6 +574,14 @@ class U:
         except KeyboardInterrupt:
             proc.kill()
             return 1
+
+    @classmethod
+    def headers(cls, path):
+        text = path.read_text(**C.ENC)
+        for header in [C.COPYRIGHT_HEADER, C.LICENSE_HEADER]:
+            if header not in text:
+                log.error(f"{path} needs {header}")
+                return False
 
 
 class R(ConsoleReporter):

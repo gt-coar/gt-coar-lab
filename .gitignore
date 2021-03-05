@@ -1,8 +1,9 @@
 __pycache__/
 .*cache/
 .doit.*
-.venv/
 .ipynb_checkpoints/
+.venv/
+.virtual_documents/
 .yarn-packages/
 atest/output/
 build/
