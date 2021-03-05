@@ -5,19 +5,11 @@
 #
 set -x
 
-export settings="$PREFIX/share/jupyter/lab/user-settings/@jupyterlab"
-export apputils="$settings/apputils-extension"
-export term="$settings/terminal-extension"
+export settings="$PREFIX/share/jupyter/lab/settings"
+export overrides="$settings/overrides.json"
 
-mkdir -p $apputils $term
+mkdir -p $settings
 
-cat << EOF > "$apputils/themes.jupyterlab-settings"
-{"theme": "GT COAR Light", "theme-scrollbars": true}
-EOF
-
-cat << EOF > "$apputils/themes.jupyterlab-settings"
-{
-  "fontFamily": "\"Roboto Mono\", Menlo, Consolas, \"DejaVu Sans Mono\", monospace",
-  "fontSize": 14
-}
+cat << EOF > "$overrides"
+{'@jupyterlab/apputils-extension:themes': {'theme': 'GT COAR Dark', 'theme-scrollbars': True}, 'jupyterlab/terminal-extension:plugin': {'fontFamily': "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", 'fontSize': 14}, '@jupyterlab/filebrowser-extension:browser': {'navigateToCurrentDirectory': True}}
 EOF

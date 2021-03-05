@@ -286,11 +286,13 @@ class P:
         *CI.rglob("*.yml"),
     ]
     ALL_MD = [*ROOT.glob("*.md")]
+    ALL_JSON = [*TEMPLATES.rglob("*.json"), *SCRIPTS.glob("*.js")]
     ALL_PRETTIER = [
-        *ALL_YAML,
+        *ALL_JSON,
         *ALL_MD,
-        *SCRIPTS.glob("*.json"),
+        *ALL_YAML,
         *CI.glob("*.yml"),
+        *SCRIPTS.glob("*.json"),
         CONDARC,
     ]
 
@@ -318,6 +320,7 @@ class U:
         lock = P.LOCKS / f"run-{variant}-{subdir}.conda.lock"
         tmpl_dir = P.TEMPLATES / "construct"
         templates = tmpl_dir.rglob("*")
+        overrides = P.TEMPLATES / "overrides.json"
         paths = {
             t: construct / (str(t.relative_to(tmpl_dir)).replace(".j2", ""))
             for t in templates
@@ -334,6 +337,9 @@ class U:
                 variant=variant,
                 build_number=C.BUILD_NUMBER,
                 version=C.VERSION,
+                # we _want_ python-compatible, single quotes,
+                settings_path="share/jupyter/lab/settings",
+                overrides=str(safe_load(overrides.read_text())),
             )
             for src_path, dest_path in paths.items():
                 if not dest_path.parent.exists():
@@ -350,7 +356,7 @@ class U:
         yield dict(
             name=f"{variant}:{subdir}",
             actions=[construct],
-            file_dep=[lock, *paths.keys()],
+            file_dep=[lock, overrides, *paths.keys()],
             targets=[*paths.values()],
         )
 
