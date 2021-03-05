@@ -18,33 +18,27 @@ Roughly, the intent is:
 
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
+
+# see the HACKS at the end of this file for DOIT_CONFIG, env vars, encoding cruft
+
+import codecs
 import os
 import platform
 import shutil
 import subprocess
+import sys
 from datetime import datetime
 from hashlib import sha256
 from pathlib import Path
 
 import colorama
+from doit.reporter import ConsoleReporter
 from doit.tools import CmdAction, config_changed, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
 
-# see additional environment variable hacks at the end
-DOIT_CONFIG = {"backend": "sqlite3", "verbosity": 2, "par_type": "thread"}
 
-# patch environment for all child tasks
-os.environ.update(
-    MAMBA_NO_BANNER="1",
-    PYTHONUNBUFFERED="1",
-    PYTHONIOENCODING="utf-8",
-)
-
-# for windows, mostly, but whatever
-colorama.init()
-
-
+# actual tasks
 def task_setup():
     """handle non-conda setup tasks"""
 
@@ -556,5 +550,69 @@ class U:
             return 1
 
 
-# late environment patches
-os.environ.update(CONDARC=str(P.CONDARC))
+class R(ConsoleReporter):
+    TIMEFMT = "%H:%M:%S"
+    SKIP = " " * len(TIMEFMT)
+    _timings = {}
+    ISTOP = "🛑"
+    ISTART = "🔬"
+    ISKIP = "⏩"
+    IPASS = "🎉"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def execute_task(self, task):
+        start = datetime.now()
+        title = task.title()
+        self._timings[title] = [start]
+        self.outstream.write(
+            f"""{R.ISTART} {start.strftime(R.TIMEFMT)}   START  {title}\n"""
+        )
+
+    def outtro(self, task, emoji, status):
+        title = task.title()
+        start, end = self._timings[title] = [
+            *self._timings[title],
+            datetime.now(),
+        ]
+        delta = end - start
+        sec = str(delta.seconds).rjust(7)
+        self.outstream.write(f"{emoji}  {sec}s   {status}  {task.title()}\n")
+
+    def add_failure(self, task, exception):
+        super().add_failure(task, exception)
+        self.outtro(task, R.ISTOP, "FAIL")
+
+    def add_success(self, task):
+        super().add_success(task)
+        self.outtro(task, R.IPASS, "PASS")
+
+    def skip_uptodate(self, task):
+        self.outstream.write(f"{R.ISKIP} {R.SKIP}    SKIP  {task.title()}\n")
+
+    skip_ignore = skip_uptodate
+
+
+# HACKS
+
+DOIT_CONFIG = {
+    "backend": "sqlite3",
+    "verbosity": 2,
+    "par_type": "thread",
+    "reporter": R,
+}
+
+# patch environment for all child tasks
+os.environ.update(
+    CONDARC=str(P.CONDARC),
+    MAMBA_NO_BANNER="1",
+    PYTHONUNBUFFERED="1",
+    PYTHONIOENCODING="utf-8",
+)
+
+# for windows, mostly, but whatever
+colorama.init()
+
+sys.stdout = codecs.getwriter(C.ENC["encoding"])(sys.stdout)
+sys.stderr = codecs.getwriter(C.ENC["encoding"])(sys.stderr)
