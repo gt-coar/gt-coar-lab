@@ -21,12 +21,11 @@ Roughly, the intent is:
 
 # see the HACKS at the end of this file for DOIT_CONFIG, env vars, encoding cruft
 
-import codecs
+import logging
 import os
 import platform
 import shutil
 import subprocess
-import sys
 from datetime import datetime
 from hashlib import sha256
 from pathlib import Path
@@ -36,6 +35,11 @@ from doit.reporter import ConsoleReporter
 from doit.tools import CmdAction, config_changed, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
+
+# init logging
+# TODO: make configurable
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
 
 
 # actual tasks
@@ -431,7 +435,7 @@ class U:
             try:
                 shutil.rmtree(out_dir)
             except Exception as err:
-                print(err)
+                log.error(err)
 
         out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -479,7 +483,7 @@ class U:
         ]
 
         str_args = ["python", "-m", "robot", *map(str, args)]
-        print(">>> ", " ".join(str_args), flush=True)
+        log.warning(">>> %s", " ".join(str_args))
         proc = subprocess.Popen(str_args, cwd=P.ATEST)
 
         try:
@@ -539,7 +543,7 @@ class U:
 
         str_args = [*map(str, args)]
 
-        print(">>> rebot args: ", " ".join(str_args), flush=True)
+        log.warning(">>> rebot args: %s", " ".join(str_args))
 
         proc = subprocess.Popen(str_args)
 
@@ -589,7 +593,7 @@ class R(ConsoleReporter):
         self.outtro(task, R.IPASS, "PASS")
 
     def skip_uptodate(self, task):
-        self.outstream.write(f"{R.ISKIP} {R.SKIP}    SKIP  {task.title()}\n")
+        self.outstream.write(f"{R.ISKIP} {R.SKIP}    SKIP      {task.title()}\n")
 
     skip_ignore = skip_uptodate
 
@@ -613,6 +617,3 @@ os.environ.update(
 
 # for windows, mostly, but whatever
 colorama.init()
-
-sys.stdout = codecs.getwriter(C.ENC["encoding"])(sys.stdout)
-sys.stderr = codecs.getwriter(C.ENC["encoding"])(sys.stderr)

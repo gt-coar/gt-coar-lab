@@ -4,3 +4,4 @@
 dependencies:
   - pytorch-gpu
   - swifter >=1
+  - tpot-full

@@ -24,6 +24,8 @@ dependencies:
   - jupyter_bokeh
   # collaboration and presentation
   - jupyter-videochat
+  # TODO: feedstock
+  # - jupyterlab-tour
   # TODO: publish
   # - ipydrawio
   # numerical compute
@@ -34,11 +36,12 @@ dependencies:
   - dask-ml
   - distributed
   - tensorflow
+  # genetic ML
   - tpot
-  - py-xgboost
-  - py-xgboost
-  - scikit-mdr
-  - skrebate
+  - tpot-dask
+  - tpot-mdr
+  - tpot-imblearn
+  - tpot-skrebate
   # interactive visualization
   - datashader
   - hvplot
@@ -46,7 +49,6 @@ dependencies:
   - ipydatagrid
   - ipyelk
   - ipywidgets >=7.6,<8
-  - python-graphviz
   - pythreejs
   - wxyz_datagrid
   - wxyz_dvcs
@@ -57,6 +59,9 @@ dependencies:
   - wxyz_svg
   - wxyz_tpl_jinja
   - wxyz_yaml
+  # computational diagrams
+  - python-graphviz
+  - pygraphviz
   # code assistance
   - jupyterlab-lsp
   - jupyter-lsp-python-plugins

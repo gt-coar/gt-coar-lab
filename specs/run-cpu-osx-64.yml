@@ -4,6 +4,7 @@
 dependencies:
   - python.app
   - swifter <1
+  - tpot-full
   # not available on windows
   - coq
   # TODO: upstream
