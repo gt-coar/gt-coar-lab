@@ -12,6 +12,8 @@ on:
     branches: [master, dev]
 
 env:
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: 1
   PIP_DISABLE_PIP_VERSION_CHECK: 1
   MAMBA_NO_BANNER: 1
   # our stuff

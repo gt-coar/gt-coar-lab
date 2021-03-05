@@ -32,7 +32,7 @@ from pathlib import Path
 
 import colorama
 from doit.reporter import ConsoleReporter
-from doit.tools import CmdAction, config_changed, create_folder
+from doit.tools import CmdAction, create_folder
 from jinja2 import Template
 from ruamel_yaml import safe_load
 
@@ -187,9 +187,11 @@ def task_test():
         for subdir in C.SUBDIRS:
             if subdir != C.THIS_SUBDIR:
                 continue
+            installer = U.installer(variant, subdir)
+            hashfile = installer.parent / f"{installer.name}.sha256"
             yield dict(
                 name=f"{variant}:{subdir}",
-                file_dep=[U.installer(variant, subdir), *P.ALL_ROBOT],
+                file_dep=[hashfile, installer, *P.ALL_ROBOT],
                 actions=[(U.atest, [variant, subdir])],
                 targets=[P.ATEST_OUT / f"{variant}-{subdir}-0.robot.xml"],
             )
@@ -383,11 +385,6 @@ class U:
             return rc == 0
 
         yield dict(
-            uptodate=[
-                config_changed(
-                    {installer.name: [installer.exists(), hashfile.exists()]}
-                )
-            ],
             name=f"{variant}:{subdir}",
             actions=[(create_folder, [P.DIST]), build],
             file_dep=[*construct.rglob("*")],

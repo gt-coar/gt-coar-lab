@@ -9,10 +9,12 @@ Resource          ./Shell.robot
 *** Keywords ***
 Maybe Run the Installer
     [Documentation]    Run the installer, if not already installed
-    ${installed} =    Evaluate    __import__('os.path').path.exists("${INST DIR}")
-    Run Keyword If
-    ...    ${installed}    Log    Already installed!
-    ...    ELSE    Run The Installer
+    ${history} =    Normalize Path    ${INST DIR}${/}conda-meta${/}history
+    ${installed} =    Evaluate    __import__('os.path').path.exists(r"""${history}""")
+    Run Keyword If    ${installed}
+    ...    Log    Already installed!
+    ...    ELSE
+    ...    Run The Installer
     Validate the Installation
 
 Run the Installer
@@ -20,10 +22,15 @@ Run the Installer
     File Should Exist    ${INSTALLER}
     ${path} =    Set Variable    ${OUTPUT DIR}
     Set Global Variable    ${HOME}    ${path}${/}home
-    ${rc} =    Run Keyword If    "${OS}" == "Linux"    Run the Linux Installer
-    ...    ELSE IF    "${OS}" == "Windows"    Run the Windows Installer
-    ...    ELSE IF    "${OS}" == "Darwin"    Run the MacOSX Installer
-    ...    ELSE    Fatal Error    Can't install on platform ${OS}!
+    ${rc} =
+    ...    Run Keyword If    "${OS}" == "Linux"
+    ...    Run the Linux Installer
+    ...    ELSE IF    "${OS}" == "Windows"
+    ...    Run the Windows Installer
+    ...    ELSE IF    "${OS}" == "Darwin"
+    ...    Run the MacOSX Installer
+    ...    ELSE
+    ...    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
 
