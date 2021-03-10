@@ -11,7 +11,7 @@ set "OVERRIDES_PATH=%SETTINGS_PATH%\overrides.json"
 
 echo "0.0: start" >> "%POST_INSTALL_LOG%"
 
-md /s /q "%SETTINGS_PATH%" || echo "0.1: directory might already exist" >> "%POST_INSTALL_LOG%"
+md "%SETTINGS_PATH%" >> "%POST_INSTALL_LOG%" 2>&1 || echo "0.1: directory might already exist" >> "%POST_INSTALL_LOG%"
 
 echo "1.0: (maybe) ensured %SETTINGS_PATH%" >> "%POST_INSTALL_LOG%"
 
