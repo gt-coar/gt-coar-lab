@@ -5,10 +5,11 @@
 #
 set -x
 
-export POST_INSTALL_LOG="${PREFIX}/share/jupyter/lab/settings"
+export POST_INSTALL_LOG="${PREFIX}/post_install.log"
 
 echo "start" >> "${POST_INSTALL_LOG}"
-mkdir -p "${PREFIX}/share/jupyter/lab/settings"
+ls "${PREFIX}/share/jupyter/lab/settings"  || echo "probably ok"
+mkdir -p "${PREFIX}/share/jupyter/lab/settings" || echo "settings path probably exists"
 
 cat << EOF > "${PREFIX}/share/jupyter/lab/settings/overrides.json"
 {"@jupyterlab/apputils-extension:themes": {"theme": "GT COAR Dark", "theme-scrollbars": true}, "jupyterlab/terminal-extension:plugin": {"fontFamily": "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", "fontSize": 14}, "@jupyterlab/filebrowser-extension:browser": {"navigateToCurrentDirectory": true}}

@@ -5,10 +5,11 @@
 #
 set -x
 
-export POST_INSTALL_LOG="${PREFIX}/{{ settings_path }}"
+export POST_INSTALL_LOG="${PREFIX}/post_install.log"
 
 echo "start" >> "${POST_INSTALL_LOG}"
-mkdir -p "${PREFIX}/{{ settings_path }}"
+ls "${PREFIX}/{{ settings_path }}"  || echo "probably ok"
+mkdir -p "${PREFIX}/{{ settings_path }}" || echo "settings path probably exists"
 
 cat << EOF > "${PREFIX}/{{ settings_path }}/overrides.json"
 {{ overrides }}
