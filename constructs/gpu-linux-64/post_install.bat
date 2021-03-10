@@ -6,17 +6,21 @@
 @ECHO ON
 
 set POST_INSTALL_LOG=%PREFIX%\post_install.log
+set SETTINGS_PATH=%PREFIX%\share\jupyter\lab\settings
+set OVERRIDES_PATH=%SETTINGS_PATH%\overrides.json
 
-echo "start" >> %POST_INSTALL_LOG%
+echo "0.0: start" >> "%POST_INSTALL_LOG%"
 
-md /s /q "%PREFIX%\share\jupyter\lab\settings" ^
-    || echo 'directory might already exist' ^
-    >> "%POST_INSTALL_LOG%"
+md /s /q "%SETTINGS_PATH%" || echo "0.1: directory might already exist" >> "%POST_INSTALL_LOG%"
 
-echo ^
-    "{""@jupyterlab/apputils-extension:themes"": {""theme"": ""GT COAR Dark"", ""theme-scrollbars"": true}, ""jupyterlab/terminal-extension:plugin"": {""fontFamily"": ""'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"", ""fontSize"": 14}, ""@jupyterlab/filebrowser-extension:browser"": {""navigateToCurrentDirectory"": true}}" ^
-    > "%PREFIX%\share\jupyter\lab\settings\overrides.json" ^
-    || echo "failed to write overrides" ^ 
-    >> %POST_INSTALL_LOG%
+echo "1.0: ensured %SETTINGS_PATH%" >> "%POST_INSTALL_LOG%"
 
-echo "done" >> %POST_INSTALL_LOG%
+set OVERRIDES="{""@jupyterlab/apputils-extension:themes"": {""theme"": ""GT COAR Dark"", ""theme-scrollbars"": true}, ""jupyterlab/terminal-extension:plugin"": {""fontFamily"": ""'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"", ""fontSize"": 14}, ""@jupyterlab/filebrowser-extension:browser"": {""navigateToCurrentDirectory"": true}}"
+
+echo "2.0: created overrides env var for %OVERRIDES%" >> "%POST_INSTALL_LOG%"
+
+echo "%OVERRIDES%" > "%OVERRIDES_PATH%" || echo "2.1: failed to write overrides" >> "%POST_INSTALL_LOG%"
+
+echo "3.0: wrote overrides" >> "%POST_INSTALL_LOG%"
+
+echo "4.0: done" >> "%POST_INSTALL_LOG%"

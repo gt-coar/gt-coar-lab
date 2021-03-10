@@ -7,7 +7,7 @@ set -x
 
 export POST_INSTALL_LOG="${PREFIX}/post_install.log"
 
-echo "start" >> "${POST_INSTALL_LOG}"
+echo "0.0: start" >> "${POST_INSTALL_LOG}"
 ls "${PREFIX}/{{ settings_path }}"  || echo "probably ok"
 mkdir -p "${PREFIX}/{{ settings_path }}" || echo "settings path probably exists"
 
@@ -15,4 +15,4 @@ cat << EOF > "${PREFIX}/{{ settings_path }}/overrides.json"
 {{ overrides }}
 EOF
 
-echo "done" >> "${POST_INSTALL_LOG}"
+echo "4.0: done" >> "${POST_INSTALL_LOG}"
