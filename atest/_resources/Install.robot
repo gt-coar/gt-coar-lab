@@ -46,6 +46,8 @@ Validate the Installation
     ...    mamba list --explicit
     Run Shell Script in Installation
     ...    python -m pip freeze
+    ${postinstall log} =  Get File   ${INST_DIR}${/}post_install.log
+    Log    ${postinstall log}
 
 Run the Linux installer
     [Documentation]    Install on Linux

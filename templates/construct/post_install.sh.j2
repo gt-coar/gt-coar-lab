@@ -5,10 +5,13 @@
 #
 set -x
 
-$PREFIX/bin/python - <<'____HERE'
-import os, json, pathlib;
-overrides = pathlib.Path(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json';
-overrides.parent.mkdir(parents=True, exist_ok=True);
-overrides.write_text(json.dumps({{ overrides }}));
-print('ok');
-____HERE
+export POST_INSTALL_LOG="${PREFIX}/{{ settings_path }}"
+
+echo "start" >> "${POST_INSTALL_LOG}"
+mkdir -p "${PREFIX}/{{ settings_path }}"
+
+cat << EOF > "${PREFIX}/{{ settings_path }}/overrides.json"
+{{ overrides }}
+EOF
+
+echo "done" >> "${POST_INSTALL_LOG}"

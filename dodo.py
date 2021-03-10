@@ -21,6 +21,7 @@ Roughly, the intent is:
 
 # see the HACKS at the end of this file for DOIT_CONFIG, env vars, encoding cruft
 
+import json
 import logging
 import os
 import platform
@@ -346,6 +347,9 @@ class U:
         }
 
         def construct():
+            overrides_text = json.dumps(
+                json.loads(overrides.read_text(encoding="utf-8"))
+            )
             context = dict(
                 specs=lock.read_text(**C.ENC)
                 .split("@EXPLICIT")[1]
@@ -360,7 +364,10 @@ class U:
                 license=C.LICENSE_HEADER,
                 # we _want_ python-compatible, single quotes,
                 settings_path="share/jupyter/lab/settings",
-                overrides=str(safe_load(overrides.read_text())),
+                overrides=overrides_text,
+                # windows is special
+                win_settings_path="share\\jupyter\\lab\\settings",
+                win_overrides=overrides_text.replace('"', '""'),
             )
             for src_path, dest_path in paths.items():
                 if not dest_path.parent.exists():

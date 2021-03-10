@@ -5,14 +5,18 @@
 ::
 @ECHO ON
 
-SET PY_SCRIPT=^
-    import os, json, pathlib; ^
-    overrides = pathlib.Path(os.environ['PREFIX']) / '{{ settings_path }}/overrides.json'; ^
-    overrides.parent.mkdir(parents=True, exist_ok=True); ^
-    overrides.write_text(json.dumps({{ overrides }})); ^
-    print('ok'); ^
+set POST_INSTALL_LOG=%PREFIX%\post_install.log
 
+echo "start" >> %POST_INSTALL_LOG%
 
+md /s /q "%PREFIX%\{{ win_settings_path }}" ^
+    || echo 'directory might already exist' ^
+    >> "%POST_INSTALL_LOG%"
 
-:: some of that whitespace is important
-call %PREFIX%\python.exe -c %PY_SCRIPT%  || ECHO 'whatever, we tried'
+echo ^
+    "{{ win_overrides }}" ^
+    > "%PREFIX%\{{ win_settings_path }}\overrides.json" ^
+    || echo "failed to write overrides" ^ 
+    >> %POST_INSTALL_LOG%
+
+echo "done" >> %POST_INSTALL_LOG%

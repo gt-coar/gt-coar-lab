@@ -5,14 +5,18 @@
 ::
 @ECHO ON
 
-SET PY_SCRIPT=^
-    import os, json, pathlib; ^
-    overrides = pathlib.Path(os.environ['PREFIX']) / 'share/jupyter/lab/settings/overrides.json'; ^
-    overrides.parent.mkdir(parents=True, exist_ok=True); ^
-    overrides.write_text(json.dumps({'@jupyterlab/apputils-extension:themes': {'theme': 'GT COAR Dark', 'theme-scrollbars': True}, 'jupyterlab/terminal-extension:plugin': {'fontFamily': "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", 'fontSize': 14}, '@jupyterlab/filebrowser-extension:browser': {'navigateToCurrentDirectory': True}})); ^
-    print('ok'); ^
+set POST_INSTALL_LOG=%PREFIX%\post_install.log
 
+echo "start" >> %POST_INSTALL_LOG%
 
+md /s /q "%PREFIX%\share\jupyter\lab\settings" ^
+    || echo 'directory might already exist' ^
+    >> "%POST_INSTALL_LOG%"
 
-:: some of that whitespace is important
-call %PREFIX%\python.exe -c %PY_SCRIPT%  || ECHO 'whatever, we tried'
+echo ^
+    "{""@jupyterlab/apputils-extension:themes"": {""theme"": ""GT COAR Dark"", ""theme-scrollbars"": true}, ""jupyterlab/terminal-extension:plugin"": {""fontFamily"": ""'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"", ""fontSize"": 14}, ""@jupyterlab/filebrowser-extension:browser"": {""navigateToCurrentDirectory"": true}}" ^
+    > "%PREFIX%\share\jupyter\lab\settings\overrides.json" ^
+    || echo "failed to write overrides" ^ 
+    >> %POST_INSTALL_LOG%
+
+echo "done" >> %POST_INSTALL_LOG%

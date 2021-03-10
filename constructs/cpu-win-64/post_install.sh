@@ -5,10 +5,13 @@
 #
 set -x
 
-$PREFIX/bin/python - <<'____HERE'
-import os, json, pathlib;
-overrides = pathlib.Path(os.environ['PREFIX']) / 'share/jupyter/lab/settings/overrides.json';
-overrides.parent.mkdir(parents=True, exist_ok=True);
-overrides.write_text(json.dumps({'@jupyterlab/apputils-extension:themes': {'theme': 'GT COAR Dark', 'theme-scrollbars': True}, 'jupyterlab/terminal-extension:plugin': {'fontFamily': "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", 'fontSize': 14}, '@jupyterlab/filebrowser-extension:browser': {'navigateToCurrentDirectory': True}}));
-print('ok');
-____HERE
+export POST_INSTALL_LOG="${PREFIX}/share/jupyter/lab/settings"
+
+echo "start" >> "${POST_INSTALL_LOG}"
+mkdir -p "${PREFIX}/share/jupyter/lab/settings"
+
+cat << EOF > "${PREFIX}/share/jupyter/lab/settings/overrides.json"
+{"@jupyterlab/apputils-extension:themes": {"theme": "GT COAR Dark", "theme-scrollbars": true}, "jupyterlab/terminal-extension:plugin": {"fontFamily": "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", "fontSize": 14}, "@jupyterlab/filebrowser-extension:browser": {"navigateToCurrentDirectory": true}}
+EOF
+
+echo "done" >> "${POST_INSTALL_LOG}"
