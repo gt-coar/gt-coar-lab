@@ -11,7 +11,7 @@ dependencies:
   - conda >=4.9.2,<4.10
   - doit
   - jinja2
-  - mamba >=0.7.14,<0.8
+  - mamba >=0.8,<0.9
   - pip
   - python >=3.7.10,<3.8.0
   - ruamel_yaml

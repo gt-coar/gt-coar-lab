@@ -24,8 +24,7 @@ dependencies:
   - jupyter_bokeh
   # collaboration and presentation
   - jupyter-videochat
-  # TODO: feedstock
-  # - jupyterlab-tour
+  - jupyterlab-tour
   # TODO: publish
   # - ipydrawio
   # numerical compute
