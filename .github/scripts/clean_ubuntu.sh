@@ -4,6 +4,7 @@ set -eux
 df -h
 
 systemctl stop snapd.service
+for i in {1..5}; do snap remove chromium && break || sleep 15; done
 
 snap remove chromium
 snap remove gtk-common-themes
