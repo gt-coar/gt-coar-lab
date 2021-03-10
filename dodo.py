@@ -108,6 +108,13 @@ def task_lint():
         ],
     )
 
+    yield dict(
+        name="shell",
+        doc="format and lint shell scripts",
+        file_dep=[*P.ALL_SH],
+        actions=[["beautysh", *P.ALL_SH], ["shellcheck", *P.ALL_SH]],
+    )
+
     for path in P.ALL_HEADER_FILES:
         yield dict(
             name=f"headers:{path.relative_to(P.ROOT)}",
@@ -252,21 +259,21 @@ class P:
     ROOT = DODO.parent
 
     # checked in
-    CI = ROOT / ".github"
+    GITHUB = ROOT / ".github"
     TEMPLATES = ROOT / "templates"
     SPECS = ROOT / "specs"
     ATEST = ROOT / "atest"
     BINDER = ROOT / ".binder"
     SCRIPTS = ROOT / "_scripts"
 
-    CONDARC = CI / ".condarc"
+    CONDARC = GITHUB / ".condarc"
     PACKAGE_JSON = SCRIPTS / "package.json"
     YARNRC = SCRIPTS / ".yarnrc"
     PYPROJECT = SCRIPTS / "pyproject.toml"
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
-    WORKFLOW = CI / "workflows/ci.yml"
+    WORKFLOW = GITHUB / "workflows/ci.yml"
     LOCKS = ROOT / "locks"
     CONSTRUCTS = ROOT / "constructs"
 
@@ -298,11 +305,16 @@ class P:
     ALL_ROBOT = [*ATEST.rglob("*.robot")]
     ALL_YAML = [
         *SPECS.glob("*.yml"),
-        *CI.rglob("*.yml"),
+        *GITHUB.rglob("*.yml"),
         *CONSTRUCTS.glob("*.yaml"),
         *BINDER.glob("*.yml"),
     ]
-    ALL_SH = [*BINDER.glob("*.sh"), *CONSTRUCTS.glob("*/*.sh")]
+    ALL_SH = [
+        *BINDER.glob("*.sh"),
+        *CONSTRUCTS.glob("*/*.sh"),
+        BINDER / "postBuild",
+        *GITHUB.rglob("*.sh"),
+    ]
     ALL_BAT = [*CONSTRUCTS.glob("*/*.bat")]
     ALL_MD = [*ROOT.glob("*.md")]
     ALL_JSON = [*TEMPLATES.rglob("*.json"), *SCRIPTS.glob("*.js")]
@@ -310,7 +322,6 @@ class P:
         *ALL_JSON,
         *ALL_MD,
         *ALL_YAML,
-        *CI.glob("*.yml"),
         *SCRIPTS.glob("*.json"),
         CONDARC,
     ]
