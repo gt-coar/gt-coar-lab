@@ -1,6 +1,7 @@
 # platform: linux-64
-# env_hash: 04ce646cf3ed15f8601cf11141418a00adb4da13487a92d770435803b3caa327
+# env_hash: b9884532a6671c96dc5db71ad08e4f9761b6ebaa090e88d66fe3a5c4acaa405d
 @EXPLICIT
+https://conda.anaconda.org/conda-forge/linux-64/shellcheck-0.7.1-0.tar.bz2#c1a23d3670a31c9b25615a20e0eff6fe
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
 https://conda.anaconda.org/conda-forge/linux-64/ca-certificates-2020.12.5-ha878542_0.tar.bz2#7eb5d4ffeee663caa1635cd67071bc1b
 https://conda.anaconda.org/conda-forge/linux-64/conda-standalone-4.9.2-ha770c72_2.tar.bz2#e2035236f9db2a4f7074af87cb46a637
@@ -124,6 +125,7 @@ https://conda.anaconda.org/conda-forge/linux-64/jupyter_core-4.7.1-py37h89c1867_
 https://conda.anaconda.org/conda-forge/linux-64/setuptools-49.6.0-py37h89c1867_3.tar.bz2#928c178bf6805b8ab71fabaa620e0234
 https://conda.anaconda.org/conda-forge/linux-64/terminado-0.9.2-py37h89c1867_0.tar.bz2#660216081c3ff3826a726bb16a623576
 https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.1-py_0.tar.bz2#d36df15eaef96549ce6231e3088fba54
+https://conda.anaconda.org/conda-forge/noarch/beautysh-6.0.1-py_1.tar.bz2#521d20fdef9eb56a0f208660f77b0903
 https://conda.anaconda.org/conda-forge/noarch/bleach-3.3.0-pyh44b312d_0.tar.bz2#abf6b76c39358ca36ca706c46f054f2a
 https://conda.anaconda.org/conda-forge/noarch/flake8-3.8.4-py_0.tar.bz2#138b1704321c115bd10e1966320ac790
 https://conda.anaconda.org/conda-forge/noarch/isort-5.7.0-pyhd8ed1ab_0.tar.bz2#073e46728e0d9a8722457cbf1c335c14
