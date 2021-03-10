@@ -13,6 +13,6 @@ Overrides
     ${path} =    Set Variable
     ...    ${INST_DIR}${/}share${/}jupyter${/}lab${/}settings${/}overrides.json
     File Should Exist    ${path}
-    ${observed} =    Load JSON from File    ${path}
-    ${expected} =    Load JSON from File    ${OVERRIDES}
+    ${observed} =    Get File as JSON    ${path}
+    ${expected} =    Get File as JSON    ${OVERRIDES}
     Dictionaries Should Be Equal    ${observed}    ${expected}
