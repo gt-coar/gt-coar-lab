@@ -12,7 +12,7 @@ Resource          ./Shell.robot
 *** Keywords ***
 Maybe Run the Installer
     [Documentation]    Run the installer, if not already installed
-    ${history} =    Normalize Path    ${INST DIR}${/}conda-meta${/}history
+    ${history} =    Normalize Path    ${INST_DIR}${/}conda-meta${/}history
     ${installed} =    Evaluate    __import__('os.path').path.exists(r"""${history}""")
     Run Keyword If    ${installed}
     ...    Log    Already installed!
@@ -49,42 +49,42 @@ Validate the Installation
 
 Run the Linux installer
     [Documentation]    Install on Linux
-    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST DIR}${/}bin${/}activate
-    Set Global Variable    ${ACTIVATE}    . "${ACTIVATE SCRIPT}" "${INST DIR}" && set -eux
-    Set Global Variable    ${PATH ENV}    ${INST DIR}${/}bin:%{PATH}
-    ${result} =    Run Process    bash    ${INSTALLER}    -fbp    ${INST DIR}
+    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST_DIR}${/}bin${/}activate
+    Set Global Variable    ${ACTIVATE}    . "${ACTIVATE SCRIPT}" "${INST_DIR}" && set -eux
+    Set Global Variable    ${PATH ENV}    ${INST_DIR}${/}bin:%{PATH}
+    ${result} =    Run Process    bash    ${INSTALLER}    -fbp    ${INST_DIR}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT
     [Return]    ${result.rc}
 
 Run the MacOSX installer
     [Documentation]    Install on OSX
-    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST DIR}${/}bin${/}activate
-    Set Global Variable    ${ACTIVATE}    . "${ACTIVATE SCRIPT}" "${INST DIR}"
-    Set Global Variable    ${PATH ENV}    ${INST DIR}${/}bin${:}%{PATH}
-    ${result} =    Run Process    bash    ${INSTALLER}    -fbp    ${INST DIR}
+    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST_DIR}${/}bin${/}activate
+    Set Global Variable    ${ACTIVATE}    . "${ACTIVATE SCRIPT}" "${INST_DIR}"
+    Set Global Variable    ${PATH ENV}    ${INST_DIR}${/}bin${:}%{PATH}
+    ${result} =    Run Process    bash    ${INSTALLER}    -fbp    ${INST_DIR}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT
     [Return]    ${result.rc}
 
 Run the Windows installer
     [Documentation]    Install on Windows
-    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST DIR}${/}Scripts${/}activate.bat
-    Set Global Variable    ${ACTIVATE}    call "${ACTIVATE SCRIPT}" "${INST DIR}"
+    Set Global Variable    ${ACTIVATE SCRIPT}    ${INST_DIR}${/}Scripts${/}activate.bat
+    Set Global Variable    ${ACTIVATE}    call "${ACTIVATE SCRIPT}" "${INST_DIR}"
     Set Global Variable    ${PATH ENV}
-    ...    ${INST DIR}${:}${INST DIR}${/}Scripts${:}${INST DIR}${/}Library${/}bin${:}%{PATH}
+    ...    ${INST_DIR}${:}${INST_DIR}${/}Scripts${:}${INST_DIR}${/}Library${/}bin${:}%{PATH}
     ${args} =    Set Variable
-    ...    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INST DIR}
+    ...    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INST_DIR}
     ${result} =    Run Process    start /wait "" ${INSTALLER} ${args}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT    shell=True
     [Return]    ${result.rc}
 
 Get GeckoDriver
     [Documentation]    Get the path to the bundled geckodriver
-    ${path} =    Set Variable    ${INST DIR}${/}&{GECKODRIVER}[${OS}]
+    ${path} =    Set Variable    ${INST_DIR}${/}&{GECKODRIVER}[${OS}]
     File Should Exist    ${path}
     [Return]    ${path}
 
 Get Firefox
     [Documentation]    Get the path to the bundled firefox
-    ${path} =    Set Variable    ${INST DIR}${/}${FIREFOX}[${OS}]
+    ${path} =    Set Variable    ${INST_DIR}${/}${FIREFOX}[${OS}]
     File Should Exist    ${path}
     [Return]    ${path}

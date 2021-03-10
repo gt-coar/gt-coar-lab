@@ -471,6 +471,22 @@ class U:
 
         extra_args += C.ATEST_ARGS
 
+        variables = dict(
+            ATTEMPT=attempt,
+            BUILD=C.BUILD_NUMBER,
+            INST_DIR=inst_dir,
+            INSTALLER=installer,
+            NAME=installer.name,
+            OS=platform.system(),
+            OVERRIDES=P.TEMPLATES / "overrides.json",
+            VARIANT=variant,
+            VERSION=C.VERSION,
+        )
+
+        extra_args += sum(
+            [["--variable", f"{key}:{value}"] for key, value in variables.items()], []
+        )
+
         args = [
             "--name",
             f"{C.NAME} {variant} {subdir}",
@@ -484,26 +500,10 @@ class U:
             P.ATEST_OUT / f"{stem}.report.html",
             "--xunit",
             P.ATEST_OUT / f"{stem}.xunit.xml",
-            "--variable",
-            f"NAME:{installer.name}",
-            "--variable",
-            f"ATTEMPT:{attempt}",
-            "--variable",
-            f"OS:{platform.system()}",
-            "--variable",
-            f"INST DIR:{inst_dir}",
-            "--variable",
-            f"INSTALLER:{installer}",
-            "--variable",
-            f"VERSION:{C.VERSION}",
-            "--variable",
-            f"BUILD:{C.BUILD_NUMBER}",
-            "--variable",
-            f"VARIANT:{variant}",
-            "--variable",
-            f"""OVERRIDES:{P.TEMPLATES / "overrides.json"}""" "--randomize",
+            "--randomize",
             "all",
-            *(extra_args or []),
+            *extra_args,
+            # the folder must always go last
             P.ATEST,
         ]
 

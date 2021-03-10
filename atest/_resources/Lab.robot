@@ -42,7 +42,7 @@ Build GTCOARLab Args
     [Documentation]     Generate some args
     @{args} =    Set Variable
     ...    run
-    ...    --prefix    ${INST DIR}    --no-capture-output
+    ...    --prefix    ${INST_DIR}    --no-capture-output
     ...    jupyter-lab
     ...    --no-browser
     ...    --debug

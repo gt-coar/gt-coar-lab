@@ -11,7 +11,7 @@ Resource          ../_resources/JSON.robot
 Overrides
     [Documentation]    Did post_install.(sh|bat) correctly update Lab overrides?
     ${path} =    Set Variable
-    ...    ${INST DIR}${/}share${/}jupyter${/}lab${/}settings${/}overrides.json
+    ...    ${INST_DIR}${/}share${/}jupyter${/}lab${/}settings${/}overrides.json
     File Should Exist    ${path}
     ${observed} =    Load JSON from File    ${path}
     ${expected} =    Load JSON from File    ${OVERRIDES}
