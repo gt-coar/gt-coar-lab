@@ -160,6 +160,7 @@ jobs:
       - name: audit (safety)
         run: |
           set -eux
+          mkdir -p ./build/audit
           python _scripts/audit.py ./build/atest/cpu-linux-64-0
 
       - name: publish (atest and audit)
@@ -260,6 +261,7 @@ jobs:
       - name: audit (safety)
         run: |
           set -eux
+          mkdir -p ./build/audit
           python _scripts/audit.py ./build/atest/cpu-osx-64-0
 
       - name: publish (atest and audit)
@@ -382,6 +384,7 @@ jobs:
       - name: audit (safety)
         run: |
           set -eux
+          mkdir -p ./build/audit
           python _scripts/audit.py ./build/atest/cpu-win-64-0
 
       - name: publish (atest and audit)
@@ -492,6 +495,7 @@ jobs:
       - name: audit (safety)
         run: |
           set -eux
+          mkdir -p ./build/audit
           python _scripts/audit.py ./build/atest/gpu-linux-64-0
 
       - name: publish (atest and audit)
