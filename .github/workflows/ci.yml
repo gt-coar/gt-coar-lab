@@ -149,12 +149,6 @@ jobs:
           set -eux
           doit -s test:cpu:linux-64
 
-      - name: audit (safety)
-        if: always()
-        run: |
-          set -eux
-          doit -s audit:cpu:linux-64
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -162,6 +156,11 @@ jobs:
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          python _scripts/audit.py ./build/atest/cpu-linux-64-0
 
       - name: publish (atest and audit)
         if: always()
@@ -250,12 +249,6 @@ jobs:
           set -eux
           doit -s test:cpu:osx-64
 
-      - name: audit (safety)
-        if: always()
-        run: |
-          set -eux
-          doit -s audit:cpu:osx-64
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -263,6 +256,11 @@ jobs:
           environment-file: locks/audit-osx-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          python _scripts/audit.py ./build/atest/cpu-osx-64-0
 
       - name: publish (atest and audit)
         if: always()
@@ -373,12 +371,6 @@ jobs:
           set -eux
           doit -s test:cpu:win-64
 
-      - name: audit (safety)
-        if: always()
-        run: |
-          set -eux
-          doit -s audit:cpu:win-64
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -386,6 +378,11 @@ jobs:
           environment-file: locks/audit-win-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          python _scripts/audit.py ./build/atest/cpu-win-64-0
 
       - name: publish (atest and audit)
         if: always()
@@ -484,12 +481,6 @@ jobs:
           set -eux
           doit -s test:gpu:linux-64
 
-      - name: audit (safety)
-        if: always()
-        run: |
-          set -eux
-          doit -s audit:gpu:linux-64
-
       - name: setup conda (mambaforge)
         uses: conda-incubator/setup-miniconda@master
         with:
@@ -497,6 +488,11 @@ jobs:
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          python _scripts/audit.py ./build/atest/gpu-linux-64-0
 
       - name: publish (atest and audit)
         if: always()

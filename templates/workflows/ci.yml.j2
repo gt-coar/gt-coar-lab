@@ -158,13 +158,12 @@ jobs:
           set -eux
           doit -s test:{{ job.variant }}:{{ job.subdir }}
 
+      {{ setup_miniconda(job.audit_lockfile) }}
+
       - name: audit (safety)
-        if: always()
         run: |
           set -eux
-          doit -s audit:{{ job.variant }}:{{ job.subdir }}
-
-      {{ setup_miniconda(job.audit_lockfile) }}
+          python _scripts/audit.py ./build/atest/{{ job.variant }}-{{ job.subdir }}-0
 
       - name: publish (atest and audit)
         if: always()
