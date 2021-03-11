@@ -21,7 +21,7 @@ set OVERRIDES={{ overrides }}
 
 echo "2.0: created overrides env var for %OVERRIDES%" >> "%POST_INSTALL_LOG%"
 
-echo "%OVERRIDES%" > "%OVERRIDES_PATH%" || echo "2.1: failed to write overrides" >> "%POST_INSTALL_LOG%"
+echo %OVERRIDES% > "%OVERRIDES_PATH%" || echo "2.1: failed to write overrides" >> "%POST_INSTALL_LOG%"
 
 dir "%SETTINGS_PATH%" >> "%POST_INSTALL_LOG%" 2>&1 || echo "2.1: might have failed to list settings" >> "%POST_INSTALL_LOG%"
 
