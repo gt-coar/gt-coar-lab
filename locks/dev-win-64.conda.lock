@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 7caca677c2b38c52ac5ccf5bb8c6ff70e47e2eb085c7034910f0d2405522c2ba
+# env_hash: 919684fc93e0e0d2f704db55d0820d93673cb2d96278c1cf46e1e775bfe36f2c
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/shellcheck-0.7.1-0.tar.bz2#d4acf071f0a45e1d83a9a8b4d0739917
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
@@ -146,7 +146,7 @@ https://conda.anaconda.org/conda-forge/noarch/nbformat-5.1.2-pyhd8ed1ab_1.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.3-pyhd8ed1ab_0.tar.bz2#25573e57774dd54cfa848e5dd44503ed
 https://conda.anaconda.org/conda-forge/noarch/wcwidth-0.2.5-pyh9f0ad1d_2.tar.bz2#5266fcd697043c59621fda522b3d78ee
 https://conda.anaconda.org/conda-forge/noarch/nbclient-0.5.3-pyhd8ed1ab_0.tar.bz2#67f12831640fde52fe9be1bbc6b699e7
-https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.16-pyha770c72_0.tar.bz2#1a7cec3da4a94cd23d3de4155bff4941
+https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.17-pyha770c72_0.tar.bz2#d3ff1dc51da26f2757c8d95c3522138e
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc
 https://conda.anaconda.org/conda-forge/win-64/selenium-3.141.0-py37hcc03f2d_1002.tar.bz2#dcbc20f8ee6f37ecf07a8387f6b357b7
 https://conda.anaconda.org/conda-forge/win-64/conda-4.9.2-py37h03978a9_0.tar.bz2#63fb83bb05e5c646e538626aadd168c1

@@ -1,5 +1,5 @@
 # platform: osx-64
-# env_hash: 010e5dceca1a1182d9d5885888c9a3f7114738025ad134bfe9e77f368eb06226
+# env_hash: bf90d616787f6cdfa1e3759ddc30299913fedf20071b8d9d82760eabe017513b
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
 https://conda.anaconda.org/conda-forge/osx-64/c-ares-1.17.1-h0d85af4_1.tar.bz2#786a1af1bc9194e43bb3a9e1ea0146ed

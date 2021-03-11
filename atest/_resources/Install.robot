@@ -43,9 +43,9 @@ Validate the Installation
     ...    Run Shell Script in Installation
     ...    mamba info
     Run Shell Script in Installation
-    ...    mamba list --explicit
+    ...    mamba list --explicit > ${OUTPUT DIR}${/}conda.lock
     Run Shell Script in Installation
-    ...    python -m pip freeze
+    ...    python -m pip freeze > ${OUTPUT DIR}${/}requirements.txt
     ${postinstall log} =  Get File   ${INST_DIR}${/}post_install.log
     Log    ${postinstall log}
 

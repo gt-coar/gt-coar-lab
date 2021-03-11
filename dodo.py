@@ -135,6 +135,7 @@ def task_lock():
         yield U.lock("build", None, subdir)
         yield U.lock("atest", None, subdir)
         yield U.lock("lint", None, subdir)
+        yield U.lock("audit", None, subdir, include_base=False)
         yield U.lock("dev", None, subdir, ["build", "lint", "atest"])
 
 
@@ -546,12 +547,15 @@ class U:
             return 1
 
     @classmethod
-    def lock(cls, env_name, variant, subdir, extra_env_names=[]):
+    def lock(cls, env_name, variant, subdir, extra_env_names=[], include_base=True):
         args = ["conda-lock", "--mamba", "--platform", subdir]
         stem = env_name + (f"-{variant}-" if variant else "-") + subdir
         lockfile = P.LOCKS / f"{stem}.conda.lock"
 
-        specs = [P.SPECS / "_base.yml"]
+        specs = []
+
+        if include_base:
+            specs += [P.SPECS / "_base.yml"]
 
         for env in [env_name, *extra_env_names]:
             for fname in [f"{env}", f"{env}-{subdir}", f"{env}-{variant}-{subdir}"]:

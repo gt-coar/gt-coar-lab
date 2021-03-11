@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 888b6572af370fabc751841d52933a91f74a5e41359ef5a43ab95085c31b1bdf
+# env_hash: b24d4cda31e97fb8a16774b1c71213cdf71b4e6bb1b9a7f5c0aa87447cdc5b0c
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#39626bb9350110a075f8be857850695f
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
@@ -419,7 +419,7 @@ https://conda.anaconda.org/conda-forge/win-64/m2-perl-net-smtp-ssl-1.02-2.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/nbclient-0.5.3-pyhd8ed1ab_0.tar.bz2#67f12831640fde52fe9be1bbc6b699e7
 https://conda.anaconda.org/conda-forge/win-64/nbconvert-5.6.1-py37hc8dfbb8_1.tar.bz2#16a8dfd9ffc525af42fd5dbc5a9af4ee
 https://conda.anaconda.org/conda-forge/win-64/posix-1.0.0-2.tar.bz2#52453fcee70389a1ea130b27a64b0797
-https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.16-pyha770c72_0.tar.bz2#1a7cec3da4a94cd23d3de4155bff4941
+https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.17-pyha770c72_0.tar.bz2#d3ff1dc51da26f2757c8d95c3522138e
 https://conda.anaconda.org/conda-forge/win-64/py-xgboost-1.3.3-py37h03978a9_2.tar.bz2#026ff9b42da08baeb44c87bd7141c4d8
 https://conda.anaconda.org/conda-forge/win-64/pytest-asyncio-0.14.0-py37h03978a9_0.tar.bz2#7945f40b5563ea9b24e883e8e288c6b3
 https://conda.anaconda.org/conda-forge/noarch/python-language-server-0.36.2-pyhd8ed1ab_0.tar.bz2#aebc751778da23fbe31fbb52c8e9ae5a

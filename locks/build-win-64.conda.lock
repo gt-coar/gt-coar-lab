@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 1c120e284fcd963ac21a1f836c14c9c3b91bdd06383e5e6a9d40003f13aba6e2
+# env_hash: 208c2b9c95e71337383d9dfa9a44f10dbabcb3aa38d39d47819cfe70568e9c72
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
 https://conda.anaconda.org/conda-forge/win-64/conda-standalone-4.9.2-h57928b3_2.tar.bz2#c9a878f103381243dbbb9d8bae593a90

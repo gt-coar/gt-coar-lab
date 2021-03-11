@@ -1,5 +1,5 @@
 # platform: osx-64
-# env_hash: 5cf38ed70e795d13f7caa966d8103ff908d3a4fbc77da213d10a5834cd371681
+# env_hash: b8d47efcda0a3e8f6cd2be47a5295a41e75b37f09a336ea5f5f50fd27e9f878e
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/osx-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#96dd44c2471a638fb9cdc40aa2573d1b
 https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
@@ -313,7 +313,7 @@ https://conda.anaconda.org/conda-forge/noarch/imbalanced-learn-0.8.0-pyhd8ed1ab_
 https://conda.anaconda.org/conda-forge/noarch/nbclient-0.5.3-pyhd8ed1ab_0.tar.bz2#67f12831640fde52fe9be1bbc6b699e7
 https://conda.anaconda.org/conda-forge/osx-64/nbconvert-5.6.1-py37hc8dfbb8_1.tar.bz2#b6ac79c2939fa2b3d7472b00b0263d3a
 https://conda.anaconda.org/conda-forge/osx-64/ocaml-4.11.2-h0d85af4_0.tar.bz2#25dbb99d9b8c89c646dc7f59ad11b91c
-https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.16-pyha770c72_0.tar.bz2#1a7cec3da4a94cd23d3de4155bff4941
+https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.17-pyha770c72_0.tar.bz2#d3ff1dc51da26f2757c8d95c3522138e
 https://conda.anaconda.org/conda-forge/osx-64/py-xgboost-1.3.3-py37hf985489_2.tar.bz2#c4bfc22e0bc3ebd03560988e2b1858ed
 https://conda.anaconda.org/conda-forge/osx-64/pytest-asyncio-0.14.0-py37hf985489_0.tar.bz2#5dd56c58471a7d3cdc9a8113f4fdbc78
 https://conda.anaconda.org/conda-forge/noarch/python-language-server-0.36.2-pyhd8ed1ab_0.tar.bz2#aebc751778da23fbe31fbb52c8e9ae5a

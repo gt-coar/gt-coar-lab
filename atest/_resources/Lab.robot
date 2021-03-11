@@ -35,8 +35,8 @@ Wait for GTCOARLab to Open
     [Documentation]     Generate some args
     Go To   ${LAB RESET URL}
     Set Window Size    1440    900
-    Run Keyword and Ignore Error   
-    ...    Wait Until Keyword Succeeds   3x   5s  
+    Run Keyword and Ignore Error
+    ...    Wait Until Keyword Succeeds   3x   5s
     ...    Wait for JupyterLab Splash Screen
     Page Should Contain Element    css:.jp-Launcher
 

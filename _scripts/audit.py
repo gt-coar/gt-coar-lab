@@ -20,8 +20,11 @@ ROOT = HERE.parent.parent
 SAFETY_LOG = HERE / "build" / "audit.safety.log"
 ATEST_OUT = ROOT / "atest" / "output"
 SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
-SAFEY_DB_URL = os.environ["SAFETY_DB_URL"]
-SAFETY_PATH = ROOT / ".cache" / "safety-db"
+SAFEY_DB_URL = os.environ.get(
+    "SAFETY_DB_URL", 
+    "https://github.com/pyupio/safety-db/archive/master.tar.gz"
+)
+SAFETY_PATH = HERE / ".cache" / "safety-db"
 SAFETY_TARBALL = SAFETY_PATH / "safety-db.tar.gz"
 
 
@@ -63,7 +66,7 @@ def find_conda_req(pip_req, conda_reqs):
 
 
 def fix_one_req_file(idx, req_file, tdp):
-    conda_reqs = (req_file.parent / "conda-explicit.txt").read_text().splitlines()
+    conda_reqs = (req_file.parent / "conda.lock").read_text().splitlines()
     req_out = tdp / f"requirements-{idx}.txt"
     reqs = []
 
