@@ -278,10 +278,6 @@ class C:
     COPYRIGHT_HEADER = f"Copyright (c) {YEAR} {AUTHORS}"
     LICENSE = "BSD-3-Clause"
     LICENSE_HEADER = f"Distributed under the terms of the {LICENSE} License"
-    SAFETY_IGNORE_IDS = [
-        # jinja2 >=2.11.3 would mitigate CVE-2020-28493, but causes breakage
-        39525
-    ]
 
 
 class P:
@@ -654,11 +650,7 @@ class U:
     def audit(cls, variant, subdir):
         args = ["python", P.SCRIPTS / "audit.py", P.ATEST_OUT / f"{variant}-{subdir}-0"]
         str_args = [*map(str, args)]
-        env = dict(**os.environ)
-        if "SAFETY_IGNORE_IDS" not in env:
-            env["SAFETY_IGNORE_IDS"] = " ".join(map(str, C.SAFETY_IGNORE_IDS))
-
-        proc = subprocess.Popen(str_args, env=env)
+        proc = subprocess.Popen(str_args)
         audit_rc = proc.wait()
         return audit_rc == 0
 

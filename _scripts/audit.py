@@ -18,7 +18,7 @@ import requests
 HERE = Path(__file__).parent
 ROOT = HERE.parent
 SAFETY_OUT = ROOT / "build" / "audit"
-SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
+SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "39525").strip().split()
 SAFEY_DB_URL = os.environ.get(
     "SAFETY_DB_URL", "https://github.com/pyupio/safety-db/archive/master.tar.gz"
 )
