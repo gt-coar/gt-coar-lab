@@ -164,6 +164,8 @@ jobs:
           set -eux
           doit -s audit:{{ job.variant }}:{{ job.subdir }}
 
+      {{ setup_miniconda(job.audit_lockfile) }}
+
       - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2

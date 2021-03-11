@@ -171,6 +171,9 @@ def task_ci():
                         atest_lockfile=str(
                             (P.LOCKS / f"atest-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
+                        audit_lockfile=str(
+                            (P.LOCKS / f"audit-{subdir}.conda.lock").relative_to(P.ROOT)
+                        ),
                         vm=C.VM[subdir],
                     )
                 ]

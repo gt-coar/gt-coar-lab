@@ -155,6 +155,14 @@ jobs:
           set -eux
           doit -s audit:cpu:linux-64
 
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
       - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
@@ -247,6 +255,14 @@ jobs:
         run: |
           set -eux
           doit -s audit:cpu:osx-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
 
       - name: publish (atest and audit)
         if: always()
@@ -363,6 +379,14 @@ jobs:
           set -eux
           doit -s audit:cpu:win-64
 
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
       - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
@@ -465,6 +489,14 @@ jobs:
         run: |
           set -eux
           doit -s audit:gpu:linux-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
 
       - name: publish (atest and audit)
         if: always()
