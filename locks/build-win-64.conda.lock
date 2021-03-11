@@ -60,7 +60,7 @@ https://conda.anaconda.org/conda-forge/win-64/ruamel_yaml-0.15.80-py37hcc03f2d_1
 https://conda.anaconda.org/conda-forge/win-64/win_inet_pton-1.1.0-py37h03978a9_2.tar.bz2#3be8e856f5b7726960041ff2fbeee4dd
 https://conda.anaconda.org/conda-forge/win-64/wincertstore-0.2-py37h03978a9_1006.tar.bz2#d05992e21bc7622dd0dce0b087452250
 https://conda.anaconda.org/conda-forge/win-64/brotlipy-0.7.0-py37hcc03f2d_1001.tar.bz2#5ae82a09056fc8eebd74222f3851c544
-https://conda.anaconda.org/conda-forge/win-64/cryptography-3.4.5-py37h20c650d_1.tar.bz2#fba91529b1f23c559b87305b502c7a1f
+https://conda.anaconda.org/conda-forge/win-64/cryptography-3.4.6-py37h20c650d_0.tar.bz2#0dadd2d9961c3ba3dca75c704245b5d1
 https://conda.anaconda.org/conda-forge/win-64/menuinst-1.4.16-py37hc8dfbb8_1.tar.bz2#25864d0f620ec6d540dd43aa49b95d43
 https://conda.anaconda.org/conda-forge/win-64/pillow-8.1.2-py37h96663a1_0.tar.bz2#fc07fafd126f585685912924c52ff744
 https://conda.anaconda.org/conda-forge/win-64/pysocks-1.7.1-py37h03978a9_3.tar.bz2#57ff67171877b6aa4575b3e9a183b92a
@@ -74,4 +74,4 @@ https://conda.anaconda.org/conda-forge/win-64/conda-4.9.2-py37h03978a9_0.tar.bz2
 https://conda.anaconda.org/conda-forge/noarch/ensureconda-1.4.1-pyhd8ed1ab_0.tar.bz2#52a7f7cc9076e2c8a25e15e19ad42821
 https://conda.anaconda.org/conda-forge/noarch/conda-lock-0.8.0-pyhd8ed1ab_0.tar.bz2#1258c98fb0bb0b9171b8150e259535b8
 https://conda.anaconda.org/conda-forge/win-64/constructor-3.2.0-py37h03978a9_1.tar.bz2#68eb269f83eb64b06dcc127e75c99c32
-https://conda.anaconda.org/conda-forge/win-64/mamba-0.8.0-py37hed535a2_0.tar.bz2#027b1e0e339e025d6a1eaa721670ea1f
+https://conda.anaconda.org/conda-forge/win-64/mamba-0.8.1-py37hed535a2_0.tar.bz2#33af381c0f02e8756e0d83879d1f6990

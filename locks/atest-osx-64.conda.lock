@@ -44,7 +44,7 @@ https://conda.anaconda.org/conda-forge/noarch/parso-0.8.1-pyhd8ed1ab_0.tar.bz2#8
 https://conda.anaconda.org/conda-forge/noarch/ptyprocess-0.7.0-pyhd3deb0d_0.tar.bz2#359eeb6536da0e687af562ed265ec263
 https://conda.anaconda.org/conda-forge/noarch/pycparser-2.20-pyh9f0ad1d_2.tar.bz2#aa798d50ffd182a0f6f31478c7f434f6
 https://conda.anaconda.org/conda-forge/osx-64/python_abi-3.7-1_cp37m.tar.bz2#d2cb192f8948ea603927a71f015574dd
-https://conda.anaconda.org/conda-forge/noarch/robotframework-3.2.2-pyh9f0ad1d_0.tar.bz2#1faf44d9a76019b0a3da4d02dead93ec
+https://conda.anaconda.org/conda-forge/noarch/robotframework-4.0-pyhd8ed1ab_0.tar.bz2#13985780c14873961b7be4e7391d184e
 https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1eec421f0f1f39e579e44e4a5ce646a2
 https://conda.anaconda.org/conda-forge/noarch/tqdm-4.59.0-pyhd8ed1ab_0.tar.bz2#9ae6fb908a7f989e59a02fef85a5fd6f
 https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
@@ -64,7 +64,7 @@ https://conda.anaconda.org/conda-forge/noarch/robotframework-pythonlibcore-2.2.0
 https://conda.anaconda.org/conda-forge/osx-64/ruamel_yaml-0.15.80-py37h7585375_1004.tar.bz2#66e51f9e5f98dee5558f092ebc9ac5c5
 https://conda.anaconda.org/conda-forge/noarch/traitlets-5.0.5-py_0.tar.bz2#99618ee9ab1323e40f231acdab92fe60
 https://conda.anaconda.org/conda-forge/osx-64/brotlipy-0.7.0-py37hf967b71_1001.tar.bz2#2e1016af5a81ba9e50d8bd25bf82b352
-https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.5-py37hce4a858_1.tar.bz2#51175f4d99275727f45ebb8446d6bcff
+https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.6-py37hce4a858_0.tar.bz2#7c92473e90da28313a08eee67997832b
 https://conda.anaconda.org/conda-forge/osx-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#e4732773cfbfc471906fac96cdc85827
 https://conda.anaconda.org/conda-forge/osx-64/setuptools-49.6.0-py37hf985489_3.tar.bz2#5030dea82548d67ec8b80882e8e4a099
 https://conda.anaconda.org/conda-forge/noarch/backports.functools_lru_cache-1.6.1-py_0.tar.bz2#d36df15eaef96549ce6231e3088fba54
@@ -80,5 +80,5 @@ https://conda.anaconda.org/conda-forge/osx-64/selenium-3.141.0-py37hf967b71_1002
 https://conda.anaconda.org/conda-forge/osx-64/conda-4.9.2-py37hf985489_0.tar.bz2#8ccd5a89558c8f7ffb5f077c79da3a36
 https://conda.anaconda.org/conda-forge/osx-64/ipython-7.21.0-py37he01cfaa_0.tar.bz2#96627dad2914a0e3232587bacc1d5ad7
 https://conda.anaconda.org/conda-forge/noarch/robotframework-seleniumlibrary-5.1.0-pyhd8ed1ab_0.tar.bz2#9d5e31761865f38bafc0aa3a1bdc500d
-https://conda.anaconda.org/conda-forge/osx-64/mamba-0.8.0-py37hede01ff_0.tar.bz2#619a11c5dd73c0204fc621b964ef3dae
+https://conda.anaconda.org/conda-forge/osx-64/mamba-0.8.1-py37hede01ff_0.tar.bz2#bacae14108ed833d37bd11374ac1b90b
 https://conda.anaconda.org/conda-forge/noarch/robotframework-jupyterlibrary-0.3.0-pyhd8ed1ab_0.tar.bz2#3d302bb13e64f23aef3e8e509156d70e

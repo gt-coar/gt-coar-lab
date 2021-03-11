@@ -70,7 +70,7 @@ https://conda.anaconda.org/conda-forge/noarch/pyflakes-2.2.0-pyh9f0ad1d_0.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/pyparsing-2.4.7-pyh9f0ad1d_0.tar.bz2#626c4f20d5bf06dcec9cf2eaa31725c7
 https://conda.anaconda.org/conda-forge/osx-64/python_abi-3.7-1_cp37m.tar.bz2#d2cb192f8948ea603927a71f015574dd
 https://conda.anaconda.org/conda-forge/noarch/pytz-2021.1-pyhd8ed1ab_0.tar.bz2#3af2e9424d5eb0063824a3f9b850d411
-https://conda.anaconda.org/conda-forge/noarch/robotframework-3.2.2-pyh9f0ad1d_0.tar.bz2#1faf44d9a76019b0a3da4d02dead93ec
+https://conda.anaconda.org/conda-forge/noarch/robotframework-4.0-pyhd8ed1ab_0.tar.bz2#13985780c14873961b7be4e7391d184e
 https://conda.anaconda.org/conda-forge/noarch/send2trash-1.5.0-py_0.tar.bz2#c3779037a635e1150f1c53c28b875949
 https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1eec421f0f1f39e579e44e4a5ce646a2
 https://conda.anaconda.org/conda-forge/noarch/testpath-0.4.4-py_0.tar.bz2#3b98fff4d5342bebde2ecaa314f796f9
@@ -115,7 +115,7 @@ https://conda.anaconda.org/conda-forge/osx-64/anyio-2.2.0-py37hf985489_0.tar.bz2
 https://conda.anaconda.org/conda-forge/osx-64/argon2-cffi-20.1.0-py37hf967b71_2.tar.bz2#4548b36af838ff2f9a0cc021348890f3
 https://conda.anaconda.org/conda-forge/noarch/black-20.8b1-py_1.tar.bz2#e555d6b71ec916c3dc4e6e3793cc9796
 https://conda.anaconda.org/conda-forge/osx-64/brotlipy-0.7.0-py37hf967b71_1001.tar.bz2#2e1016af5a81ba9e50d8bd25bf82b352
-https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.5-py37hce4a858_1.tar.bz2#51175f4d99275727f45ebb8446d6bcff
+https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.6-py37hce4a858_0.tar.bz2#7c92473e90da28313a08eee67997832b
 https://conda.anaconda.org/conda-forge/osx-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#e4732773cfbfc471906fac96cdc85827
 https://conda.anaconda.org/conda-forge/noarch/importlib_metadata-3.7.2-hd8ed1ab_0.tar.bz2#48994d84671aee4a01731ed87ac4bd3b
 https://conda.anaconda.org/conda-forge/osx-64/jupyter_core-4.7.1-py37hf985489_0.tar.bz2#a49ae78b4a221744cca02dfed08a990f
@@ -151,7 +151,7 @@ https://conda.anaconda.org/conda-forge/noarch/conda-lock-0.8.0-pyhd8ed1ab_0.tar.
 https://conda.anaconda.org/conda-forge/osx-64/constructor-3.2.0-py37hf985489_1.tar.bz2#77a11894869cfa5fb3ebba8adfea1537
 https://conda.anaconda.org/conda-forge/osx-64/ipykernel-5.5.0-py37he01cfaa_1.tar.bz2#b10a8e1325fd68f9f436dcd7b18fc1bc
 https://conda.anaconda.org/conda-forge/osx-64/jupyter_server-1.4.1-py37hf985489_0.tar.bz2#81c5effcb713aeccaef477ac936d1ec1
-https://conda.anaconda.org/conda-forge/osx-64/mamba-0.8.0-py37hede01ff_0.tar.bz2#619a11c5dd73c0204fc621b964ef3dae
+https://conda.anaconda.org/conda-forge/osx-64/mamba-0.8.1-py37hede01ff_0.tar.bz2#bacae14108ed833d37bd11374ac1b90b
 https://conda.anaconda.org/conda-forge/noarch/robotframework-jupyterlibrary-0.3.0-pyhd8ed1ab_0.tar.bz2#3d302bb13e64f23aef3e8e509156d70e
 https://conda.anaconda.org/conda-forge/noarch/jupyterlab_server-2.3.0-pyhd8ed1ab_0.tar.bz2#e1ab43655ba7ede6917e2daa37c7b217
 https://conda.anaconda.org/conda-forge/osx-64/notebook-6.2.0-py37hf985489_0.tar.bz2#ea3b665188257fff426848e7d8e5b28b
