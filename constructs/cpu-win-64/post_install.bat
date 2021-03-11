@@ -17,7 +17,7 @@ echo "1.0: (maybe) ensured %SETTINGS_PATH%" >> "%POST_INSTALL_LOG%"
 
 dir %SETTINGS_PATH% >> "%POST_INSTALL_LOG%" 2>&1 || echo "1.1: might have failed to list settings" >> "%POST_INSTALL_LOG%"
 
-set "OVERRIDES={""@jupyterlab/apputils-extension:themes"": {""theme"": ""GT COAR Dark"", ""theme-scrollbars"": true}, ""jupyterlab/terminal-extension:plugin"": {""fontFamily"": ""'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace"", ""fontSize"": 14}, ""@jupyterlab/filebrowser-extension:browser"": {""navigateToCurrentDirectory"": true}}"
+set OVERRIDES={"@jupyterlab/apputils-extension:themes": {"theme": "GT COAR Dark", "theme-scrollbars": true}, "jupyterlab/terminal-extension:plugin": {"fontFamily": "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace", "fontSize": 14}, "@jupyterlab/filebrowser-extension:browser": {"navigateToCurrentDirectory": true}}
 
 echo "2.0: created overrides env var for %OVERRIDES%" >> "%POST_INSTALL_LOG%"
 

@@ -17,7 +17,7 @@ echo "1.0: (maybe) ensured %SETTINGS_PATH%" >> "%POST_INSTALL_LOG%"
 
 dir %SETTINGS_PATH% >> "%POST_INSTALL_LOG%" 2>&1 || echo "1.1: might have failed to list settings" >> "%POST_INSTALL_LOG%"
 
-set "OVERRIDES={{ win_overrides }}"
+set OVERRIDES={{ overrides }}
 
 echo "2.0: created overrides env var for %OVERRIDES%" >> "%POST_INSTALL_LOG%"
 

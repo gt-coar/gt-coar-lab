@@ -357,6 +357,17 @@ class U:
             for t in templates
         }
 
+        paths = {
+            k: v
+            for k, v in paths.items()
+            if not any(
+                [
+                    (subdir == "win-64" and v.name.endswith(".sh")),
+                    (subdir != "win-64" and v.name.endswith(".bat")),
+                ]
+            )
+        }
+
         def construct():
             overrides_text = json.dumps(
                 json.loads(overrides.read_text(encoding="utf-8"))
@@ -378,7 +389,6 @@ class U:
                 overrides=overrides_text,
                 # windows is special
                 win_settings_path="share\\jupyter\\lab\\settings",
-                win_overrides=overrides_text.replace('"', '""'),
             )
             for src_path, dest_path in paths.items():
                 if not dest_path.parent.exists():
