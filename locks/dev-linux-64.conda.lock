@@ -1,5 +1,5 @@
 # platform: linux-64
-# env_hash: d8ee94056057ccdf0a85571de30708195ebae4f10092cd5a6177cefb5c7a7123
+# env_hash: 40a8bd336fc159094d102781a7fb638795922aa8a908d9d26e7c48a844311bfe
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/linux-64/shellcheck-0.7.1-0.tar.bz2#c1a23d3670a31c9b25615a20e0eff6fe
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
@@ -120,6 +120,7 @@ https://conda.anaconda.org/conda-forge/noarch/black-20.8b1-py_1.tar.bz2#e555d6b7
 https://conda.anaconda.org/conda-forge/linux-64/brotlipy-0.7.0-py37hb5d75c8_1001.tar.bz2#1e60063ddc9de28cb48bddb48bdc1395
 https://conda.anaconda.org/conda-forge/linux-64/cryptography-3.4.6-py37h5d9358c_0.tar.bz2#b345cf4500c6ebbec61c1f0e1a187579
 https://conda.anaconda.org/conda-forge/linux-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#80d93b768ad0151a0c109c376c31926b
+https://conda.anaconda.org/conda-forge/noarch/dparse-0.5.1-py_0.tar.bz2#a3148bd94a6d6ffb4a694c739eab6121
 https://conda.anaconda.org/conda-forge/noarch/importlib_metadata-3.7.2-hd8ed1ab_0.tar.bz2#48994d84671aee4a01731ed87ac4bd3b
 https://conda.anaconda.org/conda-forge/linux-64/jupyter_core-4.7.1-py37h89c1867_0.tar.bz2#42202575ecb1cc9491d57a4ad25f14bb
 https://conda.anaconda.org/conda-forge/linux-64/setuptools-49.6.0-py37h89c1867_3.tar.bz2#928c178bf6805b8ab71fabaa620e0234
@@ -150,6 +151,7 @@ https://conda.anaconda.org/conda-forge/noarch/ensureconda-1.4.1-pyhd8ed1ab_0.tar
 https://conda.anaconda.org/conda-forge/linux-64/ipython-7.21.0-py37h888b3d9_0.tar.bz2#8a22b88a82fd83f9b01e9b238a9272ef
 https://conda.anaconda.org/conda-forge/linux-64/nbconvert-6.0.7-py37h89c1867_3.tar.bz2#aa3710e0a8a44d7c7313b37775018446
 https://conda.anaconda.org/conda-forge/noarch/robotframework-seleniumlibrary-5.1.0-pyhd8ed1ab_0.tar.bz2#9d5e31761865f38bafc0aa3a1bdc500d
+https://conda.anaconda.org/conda-forge/noarch/safety-1.10.3-pyhd8ed1ab_0.tar.bz2#0f79fdfb0f19db3e78c900f7e8f60263
 https://conda.anaconda.org/conda-forge/noarch/conda-lock-0.8.0-pyhd8ed1ab_0.tar.bz2#1258c98fb0bb0b9171b8150e259535b8
 https://conda.anaconda.org/conda-forge/linux-64/constructor-3.2.0-py37h89c1867_1.tar.bz2#ff86468d2d2d76d1b6e7648488e4c3e6
 https://conda.anaconda.org/conda-forge/linux-64/ipykernel-5.5.0-py37h888b3d9_1.tar.bz2#0f3659210c464bbc885642b9750e7a2a

@@ -158,11 +158,19 @@ jobs:
           set -eux
           doit -s test:{{ job.variant }}:{{ job.subdir }}
 
-      - name: publish (atest)
+      - name: audit (safety)
+        if: always()
+        run: |
+          set -eux
+          doit -s audit:{{ job.variant }}:{{ job.subdir }}
+
+      - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: atest {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
-          path: ./build/atest
+          path: |
+            ./build/atest
+            ./build/audit
 
 {% endfor %}

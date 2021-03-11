@@ -149,12 +149,20 @@ jobs:
           set -eux
           doit -s test:cpu:linux-64
 
-      - name: publish (atest)
+      - name: audit (safety)
+        if: always()
+        run: |
+          set -eux
+          doit -s audit:cpu:linux-64
+
+      - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: atest cpu linux-64 ${{ github.run_number }}
-          path: ./build/atest
+          path: |
+            ./build/atest
+            ./build/audit
 
   build-cpu-osx-64:
     name: build cpu osx-64
@@ -234,12 +242,20 @@ jobs:
           set -eux
           doit -s test:cpu:osx-64
 
-      - name: publish (atest)
+      - name: audit (safety)
+        if: always()
+        run: |
+          set -eux
+          doit -s audit:cpu:osx-64
+
+      - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: atest cpu osx-64 ${{ github.run_number }}
-          path: ./build/atest
+          path: |
+            ./build/atest
+            ./build/audit
 
   build-cpu-win-64:
     name: build cpu win-64
@@ -341,12 +357,20 @@ jobs:
           set -eux
           doit -s test:cpu:win-64
 
-      - name: publish (atest)
+      - name: audit (safety)
+        if: always()
+        run: |
+          set -eux
+          doit -s audit:cpu:win-64
+
+      - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: atest cpu win-64 ${{ github.run_number }}
-          path: ./build/atest
+          path: |
+            ./build/atest
+            ./build/audit
 
   build-gpu-linux-64:
     name: build gpu linux-64
@@ -436,9 +460,17 @@ jobs:
           set -eux
           doit -s test:gpu:linux-64
 
-      - name: publish (atest)
+      - name: audit (safety)
+        if: always()
+        run: |
+          set -eux
+          doit -s audit:gpu:linux-64
+
+      - name: publish (atest and audit)
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: atest gpu linux-64 ${{ github.run_number }}
-          path: ./build/atest
+          path: |
+            ./build/atest
+            ./build/audit

@@ -15,21 +15,23 @@ from pathlib import Path
 
 import requests
 
-HERE = Path(__file__)
-ROOT = HERE.parent.parent
-SAFETY_LOG = HERE / "build" / "audit.safety.log"
-ATEST_OUT = ROOT / "atest" / "output"
+HERE = Path(__file__).parent
+ROOT = HERE.parent
+SAFETY_OUT = ROOT / "build" / "audit"
 SAFETY_IGNORE_IDS = os.environ.get("SAFETY_IGNORE_IDS", "").strip().split()
 SAFEY_DB_URL = os.environ.get(
-    "SAFETY_DB_URL", 
-    "https://github.com/pyupio/safety-db/archive/master.tar.gz"
+    "SAFETY_DB_URL", "https://github.com/pyupio/safety-db/archive/master.tar.gz"
 )
 SAFETY_PATH = HERE / ".cache" / "safety-db"
 SAFETY_TARBALL = SAFETY_PATH / "safety-db.tar.gz"
 
 
 # packages that aren't trivially normalized
-PIP_TO_CONDA = {}
+PIP_TO_CONDA = {
+    "antlr4-python3-runtime": "antlr-python-runtime",
+    "ruamel-yaml-conda": "ruamel.yaml",
+    "torch": "pytorch",
+}
 
 
 def norm_name(pkg_name):
@@ -45,7 +47,7 @@ def fetch_db():
         tf.extractall(SAFETY_PATH)
 
 
-def find_conda_req(pip_req, conda_reqs):
+def find_conda_req(pip_req, conda_reqs, logfile):
     pip_name = pip_req.split("@")[0].strip()
     print(f"\n{pip_name}\n > {pip_req}", flush=True)
     mapped_name = norm_name(PIP_TO_CONDA.get(pip_name, pip_name))
@@ -61,43 +63,48 @@ def find_conda_req(pip_req, conda_reqs):
 
     print(f" >>>> NOT FOUND {pip_name}")
 
-    with SAFETY_LOG.open("a+") as fpt:
+    with logfile.open("a+") as fpt:
         fpt.write_text(json.dumps({"missing_pip_req": pip_req}))
 
 
-def fix_one_req_file(idx, req_file, tdp):
+def fix_one_req_file(idx, req_file, tdp, logfile):
     conda_reqs = (req_file.parent / "conda.lock").read_text().splitlines()
     req_out = tdp / f"requirements-{idx}.txt"
     reqs = []
 
     for req in req_file.read_text().splitlines():
         if "@" in req:
-            reqs += [find_conda_req(req, conda_reqs)]
+            reqs += [find_conda_req(req, conda_reqs, logfile)]
         else:
             reqs += [req]
 
     req_out.write_text("\n".join(reqs))
 
 
-def make_req_args(req_files, tdp):
+def make_req_args(req_files, tdp, logfile):
     for i, req_file in enumerate(req_files):
-        fix_one_req_file(i, req_file, tdp)
+        fix_one_req_file(i, req_file, tdp, logfile)
     return sum([["-r", req] for req in tdp.rglob("requirements-*.txt")], [])
 
 
-def safety(req_files=None):
-    if not req_files:
-        req_files = sorted(ATEST_OUT.rglob("requirements.txt"))
+def safety(out_dir):
+    """validate"""
+    out_path = Path(out_dir)
+    req_file = out_path / "requirements.txt"
+    lockfile = out_path / "conda.lock"
+    assert req_file.exists(), "no requirements.txt found to audit"
+    assert lockfile.exists(), "no conda.lock found to audit"
 
-    assert req_files, "no requirements.txt found to audit"
+    logfile = SAFETY_OUT / f"{out_path.stem}.log"
 
     fetch_db()
     ignores = sum([["--ignore", id_] for id_ in SAFETY_IGNORE_IDS], [])
     with tempfile.TemporaryDirectory() as td:
         tdp = Path(td)
-        req_args = make_req_args(req_files, tdp)
-        if SAFETY_LOG.exists():
-            print("safety log\n", SAFETY_LOG.read_text().strip())
+        req_args = make_req_args([req_file], tdp, logfile)
+        if logfile.exists():
+            print("safety log\n", logfile.read_text().strip())
+
         args = list(
             map(
                 str,
@@ -113,9 +120,12 @@ def safety(req_files=None):
             )
         )
         print("safety args\n", " ".join(args), flush=True)
-        safety_rc = subprocess.check_call(args)
+        with logfile.open("a+") as fp:
+            safety = subprocess.Popen(args, stdout=fp, stderr=fp)
+            safety_rc = safety.wait()
+        print(logfile.read_text())
         return safety_rc
 
 
 if __name__ == "__main__":
-    sys.exit(safety(sys.argv[1:]))
+    sys.exit(safety(sys.argv[1]))

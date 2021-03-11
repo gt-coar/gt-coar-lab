@@ -2,18 +2,19 @@
 
 Roughly, the intent is:
 - on a contributor's machine
-  - derive conda-lock files from yml files
-  - derive constructor files from lock file
-  - update CI configuration from constructs
+  - [x] derive conda-lock files from yml files
+  - [x] derive constructor files from lock file
+  - [x] update CI configuration from constructs
 - in CI, or a contributor's machine
-  - validate well-formedness of the source files
-  - build any novel conda packages
-  - build an installer
-  - test the installer
-  - gather test reports
-  - combine test reports
-  - generate documentation
-  - build a release candidate
+  - [x] validate well-formedness of the source/generated files
+  - [ ] build any novel conda packages
+  - [x] build an installer
+  - [x] test the installer
+  - [x] gather test reports
+  - [x] combine test reports
+  - [x] audit python packages for known-bad versions
+  - [ ] generate documentation
+  - [ ] build a release candidate
 """
 
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
@@ -136,7 +137,7 @@ def task_lock():
         yield U.lock("atest", None, subdir)
         yield U.lock("lint", None, subdir)
         yield U.lock("audit", None, subdir, include_base=False)
-        yield U.lock("dev", None, subdir, ["build", "lint", "atest"])
+        yield U.lock("dev", None, subdir, ["build", "lint", "atest", "audit"])
 
 
 def task_construct():
@@ -205,11 +206,34 @@ def task_test():
                 continue
             installer = U.installer(variant, subdir)
             hashfile = installer.parent / f"{installer.name}.sha256"
+            out_dir = P.ATEST_OUT / f"{variant}-{subdir}-0"
+            pip_reqs = out_dir / "requirements.txt"
+            lockfile = out_dir / "conda.lock"
+
             yield dict(
                 name=f"{variant}:{subdir}",
                 file_dep=[hashfile, installer, *P.ALL_ROBOT],
                 actions=[(U.atest, [variant, subdir])],
-                targets=[P.ATEST_OUT / f"{variant}-{subdir}-0.robot.xml"],
+                targets=[
+                    P.ATEST_OUT / f"{variant}-{subdir}-0.robot.xml",
+                    pip_reqs,
+                    lockfile,
+                ],
+            )
+
+
+def task_audit():
+    """audit observed pip packages"""
+    for variant in C.VARIANTS:
+        for subdir in C.SUBDIRS:
+            out_dir = P.ATEST_OUT / f"{variant}-{subdir}-0"
+            pip_reqs = out_dir / "requirements.txt"
+            lockfile = out_dir / "conda.lock"
+            yield dict(
+                name=f"{variant}:{subdir}",
+                file_dep=[pip_reqs, lockfile, P.SCRIPTS / "audit.py"],
+                actions=[(create_folder, [P.AUDIT_OUT]), (U.audit, [variant, subdir])],
+                targets=[P.AUDIT_OUT / f"{variant}-{subdir}.log"],
             )
 
 
@@ -251,6 +275,10 @@ class C:
     COPYRIGHT_HEADER = f"Copyright (c) {YEAR} {AUTHORS}"
     LICENSE = "BSD-3-Clause"
     LICENSE_HEADER = f"Distributed under the terms of the {LICENSE} License"
+    SAFETY_IGNORE_IDS = [
+        # jinja2 >=2.11.3 would mitigate CVE-2020-28493, but causes breakage
+        39525
+    ]
 
 
 class P:
@@ -281,6 +309,7 @@ class P:
     # stuff we don't check in
     BUILD = ROOT / "build"
     ATEST_OUT = BUILD / "atest"
+    AUDIT_OUT = BUILD / "audit"
     DIST = ROOT / "dist"
     NODE_MODULES = SCRIPTS / "node_modules"
     YARN_INTEGRITY = NODE_MODULES / ".yarn-integrity"
@@ -302,7 +331,7 @@ class P:
     ]
 
     # collections of things
-    ALL_PY = [DODO]
+    ALL_PY = [DODO, *SCRIPTS.glob("*.py")]
     ALL_ROBOT = [*ATEST.rglob("*.robot")]
     ALL_YAML = [
         *SPECS.glob("*.yml"),
@@ -617,6 +646,18 @@ class U:
             if header not in text:
                 log.error(f"{path} needs {header}")
                 return False
+
+    @classmethod
+    def audit(cls, variant, subdir):
+        args = ["python", P.SCRIPTS / "audit.py", P.ATEST_OUT / f"{variant}-{subdir}-0"]
+        str_args = [*map(str, args)]
+        env = dict(**os.environ)
+        if "SAFETY_IGNORE_IDS" not in env:
+            env["SAFETY_IGNORE_IDS"] = " ".join(map(str, C.SAFETY_IGNORE_IDS))
+
+        proc = subprocess.Popen(str_args, env=env)
+        audit_rc = proc.wait()
+        return audit_rc == 0
 
 
 class R(ConsoleReporter):

@@ -10,8 +10,9 @@ dependencies:
   - colorama
   - conda >=4.9.2,<4.10
   - doit
-  - jinja2
   - mamba >=0.8.1,<0.9
   - pip
   - python >=3.7.10,<3.8.0
   - ruamel_yaml
+  # jinja2 >=2.11.3 would mitigate CVE-2020-28493, but causes breakage
+  - jinja2
