@@ -1,0 +1,13 @@
+{
+  "@jupyterlab/apputils-extension:themes": {
+    "theme": "GT COAR Dark",
+    "theme-scrollbars": true
+  },
+  "jupyterlab/terminal-extension:plugin": {
+    "fontFamily": "'Roboto Mono', Menlo, Consolas, 'DejaVu Sans Mono', monospace",
+    "fontSize": 14
+  },
+  "@jupyterlab/filebrowser-extension:browser": {
+    "navigateToCurrentDirectory": true
+  }
+}

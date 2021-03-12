@@ -1,0 +1,178 @@
+# {{ copyright }}
+# {{ license }}
+
+# yamllint disable rule:truthy rule:line-length rule:comments-indentation
+
+{% macro cache_conda(vm, lockfile) %}
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-${{'{{'}} hashFiles('{{ lockfile }}') {{'}}'}}
+          restore-keys: |
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
+            ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
+{% endmacro %}
+
+{% macro setup_miniconda(lockfile) %}
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: {{ lockfile }}
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+{% endmacro %}
+
+{% macro preflight(job) %}
+      {% if job.subdir == "win-64" %}
+      - name: enable long paths (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
+      {% elif job.subdir == "linux-64" and job.variant == "gpu" %}
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+      {% endif %}
+{% endmacro %}
+
+{% raw %}
+name: CI
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
+
+env:
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: 1
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+  MAMBA_NO_BANNER: 1
+  # our stuff
+  ATEST_RETRIES: 1
+  CACHE_EPOCH: 4
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-20.04
+    env:
+      CI_LINTING: 1
+    steps:
+      - uses: actions/checkout@v2
+      {% endraw %}
+      {{ cache_conda('ubuntu-20.04', 'locks/lint-linux-64.conda.lock') }}
+      {{ setup_miniconda('locks/lint-linux-64.conda.lock') }}
+      {% raw %}
+
+      - name: cache (yarn)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.yarn-packages
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('_scripts/yarn.lock', '_scripts/.yarnrc') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: lint
+        run: doit lint || doit lint || doit lint
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+{% endraw %}
+
+{% for job in jobs %}
+  build-{{ job.variant }}-{{ job.subdir }}:
+    name: build {{ job.variant }} {{ job.subdir }}
+    needs: [lint]
+    runs-on: {{ job.vm }}
+    steps:
+      - uses: actions/checkout@v2
+
+      {{ preflight(job) }}
+
+      {{ cache_conda(job.vm, job.build_lockfile) }}
+
+      {{ setup_miniconda(job.build_lockfile) }}
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: build (constructor)
+        run: |
+          set -eux
+          doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
+
+      {% raw %}
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+      {% endraw %}
+
+      - name: publish (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          path: ./dist
+
+  test-{{ job.variant }}-{{ job.subdir }}:
+    name: test {{ job.variant }} {{ job.subdir }}
+    needs: [build-{{ job.variant }}-{{ job.subdir }}]
+    runs-on: {{ job.vm}}
+    steps:
+      - uses: actions/checkout@v2
+
+      {{ preflight(job) }}
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          path: ./dist
+
+      {{ cache_conda(job.vm, job.atest_lockfile) }}
+
+      {{ setup_miniconda(job.atest_lockfile) }}
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:{{ job.variant }}:{{ job.subdir }}
+
+      {{ setup_miniconda(job.audit_lockfile) }}
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          mkdir -p ./build/audit
+          python _scripts/audit.py ./build/atest/{{ job.variant }}-{{ job.subdir }}-0
+
+      - name: publish (atest and audit)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          path: |
+            ./build/atest
+            ./build/audit
+
+{% endfor %}

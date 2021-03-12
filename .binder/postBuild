@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+set -eux
+export MAMBA_NO_BANNER=1
+
+CONDARC=$(pwd)/.github/.condarc
+export CONDARC
+
+mamba create --prefix "${NB_PYTHON_PREFIX}" --file locks/run-cpu-linux-64.conda.lock
+
+# shellcheck source=/dev/null
+source deactivate || echo "didn't deactivate..."
+
+# shellcheck source=/dev/null
+source "${NB_PYTHON_PREFIX}/bin/activate"
+
+mkdir -p "${NB_PYTHON_PREFIX}/share/jupyter/lab/settings"
+
+cp templates/overrides.json "${NB_PYTHON_PREFIX}/share/jupyter/lab/settings/"

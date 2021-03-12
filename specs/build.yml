@@ -1,0 +1,13 @@
+# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+name: gt-coar-lab-build
+
+channels:
+  - https://conda.anaconda.org/conda-forge
+
+dependencies:
+  - conda-lock >=0.8.0,<0.9
+  - constructor >=3.2.0,<3.3
+  - nodejs >=10,!=11.*,!=13.*,<15
+  - yarn <2

@@ -1,0 +1,508 @@
+# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+# yamllint disable rule:truthy rule:line-length rule:comments-indentation
+
+name: CI
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
+
+env:
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: 1
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
+  MAMBA_NO_BANNER: 1
+  # our stuff
+  ATEST_RETRIES: 1
+  CACHE_EPOCH: 4
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-20.04
+    env:
+      CI_LINTING: 1
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/lint-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/lint-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: cache (yarn)
+        uses: actions/cache@v1
+        with:
+          path: _scripts/.yarn-packages
+          key: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-${{ hashFiles('_scripts/yarn.lock', '_scripts/.yarnrc') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-yarn-${{ runner.os }}-
+            ${{ env.CACHE_EPOCH }}-yarn-
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: lint
+        run: doit lint || doit lint || doit lint
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+
+  build-cpu-linux-64:
+    name: build cpu linux-64
+    needs: [lint]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/build-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/build-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: build (constructor)
+        run: |
+          set -eux
+          doit build:cpu:linux-64:sha256 || doit build:cpu:linux-64:sha256
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+
+      - name: publish (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist cpu linux-64 ${{ github.run_number }}
+          path: ./dist
+
+  test-cpu-linux-64:
+    name: test cpu linux-64
+    needs: [build-cpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist cpu linux-64 ${{ github.run_number }}
+          path: ./dist
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/atest-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:linux-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          mkdir -p ./build/audit
+          python _scripts/audit.py ./build/atest/cpu-linux-64-0
+
+      - name: publish (atest and audit)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu linux-64 ${{ github.run_number }}
+          path: |
+            ./build/atest
+            ./build/audit
+
+  build-cpu-osx-64:
+    name: build cpu osx-64
+    needs: [lint]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-${{ hashFiles('locks/build-osx-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/build-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: build (constructor)
+        run: |
+          set -eux
+          doit build:cpu:osx-64:sha256 || doit build:cpu:osx-64:sha256
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+
+      - name: publish (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist cpu osx-64 ${{ github.run_number }}
+          path: ./dist
+
+  test-cpu-osx-64:
+    name: test cpu osx-64
+    needs: [build-cpu-osx-64]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist cpu osx-64 ${{ github.run_number }}
+          path: ./dist
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-${{ hashFiles('locks/atest-osx-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+            ${{ env.CACHE_EPOCH }}-macos-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:osx-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-osx-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          mkdir -p ./build/audit
+          python _scripts/audit.py ./build/atest/cpu-osx-64-0
+
+      - name: publish (atest and audit)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu osx-64 ${{ github.run_number }}
+          path: |
+            ./build/atest
+            ./build/audit
+
+  build-cpu-win-64:
+    name: build cpu win-64
+    needs: [lint]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: enable long paths (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-${{ hashFiles('locks/build-win-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/build-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: build (constructor)
+        run: |
+          set -eux
+          doit build:cpu:win-64:sha256 || doit build:cpu:win-64:sha256
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+
+      - name: publish (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist cpu win-64 ${{ github.run_number }}
+          path: ./dist
+
+  test-cpu-win-64:
+    name: test cpu win-64
+    needs: [build-cpu-win-64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: enable long paths (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist cpu win-64 ${{ github.run_number }}
+          path: ./dist
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-${{ hashFiles('locks/atest-win-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+            ${{ env.CACHE_EPOCH }}-windows-latest-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:cpu:win-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-win-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          mkdir -p ./build/audit
+          python _scripts/audit.py ./build/atest/cpu-win-64-0
+
+      - name: publish (atest and audit)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest cpu win-64 ${{ github.run_number }}
+          path: |
+            ./build/atest
+            ./build/audit
+
+  build-gpu-linux-64:
+    name: build gpu linux-64
+    needs: [lint]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/build-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/build-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: preflight (doit)
+        run: doit list --all --status
+
+      - name: build (constructor)
+        run: |
+          set -eux
+          doit build:gpu:linux-64:sha256 || doit build:gpu:linux-64:sha256
+
+      - name: postmortem (doit)
+        if: always()
+        run: doit list --all --status
+
+      - name: publish (dist)
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist gpu linux-64 ${{ github.run_number }}
+          path: ./dist
+
+  test-gpu-linux-64:
+    name: test gpu linux-64
+    needs: [build-gpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist gpu linux-64 ${{ github.run_number }}
+          path: ./dist
+
+      - name: cache (conda)
+        uses: actions/cache@v1
+        with:
+          path: ~/conda_pkgs_dir
+          key: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-${{ hashFiles('locks/atest-linux-64.conda.lock') }}
+          restore-keys: |
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+            ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/atest-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: test (robot)
+        run: |
+          set -eux
+          doit -s test:gpu:linux-64
+
+      - name: setup conda (mambaforge)
+        uses: conda-incubator/setup-miniconda@master
+        with:
+          condarc-file: .github/.condarc
+          environment-file: locks/audit-linux-64.conda.lock
+          miniforge-variant: Mambaforge
+          miniforge-version: 4.9.2-7
+
+      - name: audit (safety)
+        run: |
+          set -eux
+          mkdir -p ./build/audit
+          python _scripts/audit.py ./build/atest/gpu-linux-64-0
+
+      - name: publish (atest and audit)
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: atest gpu linux-64 ${{ github.run_number }}
+          path: |
+            ./build/atest
+            ./build/audit
