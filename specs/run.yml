@@ -3,7 +3,7 @@
 
 dependencies:
   # coar
-  - jupyterlab-gt-coar-theme
+  - jupyterlab-gt-coar-theme >=0.2.3
   # gym and friends
   - gym
   - gym-box2d
@@ -16,6 +16,8 @@ dependencies:
   - xeus-python
   # interactive computing extensions
   - jupyterlab >=3.0.9
+  # scientific publishing
+  - tectonic
   - jupyter-book >=0.10
   # TODO: upstream
   # - jupyterlab-git

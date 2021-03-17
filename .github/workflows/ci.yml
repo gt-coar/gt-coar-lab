@@ -78,6 +78,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
       - name: cache (conda)
         uses: actions/cache@v1
         with:
@@ -120,6 +125,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
 
       - uses: actions/download-artifact@v2
         with:
@@ -425,6 +435,11 @@ jobs:
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: clean cache (conda)
+        run: |
+          set -eux
+          conda clean -yaf
 
       - name: preflight (doit)
         run: doit list --all --status

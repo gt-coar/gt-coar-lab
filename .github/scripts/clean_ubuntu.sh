@@ -7,10 +7,11 @@ df -h
 
 systemctl stop snapd.service
 
-for i in {1..10}; do
+for i in {1..100}; do
     echo "attempt ${i}..."
+    snap abort --last=auto-refresh || echo "whatever"
     snap remove chromium && break
-    sleep 15
+    sleep 5
 done
 
 snap remove chromium
@@ -27,14 +28,41 @@ done
 
 # shellcheck disable=SC2035
 sudo apt-get purge \
-    r-* \
-    php* \
+    *azure* \
+    *clang* \
+    *google* \
+    *odbc* \
+    *openjdk* \
+    aria2* \
+    buildah* \
+    chromium* \
+    dnsmasq* \
+    dotnet-* \
+    gfortran* \
+    ghc* \
+    git-lfs* \
+    google-chrome* \
+    heroku* \
+    imagemagick* \
+    llvm* \
+    mercurial* \
+    mongodb* \
     mono-* \
     mysql* \
-    dotnet-* \
-    mongodb* \
-    *openjdk* \
-    google-chrome*
+    nginx* \
+    p7zip* \
+    php* \
+    podman* \
+    postgresql* \
+    r-* \
+    ruby* \
+    sbt* \
+    shellcheck* \
+    snapd* \
+    subversion* \
+    tcpdump* \
+    vim* \
+    yarn*
 
 apt-get -y autoclean
 apt-get -y autoremove
@@ -43,7 +71,8 @@ apt-get -y clean
 rm -rf \
     "/usr/local/share/boost" \
     "$AGENT_TOOLSDIRECTORY" \
-    /var/lib/apt/lists/*
+    /var/lib/apt/lists/* \
+    /usr/share/dotnet
 
 apt list --installed
 

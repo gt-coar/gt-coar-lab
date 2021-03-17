@@ -575,8 +575,20 @@ class U:
             return 1
 
     @classmethod
+    def attempt_lock(cls, args):
+        for solver in [["--mamba"], []]:
+            solver_args = ["conda-lock", *solver, *args]
+            str_args = list(map(str, solver_args))
+            print(" ".join(str_args))
+            solver_rc = subprocess.call(str_args, cwd=str(P.LOCKS))
+            if solver_rc == 0:
+                break
+
+        return solver_rc == 0
+
+    @classmethod
     def lock(cls, env_name, variant, subdir, extra_env_names=[], include_base=True):
-        args = ["conda-lock", "--mamba", "--platform", subdir]
+        args = ["--platform", subdir]
         stem = env_name + (f"-{variant}-" if variant else "-") + subdir
         lockfile = P.LOCKS / f"{stem}.conda.lock"
 
@@ -601,7 +613,7 @@ class U:
             file_dep=specs,
             actions=[
                 (create_folder, [P.LOCKS]),
-                U.cmd(args, cwd=str(P.LOCKS)),
+                (U.attempt_lock, [args]),
             ],
             targets=[lockfile],
         )
