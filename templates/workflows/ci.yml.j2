@@ -37,7 +37,7 @@
           Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
           Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
           Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
-      {% elif job.subdir == "linux-64" and job.variant == "gpu" %}
+      {% elif job.subdir == "linux-64" %}
       - name: apt clean (ubuntu)
         run: |
           set -eux
@@ -114,6 +114,13 @@ jobs:
       {{ cache_conda(job.vm, job.build_lockfile) }}
 
       {{ setup_miniconda(job.build_lockfile) }}
+
+      {% if job.subdir == "linux-64" and job.variant == "gpu" %}
+      - name: clean cache (conda)
+        run: |
+          set -eux
+          conda clean -yaf
+      {% endif %}
 
       - name: preflight (doit)
         run: doit list --all --status

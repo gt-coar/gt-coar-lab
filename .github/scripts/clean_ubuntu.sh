@@ -71,7 +71,8 @@ apt-get -y clean
 rm -rf \
     "/usr/local/share/boost" \
     "$AGENT_TOOLSDIRECTORY" \
-    /var/lib/apt/lists/*
+    /var/lib/apt/lists/* \
+    /usr/share/dotnet
 
 apt list --installed
 
