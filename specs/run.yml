@@ -3,7 +3,7 @@
 
 dependencies:
   # coar
-  - jupyterlab-gt-coar-theme
+  - jupyterlab-gt-coar-theme >=0.2.3
   # gym and friends
   - gym
   - gym-box2d

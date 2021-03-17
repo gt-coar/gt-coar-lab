@@ -1,5 +1,5 @@
 # platform: win-64
-# env_hash: 57465bb5445e503e99b861acbec26c15d95aae4fddfbde04a23fb634191306d8
+# env_hash: 5fc081916033901ef0b7a2e4e1292e4d6b3942fa95300c7749cf876696ac36b9
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/win-64/shellcheck-0.7.1-0.tar.bz2#d4acf071f0a45e1d83a9a8b4d0739917
 https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
@@ -166,4 +166,4 @@ https://conda.anaconda.org/conda-forge/noarch/jupyterlab_server-2.3.0-pyhd8ed1ab
 https://conda.anaconda.org/conda-forge/win-64/notebook-6.2.0-py37h03978a9_0.tar.bz2#e8dcf1ffa7819ac113f2a5fd6a0a1b0e
 https://conda.anaconda.org/conda-forge/noarch/nbclassic-0.2.6-pyhd8ed1ab_0.tar.bz2#49be35e31b49012ea91fcd667ebdf4ad
 https://conda.anaconda.org/conda-forge/noarch/jupyterlab-3.0.10-pyhd8ed1ab_0.tar.bz2#655a5c763a38ffe047dab1fb7498564a
-https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.2-pyhd8ed1ab_0.tar.bz2#99e2b9b7dac1c754b1b975cef35204fb
+https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.3-pyhd8ed1ab_0.tar.bz2#aafcb9efe412248fdbca68d202b6c55b

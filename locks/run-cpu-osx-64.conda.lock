@@ -1,5 +1,5 @@
 # platform: osx-64
-# env_hash: d54fa0f73d9ae177537daa37a94d43f6fae1c4361f0396931ecda0086bfbd6ba
+# env_hash: 8fecadc5ef7b1edafb79f2ad257a34827f73dbd0f25e1551c2d7ad2bcc87da39
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/osx-64/_py-xgboost-mutex-2.0-cpu_0.tar.bz2#96dd44c2471a638fb9cdc40aa2573d1b
 https://conda.anaconda.org/conda-forge/osx-64/bzip2-1.0.8-hc929b4f_4.tar.bz2#521b82c700a64bac7d8da27539422e91
@@ -19,7 +19,7 @@ https://conda.anaconda.org/conda-forge/osx-64/libev-4.33-haf1e3a3_1.tar.bz2#79dc
 https://conda.anaconda.org/conda-forge/osx-64/libiconv-1.16-haf1e3a3_0.tar.bz2#c5fab167412a52e491c8e11453ae016f
 https://conda.anaconda.org/conda-forge/osx-64/libsodium-1.0.18-hbcb3906_1.tar.bz2#24632c09ed931af617fe6d5292919cab
 https://conda.anaconda.org/conda-forge/osx-64/libtool-2.4.6-h2e338ed_1007.tar.bz2#014bb0a1b0fe744bbfaa95db0569eebe
-https://conda.anaconda.org/conda-forge/osx-64/libwebp-base-1.2.0-h0d85af4_1.tar.bz2#38739fb2865d69f4457f5ac42e6ee876
+https://conda.anaconda.org/conda-forge/osx-64/libwebp-base-1.2.0-h0d85af4_2.tar.bz2#a5d807d5f16967981d45d6f33621f580
 https://conda.anaconda.org/conda-forge/osx-64/llvm-openmp-11.0.1-h7c73e74_0.tar.bz2#86683a2ccd280574c0af1efb95b20aec
 https://conda.anaconda.org/conda-forge/osx-64/lzo-2.10-haf1e3a3_1000.tar.bz2#0b6bca372a95d6c602c7a922e928ce79
 https://conda.anaconda.org/conda-forge/osx-64/ncurses-6.2-h2e338ed_4.tar.bz2#9cef1910395d1543527583e73dba30f1
@@ -408,7 +408,7 @@ https://conda.anaconda.org/conda-forge/noarch/ipyelk-1.0.0-pyhd8ed1ab_0.tar.bz2#
 https://conda.anaconda.org/conda-forge/noarch/jupyter-sphinx-0.3.1-py_0.tar.bz2#8938913c4ec69a3ab3336b094ad1c796
 https://conda.anaconda.org/conda-forge/noarch/jupyter-videochat-0.5.1-pyhd8ed1ab_0.tar.bz2#714c09e7292c416dcbe49e90b5c77cab
 https://conda.anaconda.org/conda-forge/noarch/jupyter_bokeh-2.0.4-pyhd8ed1ab_0.tar.bz2#786edc783994a34ba052bb74b9f8c784
-https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.2-pyhd8ed1ab_0.tar.bz2#99e2b9b7dac1c754b1b975cef35204fb
+https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.3-pyhd8ed1ab_0.tar.bz2#aafcb9efe412248fdbca68d202b6c55b
 https://conda.anaconda.org/conda-forge/noarch/jupyterlab-lsp-3.4.1-pyhd8ed1ab_0.tar.bz2#d0cd920dfa2773cc89297d18655f499c
 https://conda.anaconda.org/conda-forge/noarch/jupyterlab-tour-3.0.0-pyhd8ed1ab_0.tar.bz2#ee00e9306726b687c88125594380f9d2
 https://conda.anaconda.org/conda-forge/osx-64/swifter-0.305-py37hc8dfbb8_0.tar.bz2#2cea88c1c8abf4e46b9d702f404097c1

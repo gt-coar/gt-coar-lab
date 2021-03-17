@@ -1,5 +1,5 @@
 # platform: linux-64
-# env_hash: 40a8bd336fc159094d102781a7fb638795922aa8a908d9d26e7c48a844311bfe
+# env_hash: 42b5b41969ab7e29a28be0e2a61299297fa9a9081568296f93bac5f080b8b72d
 @EXPLICIT
 https://conda.anaconda.org/conda-forge/linux-64/shellcheck-0.7.1-0.tar.bz2#c1a23d3670a31c9b25615a20e0eff6fe
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
@@ -162,4 +162,4 @@ https://conda.anaconda.org/conda-forge/noarch/jupyterlab_server-2.3.0-pyhd8ed1ab
 https://conda.anaconda.org/conda-forge/linux-64/notebook-6.2.0-py37h89c1867_0.tar.bz2#3bead31ff255215b069399b1dfb06200
 https://conda.anaconda.org/conda-forge/noarch/nbclassic-0.2.6-pyhd8ed1ab_0.tar.bz2#49be35e31b49012ea91fcd667ebdf4ad
 https://conda.anaconda.org/conda-forge/noarch/jupyterlab-3.0.10-pyhd8ed1ab_0.tar.bz2#655a5c763a38ffe047dab1fb7498564a
-https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.2-pyhd8ed1ab_0.tar.bz2#99e2b9b7dac1c754b1b975cef35204fb
+https://conda.anaconda.org/conda-forge/noarch/jupyterlab-gt-coar-theme-0.2.3-pyhd8ed1ab_0.tar.bz2#aafcb9efe412248fdbca68d202b6c55b
