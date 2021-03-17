@@ -45,6 +45,7 @@ sudo apt-get purge \
     heroku* \
     imagemagick* \
     llvm* \
+    mercurial* \
     mongodb* \
     mono-* \
     mysql* \
@@ -55,6 +56,10 @@ sudo apt-get purge \
     postgresql* \
     r-* \
     ruby* \
+    sbt* \
+    shellcheck* \
+    snapd* \
+    subversion* \
     tcpdump* \
     vim* \
     yarn*
