@@ -9,7 +9,7 @@ systemctl stop snapd.service
 
 for i in {1..100}; do
     echo "attempt ${i}..."
-    snap abort
+    snap abort --last=auto-refresh || echo "whatever"
     snap remove chromium && break
     sleep 5
 done
