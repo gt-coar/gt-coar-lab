@@ -9,6 +9,7 @@ systemctl stop snapd.service
 
 for i in {1..100}; do
     echo "attempt ${i}..."
+    snap abort
     snap remove chromium && break
     sleep 5
 done
@@ -27,14 +28,36 @@ done
 
 # shellcheck disable=SC2035
 sudo apt-get purge \
-    r-* \
-    php* \
+    *azure* \
+    *clang* \
+    *google* \
+    *odbc* \
+    *openjdk* \
+    aria2* \
+    buildah* \
+    chromium* \
+    dnsmasq* \
+    dotnet-* \
+    gfortran* \
+    ghc* \
+    git-lfs* \
+    google-chrome* \
+    heroku* \
+    imagemagick* \
+    llvm* \
+    mongodb* \
     mono-* \
     mysql* \
-    dotnet-* \
-    mongodb* \
-    *openjdk* \
-    google-chrome*
+    nginx* \
+    p7zip* \
+    php* \
+    podman* \
+    postgresql* \
+    r-* \
+    ruby* \
+    tcpdump* \
+    vim* \
+    yarn*
 
 apt-get -y autoclean
 apt-get -y autoremove
