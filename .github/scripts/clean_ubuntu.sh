@@ -7,10 +7,10 @@ df -h
 
 systemctl stop snapd.service
 
-for i in {1..10}; do
+for i in {1..100}; do
     echo "attempt ${i}..."
     snap remove chromium && break
-    sleep 15
+    sleep 5
 done
 
 snap remove chromium
