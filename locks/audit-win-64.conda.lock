@@ -1,0 +1,36 @@
+# platform: win-64
+# env_hash: 617f38df09bfc24401c0841b72e8decb52af64cddb05cdf535b04242782918b8
+@EXPLICIT
+https://conda.anaconda.org/conda-forge/win-64/ca-certificates-2020.12.5-h5b45459_0.tar.bz2#f36a2988a9f57cffdc43929ba67a3a2a
+https://conda.anaconda.org/conda-forge/noarch/tzdata-2021a-he74cb21_0.tar.bz2#6f36861f102249fc54861ff9343c3fdd
+https://conda.anaconda.org/conda-forge/win-64/vs2015_runtime-14.28.29325-h5e1d092_4.tar.bz2#e89bf06003c46c09ee8628eb76aa9520
+https://conda.anaconda.org/conda-forge/win-64/vc-14.2-hb210afc_4.tar.bz2#45ddc2c65ad6c200120db1a682803462
+https://conda.anaconda.org/conda-forge/win-64/openssl-1.1.1j-h8ffe710_0.tar.bz2#3f98c6e8d40701b975943feda6fd2cfc
+https://conda.anaconda.org/conda-forge/win-64/sqlite-3.34.0-h8ffe710_0.tar.bz2#0887d420b945a5342cd03429d475658c
+https://conda.anaconda.org/conda-forge/win-64/yaml-0.2.5-he774522_0.tar.bz2#d41c34441d8bbb6d141e691ae7bccf35
+https://conda.anaconda.org/conda-forge/win-64/python-3.9.2-h7840368_0_cpython.tar.bz2#a133ac04fc02fd0b941167798b6b501b
+https://conda.anaconda.org/conda-forge/noarch/click-7.1.2-pyh9f0ad1d_0.tar.bz2#bd50a970ce07e660c319fdc4d730d3f1
+https://conda.anaconda.org/conda-forge/noarch/idna-2.10-pyh9f0ad1d_0.tar.bz2#f95a12b4f435aae6680fe55ae2eb1b06
+https://conda.anaconda.org/conda-forge/noarch/pycparser-2.20-pyh9f0ad1d_2.tar.bz2#aa798d50ffd182a0f6f31478c7f434f6
+https://conda.anaconda.org/conda-forge/noarch/pyparsing-2.4.7-pyh9f0ad1d_0.tar.bz2#626c4f20d5bf06dcec9cf2eaa31725c7
+https://conda.anaconda.org/conda-forge/win-64/python_abi-3.9-1_cp39.tar.bz2#4f11fc3c42d6aff5cc1daff5e1e6caca
+https://conda.anaconda.org/conda-forge/noarch/six-1.15.0-pyh9f0ad1d_0.tar.bz2#1eec421f0f1f39e579e44e4a5ce646a2
+https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2#f832c45a477c78bebd107098db465095
+https://conda.anaconda.org/conda-forge/noarch/wheel-0.36.2-pyhd3deb0d_0.tar.bz2#768bfbe026426d0e76b377997d1f2b98
+https://conda.anaconda.org/conda-forge/win-64/certifi-2020.12.5-py39hcbf5309_1.tar.bz2#859d8952947ef7bd8aca48f01688a86f
+https://conda.anaconda.org/conda-forge/win-64/cffi-1.14.5-py39h0878f49_0.tar.bz2#8f5353bca9118addc02ae1331ddadb19
+https://conda.anaconda.org/conda-forge/win-64/chardet-4.0.0-py39hcbf5309_1.tar.bz2#2c220000bcacdf633723cd56d0cb4cca
+https://conda.anaconda.org/conda-forge/noarch/packaging-20.9-pyh44b312d_0.tar.bz2#be69a38e912054a62dc82cc3c7711a64
+https://conda.anaconda.org/conda-forge/win-64/pyyaml-5.4.1-py39hb82d6ee_0.tar.bz2#c8d78d0cdf41a332900213bd2e0058fc
+https://conda.anaconda.org/conda-forge/win-64/win_inet_pton-1.1.0-py39hcbf5309_2.tar.bz2#10d4cf2796ef9d1a71f52056469ad587
+https://conda.anaconda.org/conda-forge/win-64/wincertstore-0.2-py39hcbf5309_1006.tar.bz2#19046b323a499a293e68cf77ea12ae63
+https://conda.anaconda.org/conda-forge/win-64/brotlipy-0.7.0-py39hb82d6ee_1001.tar.bz2#930034c89054b103eec4b9d821f8e196
+https://conda.anaconda.org/conda-forge/win-64/cryptography-3.4.6-py39hd8d06c1_0.tar.bz2#75d14ea93558a4cdfd0283f610f2f952
+https://conda.anaconda.org/conda-forge/noarch/dparse-0.5.1-py_0.tar.bz2#a3148bd94a6d6ffb4a694c739eab6121
+https://conda.anaconda.org/conda-forge/win-64/pysocks-1.7.1-py39hcbf5309_3.tar.bz2#76b07f5b989c96632eb7d6f2bd0c26aa
+https://conda.anaconda.org/conda-forge/win-64/setuptools-49.6.0-py39hcbf5309_3.tar.bz2#135507b182371e6d0cd97c875b7e4913
+https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
+https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
+https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.4-pyhd8ed1ab_0.tar.bz2#d7b20b328e23d993994ea02077c009c0
+https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc
+https://conda.anaconda.org/conda-forge/noarch/safety-1.10.3-pyhd8ed1ab_0.tar.bz2#0f79fdfb0f19db3e78c900f7e8f60263

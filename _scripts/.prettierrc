@@ -1,0 +1,10 @@
+proseWrap: always
+printWidth: 88
+singleQuote: true
+tabWidth: 2
+overrides:
+  - files:
+    - .yamllint
+    - ../.github/.condarc
+    options:
+      parser: yaml

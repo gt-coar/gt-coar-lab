@@ -1,0 +1,8 @@
+{
+  "name": "gt-coar-lab-dev",
+  "private": true,
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  }
+}

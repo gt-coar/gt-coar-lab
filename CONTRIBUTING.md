@@ -2,19 +2,22 @@
 
 ## Set Up
 
-- Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) for Python 3
-- Create the core env
+- Install [Mambaforge](https://github.com/conda-forge/miniforge/releases)
+- Create the base environment
 
 ```bash
-conda env update --file .ci_support/environment-base.yml
+CONDARC=.github/.condarc mamba create --file locks/dev-linux-64.conda.lock --prefix .venv
 ```
 
-- follow the instructions, and always run the commands below from that env
+- always run any commands with that environment activated
+
+```bash
+source .venv/bin/activate
+```
 
 ## doit
 
-[doit](https://github.com/pydoit/doit) drives local development, usually by calling
-[anaconda-project](https://github.com/Anaconda-Platform/anaconda-project) commands.
+[doit](https://github.com/pydoit/doit) drives local development.
 
 To list all the tasks that you _could_ run:
 
@@ -30,18 +33,8 @@ doit
 
 - `*` may be used as a wildcard
 
-## Updating dependencies
-
-One notable task that doesn't occur in the `doit` flow is updating dependencies.
-
-After changing a dependency in `anaconda-project.yml`:
-
-```bash
-python -m scripts.update
-```
-
 ---
 
-> Copyright (c) 2020 University System of Georgia and GTCOARLab Contributors
+> Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 >
 > Distributed under the terms of the BSD-3-Clause License

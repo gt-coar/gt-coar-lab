@@ -1,0 +1,53 @@
+# Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
+# Distributed under the terms of the BSD-3-Clause License
+
+name: "{{ name }}-{{ variant.upper() }}"
+version: "{{ version }}-{{ build_number }}"
+company: University System of Georgia
+license_file: LICENSE
+post_install: post_install.sh   # [unix]
+post_install: post_install.bat  # [win]
+
+# constructor config
+ignore_duplicate_files: true
+keep_pkgs: true
+initialize_by_default: false
+register_python_default: false
+check_path_length: true
+
+# populate the delivered condarc
+condarc:
+  add_anaconda_token: False
+  channels:
+  - conda-forge
+  add_pip_as_python_dependency: False
+  auto_update_conda: False
+  default_channels:
+  - conda-forge
+  local_repodata_ttl: 600
+  remote_connect_timeout_secs: 600.0
+  remote_max_retries: 10
+  remote_read_timeout_secs: 600.0
+  repodata_fns:
+  - repodata.json
+  show_channel_urls: True
+  show_sources: True
+  unsatisfiable_hints_check_depth: 2
+  use_only_tar_bz2: True
+
+{% if build_channel %}
+# TODO: get a real channel
+channels_remap:
+  - src: {{ build_channel }}
+    dest: {{ channels[0] }}
+{% endif %}
+
+channels:
+  - https://conda.anaconda.org/conda-forge
+  {% if build_channel %}
+  - {{ build_channel }}
+  {% endif %}
+
+specs:
+  {% for spec in specs %}- {{ spec }}
+  {% endfor %}
