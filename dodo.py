@@ -280,8 +280,8 @@ class P:
     )
 
     # config cruft
-    YARN = [Path(shutil.which("yarn")).resolve()]
-    PRETTIER_SUFFIXES = [".yml", ".yaml", ".toml", ".json", ".md"]
+    YARN = ["yarn"]
+    PRETTIER_SUFFIXES = [".yml", ".yaml", ".json", ".md"]
     PRETTIERRC = SCRIPTS / ".prettierrc"
     PRETTIER = [
         *YARN,
