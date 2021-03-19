@@ -525,11 +525,8 @@ jobs:
   draft-release:
     needs:
       - build-cpu-linux-64
-
       - build-cpu-osx-64
-
       - build-cpu-win-64
-
       - build-gpu-linux-64
 
     runs-on: ubuntu-latest
@@ -558,7 +555,7 @@ jobs:
           ARTIFACTS: './artifacts/v${{ steps.info.outputs.version }}'
         run: |
           set -eux
-          cat ${ARTIFACTS}/*/dist/*.sha256 > ${RELEASE}/SHA256SUMS
+          cat ${ARTIFACTS}/*/dist*/*.sha256 > ${RELEASE}/SHA256SUMS
           cat ${RELEASE}/SHA256SUMS
 
       - name: prepare v${{ steps.info.outputs.version }} release notes
@@ -574,8 +571,8 @@ jobs:
           ARTIFACTS: './artifacts/v${{ steps.info.outputs.version }}'
         run: |
           set -eux
-          mv ${ARTIFACTS}/*/dist/*.exe ${RELEASE}
-          mv ${ARTIFACTS}/*/dist/*.sh ${RELEASE}
+          mv ${ARTIFACTS}/*/dist*/*.exe ${RELEASE}
+          mv ${ARTIFACTS}/*/dist*/*.sh ${RELEASE}
           find ${RELEASE}
 
       - name: draft v${{ steps.info.outputs.version }} release
