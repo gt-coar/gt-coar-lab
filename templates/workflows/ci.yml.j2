@@ -195,52 +195,19 @@ jobs:
       - name: get branch name
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          echo "##[set-output name=version;]$(head -n1 VERSION)"
         id: info
-
-      - name: prepare v${{ steps.info.outputs.version }} release folder
-        env:
-          RELEASE: ./release/v${{ steps.info.outputs.version }}
-        run: mkdir -p "${RELEASE}"
 
       - name: download v${{ steps.info.outputs.version }} artifacts
         uses: actions/download-artifact@v2
         with:
-          path: ./artifacts/v${{ steps.info.outputs.version }}
+          path: artifacts
 
-      - name: gather v${{ steps.info.outputs.version }} hashsums
-        env:
-          RELEASE: ./release/v${{ steps.info.outputs.version }}
-          ARTIFACTS: ./artifacts/v${{ steps.info.outputs.version }}
-        run: |
-          set -eux
-          cat "${ARTIFACTS}/*/dist*/*.sha256" > "${RELEASE}/SHA256SUMS"
-          cat "${RELEASE}/SHA256SUMS"
+      - name: dry-run release
+        run: python _scripts/release.py
 
-      - name: prepare v${{ steps.info.outputs.version }} release notes
+      - name: draft release
+        if: ${{ steps.branch.outputs.name == 'master' }}
         env:
-          RELEASE: ./release/v${{ steps.info.outputs.version }}
-        run: |
-          set -eux
-          python _scripts/releasenotes.py > "${RELEASE}/README.md"
-
-      - name: gather v${{ steps.info.outputs.version }} artifacts
-        env:
-          RELEASE: ./release/v${{ steps.info.outputs.version }}
-          ARTIFACTS: ./artifacts/v${{ steps.info.outputs.version }}
-        run: |
-          set -eux
-          mv "${ARTIFACTS}/*/dist*/*.exe" "${RELEASE}"
-          mv "${ARTIFACTS}/*/dist*/*.sh" "${RELEASE}"
-          find "${RELEASE}"
-
-      - name: draft v${{ steps.info.outputs.version }} release
-        if: ${{ contains(steps.branch.outputs.name, 'master') }}
-        env:
-          RELEASE: ./release/v${{ steps.info.outputs.version }}
-          ARTIFACTS: ./artifacts/v${{ steps.info.outputs.version }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "${{ steps.info.outputs.version }} coming soon to a ${{ steps.info.outputs.branch }} near you"
-          gh release create --target v${{ steps.info.outputs.version }} --draft --notes-file "${RELEASE}/README.md" "${RELEASE}/*"
+        run: python _scripts/release.py
 {% endraw %}
