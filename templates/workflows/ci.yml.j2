@@ -235,11 +235,12 @@ jobs:
           find "${RELEASE}"
 
       - name: draft v${{ steps.info.outputs.version }} release
-        # if: ${{ contains(steps.branch.outputs.name, 'master') }}
+        if: ${{ contains(steps.branch.outputs.name, 'master') }}
         env:
           RELEASE: ./release/v${{ steps.info.outputs.version }}
           ARTIFACTS: ./artifacts/v${{ steps.info.outputs.version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "${{ steps.info.outputs.version }} coming soon to a ${{ steps.info.outputs.branch }} near you"
-          gh release create v${{ steps.info.outputs.version }} --draft --notes-file "${RELEASE}/README.md" "${RELEASE}/*"
+          gh release create --target v${{ steps.info.outputs.version }} --draft --notes-file "${RELEASE}/README.md" "${RELEASE}/*"
 {% endraw %}
