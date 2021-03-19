@@ -57,7 +57,7 @@ def task_setup():
         name="yarn",
         doc="install npm dependencies with yarn",
         file_dep=yarn_dep,
-        actions=[U.script(C.YARN)],
+        actions=[U.script(P.YARN)],
         targets=[P.YARN_INTEGRITY],
     )
 
@@ -73,7 +73,7 @@ def task_lint():
         actions=[
             U.script(
                 [
-                    *P.PRETTIER_ARGS,
+                    *P.PRETTIER,
                     *P.ALL_PRETTIER,
                 ]
             )
@@ -185,7 +185,7 @@ def task_ci():
 
     yield dict(
         name="workflow",
-        actions=[build, U.script([*P.PRETTIER_ARGS, P.WORKFLOW])],
+        actions=[build, U.script([*P.PRETTIER, P.WORKFLOW])],
         file_dep=[tmpl, P.YARN_INTEGRITY],
         targets=[P.WORKFLOW],
     )
@@ -241,50 +241,12 @@ def task_audit():
 
 
 # some namespaces for project-level stuff
-class C:
-    """constants"""
-
-    NAME = "GTCOARLab"
-    ENC = dict(encoding="utf-8")
-    YARN = ["yarn"]
-    VARIANTS = ["cpu", "gpu"]
-    SUBDIRS = ["linux-64", "osx-64", "win-64"]
-    THIS_SUBDIR = {"Linux": "linux-64", "Darwin": "osx-64", "Windows": "win-64"}[
-        platform.system()
-    ]
-    TODAY = datetime.today()
-    YEAR = TODAY.strftime("%Y")
-    VERSION = TODAY.strftime("%Y.%m")
-    BUILD_NUMBER = "0"
-    CONSTRUCTOR_PLATFORM = {
-        "linux-64": ["Linux-x86_64", "sh"],
-        "osx-64": ["MacOSX-x86_64", "sh"],
-        "win-64": ["Windows-x86_64", "exe"],
-    }
-    VM = {
-        "linux-64": "ubuntu-20.04",
-        "osx-64": "macos-latest",
-        "win-64": "windows-latest",
-    }
-    CI = bool(safe_load(os.environ.get("CI", "0")))
-    CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
-    SKIP_LOCKS = CI
-    SKIP_LINT = CI and not CI_LINTING
-    CHUNKSIZE = 8192
-
-    ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES", "0"))
-    ATEST_ARGS = safe_load(os.environ.get("ATEST_ARGS", "[]"))
-    AUTHORS = "University System of Georgia and GTCOARLab Contributors"
-    COPYRIGHT_HEADER = f"Copyright (c) {YEAR} {AUTHORS}"
-    LICENSE = "BSD-3-Clause"
-    LICENSE_HEADER = f"Distributed under the terms of the {LICENSE} License"
-
-
 class P:
     """paths"""
 
     DODO = Path(__file__)
     ROOT = DODO.parent
+    VERSION = ROOT / "VERSION"
 
     # checked in
     GITHUB = ROOT / ".github"
@@ -318,10 +280,11 @@ class P:
     )
 
     # config cruft
-    PRETTIER_SUFFIXES = [".yml", ".yaml", ".toml", ".json", ".md"]
+    YARN = ["yarn"]
+    PRETTIER_SUFFIXES = [".yml", ".yaml", ".json", ".md"]
     PRETTIERRC = SCRIPTS / ".prettierrc"
-    PRETTIER_ARGS = [
-        *C.YARN,
+    PRETTIER = [
+        *YARN,
         "prettier",
         "--config",
         PRETTIERRC,
@@ -357,6 +320,43 @@ class P:
     ALL_HEADER_FILES = [*ALL_MD, *ALL_YAML, *ALL_PY, *ALL_ROBOT, *ALL_SH, *ALL_BAT]
 
 
+class C:
+    """constants"""
+
+    NAME = "GTCOARLab"
+    ENC = dict(encoding="utf-8")
+    VARIANTS = ["cpu", "gpu"]
+    SUBDIRS = ["linux-64", "osx-64", "win-64"]
+    THIS_SUBDIR = {"Linux": "linux-64", "Darwin": "osx-64", "Windows": "win-64"}[
+        platform.system()
+    ]
+    TODAY = datetime.today()
+    YEAR = TODAY.strftime("%Y")
+    VERSION = P.VERSION.read_text(encoding="utf-8").strip()
+    CONSTRUCTOR_PLATFORM = {
+        "linux-64": ["Linux-x86_64", "sh"],
+        "osx-64": ["MacOSX-x86_64", "sh"],
+        "win-64": ["Windows-x86_64", "exe"],
+    }
+    VM = {
+        "linux-64": "ubuntu-20.04",
+        "osx-64": "macos-latest",
+        "win-64": "windows-latest",
+    }
+    CI = bool(safe_load(os.environ.get("CI", "0")))
+    CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
+    SKIP_LOCKS = CI
+    SKIP_LINT = CI and not CI_LINTING
+    CHUNKSIZE = 8192
+
+    ATEST_RETRIES = int(os.environ.get("ATEST_RETRIES", "0"))
+    ATEST_ARGS = safe_load(os.environ.get("ATEST_ARGS", "[]"))
+    AUTHORS = "University System of Georgia and GTCOARLab Contributors"
+    COPYRIGHT_HEADER = f"Copyright (c) {YEAR} {AUTHORS}"
+    LICENSE = "BSD-3-Clause"
+    LICENSE_HEADER = f"Distributed under the terms of the {LICENSE} License"
+
+
 class U:
     """utilities"""
 
@@ -371,7 +371,7 @@ class U:
     @classmethod
     def installer(cls, variant, subdir):
         pf, ext = C.CONSTRUCTOR_PLATFORM[subdir]
-        name = f"{C.NAME}-{variant.upper()}-{C.VERSION}-{C.BUILD_NUMBER}-{pf}.{ext}"
+        name = f"{C.NAME}-{variant.upper()}-{C.VERSION}-{pf}.{ext}"
         return P.DIST / name
 
     @classmethod
@@ -409,7 +409,6 @@ class U:
                 name=C.NAME,
                 subdir=subdir,
                 variant=variant,
-                build_number=C.BUILD_NUMBER,
                 version=C.VERSION,
                 copyright=C.COPYRIGHT_HEADER,
                 license=C.LICENSE_HEADER,
@@ -429,7 +428,7 @@ class U:
                     dest = src
                 dest_path.write_text(dest, **C.ENC)
                 if dest_path.suffix in P.PRETTIER_SUFFIXES:
-                    U.script([*P.PRETTIER_ARGS, dest_path]).execute()
+                    U.script([*P.PRETTIER, dest_path]).execute()
 
         yield dict(
             name=f"{variant}:{subdir}",
@@ -530,7 +529,6 @@ class U:
 
         variables = dict(
             ATTEMPT=attempt,
-            BUILD=C.BUILD_NUMBER,
             INST_DIR=inst_dir,
             INSTALLER=installer,
             NAME=installer.name,
