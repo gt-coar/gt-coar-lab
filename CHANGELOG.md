@@ -6,11 +6,11 @@
 
 ### All
 
-- ⚒️ [#12] use all `conda-forge` upstreams, derived from `conda-lock` files
-- 🤖 continuous integration and delivery with GitHub Actions
-- 🧠 [#8] adds `dm-acme`
-- 🎨 adds [jupyterlab-gt-coar-theme] as the default theme. _Go Jackets!_
-- ♃ adds many JupyterLab 3 extensions for collaborative interactive computing
+- [#12] use all `conda-forge` upstreams, derived from `conda-lock` files
+- continuous integration and delivery with GitHub Actions
+- [#8] adds `dm-acme`
+- adds [jupyterlab-gt-coar-theme] as the default theme. _Go Jackets!_
+- adds many JupyterLab 3 extensions for collaborative interactive computing
   <details>
     <summary>highlights include...</summary>
     <ul>
@@ -27,8 +27,8 @@
 
 ### Linux
 
-- 🌿 [#10] adds `sage`
-- 🖥️ [#4] adds GPU build
+- [#10] adds `sage`
+- [#4] adds GPU build
 
 [#4]: https://github.com/gt-coar/gt-coar-lab/issues/4
 [#8]: https://github.com/gt-coar/gt-coar-lab/issues/8
@@ -40,7 +40,7 @@
 
 ## 2020.5.0
 
-- 🐣 initial prototype builds
+- initial prototype builds
 
 ---
 
