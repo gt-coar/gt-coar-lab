@@ -538,7 +538,7 @@ jobs:
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: info
 
-      - name: download v${{ steps.info.outputs.version }} artifacts
+      - name: download artifacts
         uses: actions/download-artifact@v2
         with:
           path: artifacts
