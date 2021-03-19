@@ -184,6 +184,7 @@ jobs:
 
 {% endfor %}
   draft-release:
+    name: release
     needs: {% for job in jobs %}
       - build-{{ job.variant }}-{{ job.subdir }}
     {%- endfor %}
@@ -206,7 +207,7 @@ jobs:
         run: python _scripts/release.py
 
       - name: draft release
-        if: ${{ steps.branch.outputs.name == 'master' }}
+        if: ${{ steps.info.outputs.branch == 'master' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python _scripts/release.py
