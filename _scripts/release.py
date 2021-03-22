@@ -2,10 +2,15 @@
 # Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
 # Distributed under the terms of the BSD-3-Clause License
 
+import logging
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+LOG = logging.getLogger(__name__)
+LOG.setLevel(logging.INFO)
 
 HERE = Path(__file__).parent
 ROOT = HERE.parent.resolve()
@@ -36,6 +41,9 @@ INSTALLERS = [installer for installer in INSTALLERS if installer.exists()]
 # the concatenated shasums
 SHA256SUMS = ROOT / "SHA256SUMS"
 
+# how many times to try the real release
+RETRIES = 10
+
 
 def make_notes():
     """generate release notes"""
@@ -47,15 +55,15 @@ def make_notes():
 
 def make_hashsums():
     """collect all the hashfiles into one"""
+    LOG.info(f"artifacts {ARTIFACTS}")
     lines = []
-    print(ARTIFACTS, flush=True)
     for hashfile in ARTIFACT_HASHES:
-        print("...", hashfile, flush=True)
+        LOG.info(f"... {hashfile}")
         lines += [hashfile.read_text(encoding="utf-8").strip()]
 
     hashsums = "\n".join(lines).strip()
     assert hashsums, "no sums"
-    print(hashsums, flush=True)
+    LOG.info("hashsums {hashsums}")
     return hashsums
 
 
@@ -86,12 +94,21 @@ def release():
         *INSTALLERS,
     ]
 
-    print(args, flush=True)
+    LOG.info("Release args %s", args)
+
+    status_code = 0
 
     if os.environ.get("GITHUB_TOKEN", "").strip():
-        return subprocess.call([*map(str, args)])
+        status_code = 1
+        LOG.warn(f"Trying to deploy {RETRIES} times...")
+        for i in range(RETRIES):
+            LOG.warn(f"... START attempt {i + 1} of {RETRIES}")
+            status_code = subprocess.call([*map(str, args)])
+            if status_code != 0:
+                LOG.error(f"... FAIL attempt {i + 1} of {RETRIES}, waiting 10s...")
+                time.sleep(10)
 
-    return 0
+    return status_code
 
 
 if __name__ == "__main__":
