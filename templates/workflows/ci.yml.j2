@@ -53,6 +53,8 @@ on:
     branches: [master, dev]
   pull_request:
     branches: [master, dev]
+  create:
+    tags: [v*]
 
 env:
   PYTHONIOENCODING: utf-8
@@ -203,12 +205,15 @@ jobs:
         with:
           path: artifacts
 
-      - name: dry-run release
+      - name: collect release artifacts
         run: python _scripts/release.py
 
-      - name: draft release
-        if: ${{ steps.info.outputs.branch == 'master' }}
+      - uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python _scripts/release.py
+        with:
+          body_path: release/NOTES.md
+          files: |
+            release/artifacts/*
 {% endraw %}
