@@ -32,12 +32,12 @@ https://conda.anaconda.org/conda-forge/linux-64/libxml2-2.9.10-h72842e0_3.tar.bz
 https://conda.anaconda.org/conda-forge/linux-64/nodejs-14.15.4-h92b4a50_1.tar.bz2#c892d4910dee3eb4da7a8840d9e8806e
 https://conda.anaconda.org/conda-forge/linux-64/readline-8.0-he28a2e2_2.tar.bz2#4d0ae8d473f863696088f76800ef9d38
 https://conda.anaconda.org/conda-forge/linux-64/reproc-cpp-14.2.1-h58526e2_0.tar.bz2#d1d5d63dafc7b2e484d02823606db5d9
-https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-h21135ba_1.tar.bz2#c647f70aa7e3d4cc4e029cc1c9a99953
+https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-hed695b0_1.tar.bz2#7ef837cd455bd0f19f49b8b62d4cb568
 https://conda.anaconda.org/conda-forge/linux-64/zstd-1.4.9-ha95c52a_0.tar.bz2#b481dc9fda3af2a681d08a4d5cd1ea0b
 https://conda.anaconda.org/conda-forge/linux-64/krb5-1.17.2-h926e7f8_0.tar.bz2#926325c11478d6e781e76072c117763b
 https://conda.anaconda.org/conda-forge/linux-64/libarchive-3.5.1-h3f442fb_1.tar.bz2#1579ccb4f14593e95627bcdb29af953a
 https://conda.anaconda.org/conda-forge/linux-64/sqlite-3.34.0-h74cdb3f_0.tar.bz2#0a83e21e8c1929cc9a1e21ebb2459fc5
-https://conda.anaconda.org/conda-forge/linux-64/yarn-1.22.10-ha770c72_0.tar.bz2#795d11f9767d98354f80c667cedaf485
+https://conda.anaconda.org/conda-forge/linux-64/yarn-1.22.10-0.tar.bz2#a2a4efe3536edf0798dd258834de62bc
 https://conda.anaconda.org/conda-forge/linux-64/libcurl-7.75.0-hc4aaa36_0.tar.bz2#7283260c001a5f62d831b6c660c5afe7
 https://conda.anaconda.org/conda-forge/linux-64/python-3.7.10-hffdb5ce_100_cpython.tar.bz2#7425fffa658971915f595e9110163c3c
 https://conda.anaconda.org/conda-forge/noarch/appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2#5f095bc6454094e96f146491fd03633b
@@ -63,7 +63,7 @@ https://conda.anaconda.org/conda-forge/linux-64/pyinotify-0.9.6-py37h89c1867_100
 https://conda.anaconda.org/conda-forge/linux-64/pysocks-1.7.1-py37h89c1867_3.tar.bz2#bd069d59ee91a2e26552cd7bb4c64032
 https://conda.anaconda.org/conda-forge/linux-64/pyyaml-5.4.1-py37h5e8e339_0.tar.bz2#090550b9425fe9a87dc1ec7fde201633
 https://conda.anaconda.org/conda-forge/linux-64/ruamel_yaml-0.15.80-py37h5e8e339_1004.tar.bz2#0c520ba7aa566aec5c41012df4edbb65
-https://conda.anaconda.org/conda-forge/linux-64/brotlipy-0.7.0-py37h5e8e339_1001.tar.bz2#871eed4ba322e7b3f200956a096b34e7
+https://conda.anaconda.org/conda-forge/linux-64/brotlipy-0.7.0-py37hb5d75c8_1001.tar.bz2#1e60063ddc9de28cb48bddb48bdc1395
 https://conda.anaconda.org/conda-forge/linux-64/cryptography-3.4.6-py37h5d9358c_0.tar.bz2#b345cf4500c6ebbec61c1f0e1a187579
 https://conda.anaconda.org/conda-forge/linux-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#80d93b768ad0151a0c109c376c31926b
 https://conda.anaconda.org/conda-forge/linux-64/setuptools-49.6.0-py37h89c1867_3.tar.bz2#928c178bf6805b8ab71fabaa620e0234

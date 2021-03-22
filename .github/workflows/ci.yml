@@ -521,3 +521,34 @@ jobs:
           path: |
             ./build/atest
             ./build/audit
+
+  draft-release:
+    name: release
+    needs:
+      - build-cpu-linux-64
+      - build-cpu-osx-64
+      - build-cpu-win-64
+      - build-gpu-linux-64
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: get branch name
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: info
+
+      - name: download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+
+      - name: dry-run release
+        run: python _scripts/release.py
+
+      - name: draft release
+        if: ${{ steps.info.outputs.branch == 'master' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python _scripts/release.py
