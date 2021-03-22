@@ -10,7 +10,7 @@ https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-1_gnu.tar.bz2#
 https://conda.anaconda.org/conda-forge/linux-64/libgcc-ng-9.3.0-h2828fa1_18.tar.bz2#5a9490c49a3505a6d19bda012cde6ad3
 https://conda.anaconda.org/conda-forge/linux-64/bzip2-1.0.8-h7f98852_4.tar.bz2#a1fd65c7ccbf10880423d82bca54eb54
 https://conda.anaconda.org/conda-forge/linux-64/c-ares-1.17.1-h7f98852_1.tar.bz2#ed1dc233ed5e3eaa9bfbaac64d130c5e
-https://conda.anaconda.org/conda-forge/linux-64/firefox-78.8.0esr-h9c3ff4c_0.tar.bz2#eb21ca70af2e5239d2c56fe391690864
+https://conda.anaconda.org/conda-forge/linux-64/firefox-78.9.0esr-h9c3ff4c_0.tar.bz2#b577a5589ee6418c0330436239233603
 https://conda.anaconda.org/conda-forge/linux-64/geckodriver-0.29.0-h3146498_0.tar.bz2#7a76f8a22b8f67cf4fdabbfaec3ad061
 https://conda.anaconda.org/conda-forge/linux-64/icu-68.1-h58526e2_0.tar.bz2#fc7a4271dc2a7f4fd78cd63695baf7c3
 https://conda.anaconda.org/conda-forge/linux-64/libev-4.33-h516909a_1.tar.bz2#6f8720dff19e17ce5d48cfe7f3d2f0a3
@@ -31,7 +31,7 @@ https://conda.anaconda.org/conda-forge/linux-64/libssh2-1.9.0-ha56f1ee_6.tar.bz2
 https://conda.anaconda.org/conda-forge/linux-64/libxml2-2.9.10-h72842e0_3.tar.bz2#5ed2c4742d5f1141783f484fe8974ccf
 https://conda.anaconda.org/conda-forge/linux-64/readline-8.0-he28a2e2_2.tar.bz2#4d0ae8d473f863696088f76800ef9d38
 https://conda.anaconda.org/conda-forge/linux-64/reproc-cpp-14.2.1-h58526e2_0.tar.bz2#d1d5d63dafc7b2e484d02823606db5d9
-https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-h21135ba_1.tar.bz2#c647f70aa7e3d4cc4e029cc1c9a99953
+https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-hed695b0_1.tar.bz2#7ef837cd455bd0f19f49b8b62d4cb568
 https://conda.anaconda.org/conda-forge/linux-64/zstd-1.4.9-ha95c52a_0.tar.bz2#b481dc9fda3af2a681d08a4d5cd1ea0b
 https://conda.anaconda.org/conda-forge/linux-64/krb5-1.17.2-h926e7f8_0.tar.bz2#926325c11478d6e781e76072c117763b
 https://conda.anaconda.org/conda-forge/linux-64/libarchive-3.5.1-h3f442fb_1.tar.bz2#1579ccb4f14593e95627bcdb29af953a
@@ -46,7 +46,6 @@ https://conda.anaconda.org/conda-forge/noarch/decorator-4.4.2-py_0.tar.bz2#d2eab
 https://conda.anaconda.org/conda-forge/noarch/idna-2.10-pyh9f0ad1d_0.tar.bz2#f95a12b4f435aae6680fe55ae2eb1b06
 https://conda.anaconda.org/conda-forge/noarch/ipython_genutils-0.2.0-py_1.tar.bz2#5071c982548b3a20caf70462f04f5287
 https://conda.anaconda.org/conda-forge/noarch/parso-0.8.1-pyhd8ed1ab_0.tar.bz2#8b0a19d867a59005c1ae631d61a12194
-https://conda.anaconda.org/conda-forge/noarch/pickleshare-0.7.5-py_1003.tar.bz2#415f0ebb6198cc2801c73438a9fb5761
 https://conda.anaconda.org/conda-forge/noarch/ptyprocess-0.7.0-pyhd3deb0d_0.tar.bz2#359eeb6536da0e687af562ed265ec263
 https://conda.anaconda.org/conda-forge/noarch/pycparser-2.20-pyh9f0ad1d_2.tar.bz2#aa798d50ffd182a0f6f31478c7f434f6
 https://conda.anaconda.org/conda-forge/linux-64/python_abi-3.7-1_cp37m.tar.bz2#658a5c3d766bfc6574480204b10a6f20
@@ -60,14 +59,15 @@ https://conda.anaconda.org/conda-forge/linux-64/chardet-4.0.0-py37h89c1867_1.tar
 https://conda.anaconda.org/conda-forge/linux-64/conda-package-handling-1.7.2-py37hb5d75c8_0.tar.bz2#f339f7aca7602c5ca609ccad0162d651
 https://conda.anaconda.org/conda-forge/linux-64/jedi-0.18.0-py37h89c1867_2.tar.bz2#5e95b453f199caec4dd1bf6002ae0ce2
 https://conda.anaconda.org/conda-forge/linux-64/markupsafe-1.1.1-py37h5e8e339_3.tar.bz2#b874d44750373553008083116442c972
-https://conda.anaconda.org/conda-forge/noarch/pexpect-4.8.0-pyh9f0ad1d_2.tar.bz2#5909e7b978141dd80d28dbf9de627827
+https://conda.anaconda.org/conda-forge/linux-64/pexpect-4.8.0-py37hc8dfbb8_1.tar.bz2#fda2ad946f9f5b7ce3531cc34ab262e9
+https://conda.anaconda.org/conda-forge/linux-64/pickleshare-0.7.5-py37hc8dfbb8_1002.tar.bz2#14ce4d7ec7d9a22007168539135bc6d5
 https://conda.anaconda.org/conda-forge/linux-64/pycosat-0.6.3-py37h5e8e339_1006.tar.bz2#28c4cc34c26926d09e50a05fee5ebe5f
 https://conda.anaconda.org/conda-forge/linux-64/pyinotify-0.9.6-py37h89c1867_1003.tar.bz2#046d0c4c59f784d5bb1c9ecddcbb3f0b
 https://conda.anaconda.org/conda-forge/linux-64/pysocks-1.7.1-py37h89c1867_3.tar.bz2#bd069d59ee91a2e26552cd7bb4c64032
 https://conda.anaconda.org/conda-forge/noarch/robotframework-pythonlibcore-2.2.0-pyhd8ed1ab_0.tar.bz2#29a329f0b817038d27d7bdfb2ca04b5a
 https://conda.anaconda.org/conda-forge/linux-64/ruamel_yaml-0.15.80-py37h5e8e339_1004.tar.bz2#0c520ba7aa566aec5c41012df4edbb65
 https://conda.anaconda.org/conda-forge/noarch/traitlets-5.0.5-py_0.tar.bz2#99618ee9ab1323e40f231acdab92fe60
-https://conda.anaconda.org/conda-forge/linux-64/brotlipy-0.7.0-py37h5e8e339_1001.tar.bz2#871eed4ba322e7b3f200956a096b34e7
+https://conda.anaconda.org/conda-forge/linux-64/brotlipy-0.7.0-py37hb5d75c8_1001.tar.bz2#1e60063ddc9de28cb48bddb48bdc1395
 https://conda.anaconda.org/conda-forge/linux-64/cryptography-3.4.6-py37h5d9358c_0.tar.bz2#b345cf4500c6ebbec61c1f0e1a187579
 https://conda.anaconda.org/conda-forge/linux-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#80d93b768ad0151a0c109c376c31926b
 https://conda.anaconda.org/conda-forge/linux-64/setuptools-49.6.0-py37h89c1867_3.tar.bz2#928c178bf6805b8ab71fabaa620e0234
@@ -80,7 +80,7 @@ https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.4-pyhd8ed1ab_0.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/wcwidth-0.2.5-pyh9f0ad1d_2.tar.bz2#5266fcd697043c59621fda522b3d78ee
 https://conda.anaconda.org/conda-forge/noarch/prompt-toolkit-3.0.17-pyha770c72_0.tar.bz2#d3ff1dc51da26f2757c8d95c3522138e
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc
-https://conda.anaconda.org/conda-forge/linux-64/selenium-3.141.0-py37h5e8e339_1002.tar.bz2#17d46ebc0dea2b1a9a1b670e6cc0b923
+https://conda.anaconda.org/conda-forge/linux-64/selenium-3.141.0-py37h8f50634_1002.tar.bz2#e68c4443809c54a6bd8a16c433896ee7
 https://conda.anaconda.org/conda-forge/linux-64/conda-4.9.2-py37h89c1867_0.tar.bz2#8c24efe074ff6c56eec13ab5e0829302
 https://conda.anaconda.org/conda-forge/linux-64/ipython-7.21.0-py37h888b3d9_0.tar.bz2#8a22b88a82fd83f9b01e9b238a9272ef
 https://conda.anaconda.org/conda-forge/noarch/robotframework-seleniumlibrary-5.1.1-pyhd8ed1ab_0.tar.bz2#3eacc90d82d69cb1b78d6459be33fd8e
