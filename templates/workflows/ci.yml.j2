@@ -205,6 +205,11 @@ jobs:
         with:
           path: artifacts
 
+      - name: apt clean (ubuntu)
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
       - name: collect release artifacts
         run: python _scripts/release.py
 
