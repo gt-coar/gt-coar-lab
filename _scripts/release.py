@@ -3,10 +3,8 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 import logging
-import os
-import subprocess
+import shutil
 import sys
-import time
 from pathlib import Path
 
 LOG = logging.getLogger(__name__)
@@ -38,11 +36,17 @@ INSTALLERS = [
 
 INSTALLERS = [installer for installer in INSTALLERS if installer.exists()]
 
-# the concatenated shasums
-SHA256SUMS = ROOT / "SHA256SUMS"
+# where we put the release stuff
+RELEASE = ROOT / "release"
 
-# how many times to try the real release
-RETRIES = 10
+# extracted from CHANGELOG
+NOTES = RELEASE / "NOTES.md"
+
+# where we put the actual release artifacts
+RELEASE_ARTIFACTS = RELEASE / "artifacts"
+
+# the concatenated shasums
+SHA256SUMS = RELEASE_ARTIFACTS / "SHA256SUMS"
 
 
 def make_notes():
@@ -50,6 +54,7 @@ def make_notes():
     chunks = CHANGELOG.read_text(encoding="utf-8").split("---")
     notes = chunks[1].strip()
     assert f"## {VERSION}" in notes
+    LOG.info(f"notes {notes}")
     return notes
 
 
@@ -63,14 +68,28 @@ def make_hashsums():
 
     hashsums = "\n".join(lines).strip()
     assert hashsums, "no sums"
-    LOG.info("hashsums {hashsums}")
+    LOG.info(f"hashsums {hashsums}")
     return hashsums
 
 
-def release():
-    """use the github CLI to create the release
+def make_artifacts():
+    LOG.warning(f"... ensuring {RELEASE_ARTIFACTS} exists")
+    RELEASE_ARTIFACTS.mkdir(exist_ok=True, parents=True)
 
-    relies on GITHUB_TOKEN being set
+    for artifact in ARTIFACTS:
+        LOG.warning(f"... copying {artifact.name}")
+        shutil.copy2(artifact, RELEASE_ARTIFACTS / artifact.name)
+        LOG.warning(f"... OK {artifact.name}")
+
+
+def release():
+    """prepare a release folder with the structure
+
+    release/
+        NOTES.md
+        artifacts/
+            SHA256SUMS
+            <all the goods>
     """
     assert INSTALLERS, "no installers"
 
@@ -81,34 +100,11 @@ def release():
     assert notes, "no notes"
 
     SHA256SUMS.write_text(hashsums, encoding="utf-8")
+    NOTES.write_text(notes, encoding="utf-8")
 
-    args = [
-        "gh",
-        "release",
-        "create",
-        TAG,
-        "--draft",
-        "--notes",
-        notes,
-        SHA256SUMS,
-        *INSTALLERS,
-    ]
+    make_artifacts()
 
-    LOG.info("Release args %s", args)
-
-    status_code = 0
-
-    if os.environ.get("GITHUB_TOKEN", "").strip():
-        status_code = 1
-        LOG.warn(f"Trying to deploy {RETRIES} times...")
-        for i in range(RETRIES):
-            LOG.warn(f"... START attempt {i + 1} of {RETRIES}")
-            status_code = subprocess.call([*map(str, args)])
-            if status_code != 0:
-                LOG.error(f"... FAIL attempt {i + 1} of {RETRIES}, waiting 10s...")
-                time.sleep(10)
-
-    return status_code
+    return 0
 
 
 if __name__ == "__main__":
