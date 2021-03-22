@@ -76,10 +76,10 @@ def make_artifacts():
     LOG.warning(f"... ensuring {RELEASE_ARTIFACTS} exists")
     RELEASE_ARTIFACTS.mkdir(exist_ok=True, parents=True)
 
-    for artifact in ARTIFACTS:
-        LOG.warning(f"... copying {artifact.name}")
-        shutil.copy2(artifact, RELEASE_ARTIFACTS / artifact.name)
-        LOG.warning(f"... OK {artifact.name}")
+    for installer in INSTALLERS:
+        LOG.warning(f"... copying {installer.name}")
+        shutil.copy2(installer, RELEASE_ARTIFACTS / installer.name)
+        LOG.warning(f"... OK {installer.name}")
 
 
 def release():
