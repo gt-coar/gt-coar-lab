@@ -93,6 +93,8 @@ def release():
     """
     assert INSTALLERS, "no installers"
 
+    make_artifacts()
+
     hashsums = make_hashsums()
     notes = make_notes()
 
@@ -101,8 +103,6 @@ def release():
 
     SHA256SUMS.write_text(hashsums, encoding="utf-8")
     NOTES.write_text(notes, encoding="utf-8")
-
-    make_artifacts()
 
     return 0
 
