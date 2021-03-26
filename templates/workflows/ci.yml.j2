@@ -113,7 +113,7 @@ jobs:
     needs: [lint]
     runs-on: {{ job.vm }}
     env:
-      CONSTRUCT: {{ job.variant }}-{{ job.subdir }}
+      CONSTRUCT_INPUTS: constructs/{{ job.variant }}-{{ job.subdir }}/*
     steps:
       - uses: actions/checkout@v2
 
@@ -124,7 +124,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
       {% endraw %}
 
       {{ preflight(job) }}

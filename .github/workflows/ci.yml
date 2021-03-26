@@ -80,7 +80,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     env:
-      CONSTRUCT: cpu-linux-64
+      CONSTRUCT_INPUTS: constructs/cpu-linux-64/*
     steps:
       - uses: actions/checkout@v2
 
@@ -90,7 +90,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -210,7 +210,7 @@ jobs:
     needs: [lint]
     runs-on: macos-latest
     env:
-      CONSTRUCT: cpu-osx-64
+      CONSTRUCT_INPUTS: constructs/cpu-osx-64/*
     steps:
       - uses: actions/checkout@v2
 
@@ -220,7 +220,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
 
       - name: cache (conda)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -328,7 +328,7 @@ jobs:
     needs: [lint]
     runs-on: windows-latest
     env:
-      CONSTRUCT: cpu-win-64
+      CONSTRUCT_INPUTS: constructs/cpu-win-64/*
     steps:
       - uses: actions/checkout@v2
 
@@ -338,7 +338,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
 
       - name: enable long paths (windows)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -470,7 +470,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-20.04
     env:
-      CONSTRUCT: gpu-linux-64
+      CONSTRUCT_INPUTS: constructs/gpu-linux-64/*
     steps:
       - uses: actions/checkout@v2
 
@@ -480,7 +480,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'
