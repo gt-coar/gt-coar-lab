@@ -114,6 +114,7 @@ jobs:
     runs-on: {{ job.vm }}
     env:
       CONSTRUCT_INPUTS: constructs/{{ job.variant }}-{{ job.subdir }}/*
+      BUILD_LOCKFILE: {{ job.build_lockfile }}
     steps:
       - uses: actions/checkout@v2
 
@@ -124,7 +125,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
       {% endraw %}
 
       {{ preflight(job, if_dist_skip) }}

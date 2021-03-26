@@ -81,6 +81,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       CONSTRUCT_INPUTS: constructs/cpu-linux-64/*
+      BUILD_LOCKFILE: locks/build-linux-64.conda.lock
     steps:
       - uses: actions/checkout@v2
 
@@ -90,7 +91,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -211,6 +212,7 @@ jobs:
     runs-on: macos-latest
     env:
       CONSTRUCT_INPUTS: constructs/cpu-osx-64/*
+      BUILD_LOCKFILE: locks/build-osx-64.conda.lock
     steps:
       - uses: actions/checkout@v2
 
@@ -220,7 +222,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
 
       - name: cache (conda)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -329,6 +331,7 @@ jobs:
     runs-on: windows-latest
     env:
       CONSTRUCT_INPUTS: constructs/cpu-win-64/*
+      BUILD_LOCKFILE: locks/build-win-64.conda.lock
     steps:
       - uses: actions/checkout@v2
 
@@ -338,7 +341,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
 
       - name: enable long paths (windows)
         shell: pwsh
@@ -469,6 +472,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       CONSTRUCT_INPUTS: constructs/gpu-linux-64/*
+      BUILD_LOCKFILE: locks/build-linux-64.conda.lock
     steps:
       - uses: actions/checkout@v2
 
@@ -478,7 +482,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'

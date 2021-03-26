@@ -33,6 +33,20 @@ doit
 
 - `*` may be used as a wildcard
 
+## ci
+
+Building, testing, and even releasing the GTCOARLab installers is a _heavy_ continuous
+integration task. The `.github/workflows/ci.yml` is quite verbose, and is actually
+generated from a number of other files, to allow for (relatively) quick testing, if only
+only tests or release scripts change.
+
+Some notes:
+
+- the installers should only be rebuilt when one of the following changes:
+  - any file in `constructs/<variant>-<subdir>`
+  - the platform-specific `locks/build-<subdir>.conda.lock` file
+  - the `CACHE_EPOCH` (ideally, only by _increasing_)
+
 ---
 
 > Copyright (c) 2021 University System of Georgia and GTCOARLab Contributors
