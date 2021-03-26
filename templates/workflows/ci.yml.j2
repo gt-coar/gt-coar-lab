@@ -2,10 +2,12 @@
 # {{ license }}
 
 # yamllint disable rule:truthy rule:line-length rule:comments-indentation
+{% set if_dist_skip = "if: steps.cache-dist.outputs.cache-hit != 'true'" %}
 
-{% macro cache_conda(vm, lockfile) %}
+{% macro cache_conda(vm, lockfile, if_expr="") %}
       - name: cache (conda)
-        uses: actions/cache@v1
+        {{ if_expr }}
+        uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
           key: |
@@ -15,8 +17,9 @@
             ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
 {% endmacro %}
 
-{% macro setup_miniconda(lockfile) %}
+{% macro setup_miniconda(lockfile, if_expr="") %}
       - name: setup conda (mambaforge)
+        {{ if_expr }}
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -25,7 +28,7 @@
           miniforge-version: 4.9.2-7
 {% endmacro %}
 
-{% macro preflight(job) %}
+{% macro preflight(job, if_expr="") %}
       {% if job.subdir == "win-64" %}
       - name: enable long paths (windows)
         shell: pwsh
@@ -39,6 +42,7 @@
           Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
       {% elif job.subdir == "linux-64" %}
       - name: apt clean (ubuntu)
+        {{ if_expr }}
         run: |
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
@@ -83,7 +87,7 @@ jobs:
       {% raw %}
 
       - name: cache (yarn)
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: _scripts/.yarn-packages
           key: |
@@ -108,35 +112,49 @@ jobs:
     name: build {{ job.variant }} {{ job.subdir }}
     needs: [lint]
     runs-on: {{ job.vm }}
+    env:
+      CONSTRUCT_INPUTS: constructs/{{ job.variant }}-{{ job.subdir }}/*
+      BUILD_LOCKFILE: {{ job.build_lockfile }}
     steps:
       - uses: actions/checkout@v2
 
-      {{ preflight(job) }}
+      {% raw %}
+      - name: cache (dist)
+        uses: actions/cache@v2
+        id: cache-dist
+        with:
+          path: dist
+          key: |
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS, env.BUILD_LOCKFILE) }}
+      {% endraw %}
 
-      {{ cache_conda(job.vm, job.build_lockfile) }}
+      {{ preflight(job, if_dist_skip) }}
 
-      {{ setup_miniconda(job.build_lockfile) }}
+      {{ cache_conda(job.vm, job.build_lockfile, if_dist_skip) }}
+
+      {{ setup_miniconda(job.build_lockfile, if_dist_skip) }}
 
       {% if job.subdir == "linux-64" and job.variant == "gpu" %}
       - name: clean cache (conda)
+        {{ if_dist_skip }}
         run: |
           set -eux
           conda clean -yaf
       {% endif %}
 
       - name: preflight (doit)
+        {{ if_dist_skip }}
         run: doit list --all --status
 
       - name: build (constructor)
+        {{ if_dist_skip }}
         run: |
           set -eux
           doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
 
-      {% raw %}
       - name: postmortem (doit)
-        if: always()
+        {{ if_dist_skip }}
         run: doit list --all --status
-      {% endraw %}
 
       - name: publish (dist)
         uses: actions/upload-artifact@v2
@@ -210,15 +228,16 @@ jobs:
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
 
-      - name: collect release artifacts
+      - name: dry-run release artifacts
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          GIT_REF: ${{ github.ref }}
         run: python _scripts/release.py
 
-      - uses: softprops/action-gh-release@v1
+      - name: release artifacts
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         env:
+          GIT_REF: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          body_path: release/NOTES.md
-          files: |
-            release/artifacts/*
+        run: python _scripts/release.py
 {% endraw %}

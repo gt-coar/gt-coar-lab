@@ -3,7 +3,9 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 import logging
+import os
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -48,6 +50,12 @@ RELEASE_ARTIFACTS = RELEASE / "artifacts"
 # the concatenated shasums
 SHA256SUMS = RELEASE_ARTIFACTS / "SHA256SUMS"
 
+# the github token
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+
+# the tag
+GIT_REF = os.environ["GIT_REF"].split("/")[-1]
+
 
 def make_notes():
     """generate release notes"""
@@ -78,8 +86,35 @@ def make_artifacts():
 
     for installer in INSTALLERS:
         LOG.warning(f"... copying {installer.name}")
-        shutil.copy2(installer, RELEASE_ARTIFACTS / installer.name)
+        dest = RELEASE_ARTIFACTS / installer.name
+        if not dest.exists():
+            shutil.copy2(installer, dest)
         LOG.warning(f"... OK {installer.name}")
+
+
+def upload_one(artifact) -> int:
+    LOG.warning(f"Uploading {artifact.name}...")
+    status = 0
+    for i in range(3):
+        LOG.warning(f"... {i+1} of 3")
+        args = [
+            "bash",
+            HERE / "upload-github-release-asset.sh",
+            "owner=gt-coar",
+            "repo=gt-coar-lab",
+            f"tag={GIT_REF}",
+            f"filename={artifact.relative_to(ROOT)}",
+        ]
+
+        LOG.warning(f"""... args before token {args}""")
+
+        if GITHUB_TOKEN:
+            args += [f"github_api_token={GITHUB_TOKEN}"]
+            status = subprocess.call([*map(str, args)])
+
+        if status == 0:
+            return status
+    return status
 
 
 def release():
@@ -104,7 +139,12 @@ def release():
     SHA256SUMS.write_text(hashsums, encoding="utf-8")
     NOTES.write_text(notes, encoding="utf-8")
 
-    return 0
+    statuses = [0]
+
+    for artifact in RELEASE_ARTIFACTS.glob("*"):
+        statuses += [upload_one(artifact)]
+
+    return max(statuses)
 
 
 if __name__ == "__main__":
