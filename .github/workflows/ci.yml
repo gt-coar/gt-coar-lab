@@ -90,7 +90,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles('construct/' + env.CONSTRUCT + '/*') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -220,7 +220,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles('construct/' + env.CONSTRUCT + '/*') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
 
       - name: cache (conda)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -338,7 +338,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles('construct/' + env.CONSTRUCT + '/*') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
 
       - name: enable long paths (windows)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -480,7 +480,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles('construct/' + env.CONSTRUCT + '/*') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
 
       - name: apt clean (ubuntu)
         if: steps.cache-dist.outputs.cache-hit != 'true'

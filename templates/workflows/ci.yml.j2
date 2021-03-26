@@ -124,7 +124,7 @@ jobs:
         with:
           path: dist
           key: |
-            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles('construct/' + env.CONSTRUCT + '/*') }}
+            ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ env.CONSTRUCT }}-${{ hashFiles(join(['construct', env.CONSTRUCT, '*'], '/') }}
       {% endraw %}
 
       {{ preflight(job) }}
