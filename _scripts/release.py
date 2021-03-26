@@ -54,11 +54,7 @@ SHA256SUMS = RELEASE_ARTIFACTS / "SHA256SUMS"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 # the tag
-TAG = (
-    subprocess.check_output(["git", "describe", "--tags", "--abbrev=0"])
-    .decode("utf-8")
-    .strip()
-)
+GIT_REF = os.environ["GIT_REF"].split("/")[-1]
 
 
 def make_notes():
@@ -106,7 +102,7 @@ def upload_one(artifact) -> int:
             HERE / "upload-github-release-asset.sh",
             "owner=gt-coar",
             "repo=gt-coar-lab",
-            f"tag={TAG}",
+            f"tag={GIT_REF}",
             f"filename={artifact.relative_to(ROOT)}",
         ]
 
