@@ -106,7 +106,7 @@ def upload_one(artifact) -> int:
             f"filename={artifact.relative_to(ROOT)}",
         ]
 
-        LOG.warning(f"""... args before token {" ".join(args)}""")
+        LOG.warning(f"""... args before token {args}""")
 
         if GITHUB_TOKEN:
             args += [f"github_api_token={GITHUB_TOKEN}"]
