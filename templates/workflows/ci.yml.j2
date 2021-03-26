@@ -2,10 +2,11 @@
 # {{ license }}
 
 # yamllint disable rule:truthy rule:line-length rule:comments-indentation
+{% set if_dist_skip = "if: steps.cache-dist.outputs.cache-hit != 'true'" %}
 
-{% macro cache_conda(vm, lockfile) %}
+{% macro cache_conda(vm, lockfile, if_expr="") %}
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_expr }}
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -16,9 +17,9 @@
             ${{'{{'}} env.CACHE_EPOCH {{'}}'}}-{{ vm }}-conda-
 {% endmacro %}
 
-{% macro setup_miniconda(lockfile) %}
+{% macro setup_miniconda(lockfile, if_expr="") %}
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_expr }}
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -27,10 +28,9 @@
           miniforge-version: 4.9.2-7
 {% endmacro %}
 
-{% macro preflight(job) %}
+{% macro preflight(job, if_expr="") %}
       {% if job.subdir == "win-64" %}
       - name: enable long paths (windows)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
@@ -42,7 +42,7 @@
           Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
       {% elif job.subdir == "linux-64" %}
       - name: apt clean (ubuntu)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_expr }}
         run: |
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
@@ -127,35 +127,33 @@ jobs:
             ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
       {% endraw %}
 
-      {{ preflight(job) }}
+      {{ preflight(job, if_dist_skip) }}
 
-      {{ cache_conda(job.vm, job.build_lockfile) }}
+      {{ cache_conda(job.vm, job.build_lockfile, if_dist_skip) }}
 
-      {{ setup_miniconda(job.build_lockfile) }}
+      {{ setup_miniconda(job.build_lockfile, if_dist_skip) }}
 
       {% if job.subdir == "linux-64" and job.variant == "gpu" %}
       - name: clean cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_dist_skip }}
         run: |
           set -eux
           conda clean -yaf
       {% endif %}
 
       - name: preflight (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_dist_skip }}
         run: doit list --all --status
 
       - name: build (constructor)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+        {{ if_dist_skip }}
         run: |
           set -eux
           doit build:{{ job.variant }}:{{ job.subdir }}:sha256 || doit build:{{ job.variant }}:{{ job.subdir }}:sha256
 
-      {% raw %}
       - name: postmortem (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true' && always()
+        {{ if_dist_skip }}
         run: doit list --all --status
-      {% endraw %}
 
       - name: publish (dist)
         uses: actions/upload-artifact@v2

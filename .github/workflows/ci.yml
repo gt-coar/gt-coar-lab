@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -47,7 +47,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -129,7 +129,7 @@ jobs:
           doit build:cpu:linux-64:sha256 || doit build:cpu:linux-64:sha256
 
       - name: postmortem (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true' && always()
+        if: steps.cache-dist.outputs.cache-hit != 'true'
         run: doit list --all --status
 
       - name: publish (dist)
@@ -146,7 +146,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: apt clean (ubuntu)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         run: |
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
@@ -157,7 +157,7 @@ jobs:
           path: ./dist
 
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -168,7 +168,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -182,7 +182,7 @@ jobs:
           doit -s test:cpu:linux-64
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -253,7 +253,7 @@ jobs:
           doit build:cpu:osx-64:sha256 || doit build:cpu:osx-64:sha256
 
       - name: postmortem (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true' && always()
+        if: steps.cache-dist.outputs.cache-hit != 'true'
         run: doit list --all --status
 
       - name: publish (dist)
@@ -275,7 +275,7 @@ jobs:
           path: ./dist
 
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -286,7 +286,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-macos-latest-conda-
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -300,7 +300,7 @@ jobs:
           doit -s test:cpu:osx-64
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -341,7 +341,6 @@ jobs:
             ${{ env.CACHE_EPOCH }}-dist-${{ runner.os }}-${{ hashFiles(env.CONSTRUCT_INPUTS) }}
 
       - name: enable long paths (windows)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
@@ -383,7 +382,7 @@ jobs:
           doit build:cpu:win-64:sha256 || doit build:cpu:win-64:sha256
 
       - name: postmortem (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true' && always()
+        if: steps.cache-dist.outputs.cache-hit != 'true'
         run: doit list --all --status
 
       - name: publish (dist)
@@ -400,7 +399,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: enable long paths (windows)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
@@ -417,7 +415,7 @@ jobs:
           path: ./dist
 
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -428,7 +426,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-windows-latest-conda-
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -442,7 +440,7 @@ jobs:
           doit -s test:cpu:win-64
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -525,7 +523,7 @@ jobs:
           doit build:gpu:linux-64:sha256 || doit build:gpu:linux-64:sha256
 
       - name: postmortem (doit)
-        if: steps.cache-dist.outputs.cache-hit != 'true' && always()
+        if: steps.cache-dist.outputs.cache-hit != 'true'
         run: doit list --all --status
 
       - name: publish (dist)
@@ -542,7 +540,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: apt clean (ubuntu)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         run: |
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
@@ -553,7 +551,7 @@ jobs:
           path: ./dist
 
       - name: cache (conda)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: actions/cache@v2
         with:
           path: ~/conda_pkgs_dir
@@ -564,7 +562,7 @@ jobs:
             ${{ env.CACHE_EPOCH }}-ubuntu-20.04-conda-
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
@@ -578,7 +576,7 @@ jobs:
           doit -s test:gpu:linux-64
 
       - name: setup conda (mambaforge)
-        if: steps.cache-dist.outputs.cache-hit != 'true'
+
         uses: conda-incubator/setup-miniconda@master
         with:
           condarc-file: .github/.condarc
