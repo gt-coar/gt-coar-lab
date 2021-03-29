@@ -6,6 +6,14 @@
 
 ### All
 
+- update to `jupyterlab-gt-coar-theme 0.2.4`
+
+---
+
+## 2021.03.0-0
+
+### All
+
 - [#12] use all `conda-forge` upstreams, derived from `conda-lock` files
 - continuous integration and delivery with GitHub Actions
 - [#8] adds `dm-acme`
