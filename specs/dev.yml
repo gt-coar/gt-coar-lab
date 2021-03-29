@@ -8,4 +8,4 @@ channels:
 
 dependencies:
   - jupyterlab >=3,<4
-  - jupyterlab-gt-coar-theme >=0.2.3
+  - jupyterlab-gt-coar-theme >=0.2.4
