@@ -123,6 +123,16 @@ def task_lint():
             actions=[(U.headers, [path])],
         )
 
+    yield dict(
+        name="changelog",
+        doc="ensure changelog is good",
+        file_dep=[P.VERSION, P.CHANGELOG],
+        actions=[
+            lambda: f"## {P.VERSION.read_text(**C.ENC).strip()}"
+            in P.CHANGELOG.read_text(**C.ENC)
+        ],
+    )
+
 
 def task_lock():
     if C.SKIP_LOCKS:
@@ -260,6 +270,8 @@ class P:
     PACKAGE_JSON = SCRIPTS / "package.json"
     YARNRC = SCRIPTS / ".yarnrc"
     PYPROJECT = SCRIPTS / "pyproject.toml"
+    README = ROOT / "README.md"
+    CHANGELOG = ROOT / "CHANGELOG.md"
 
     # generated, but checked in
     YARN_LOCK = SCRIPTS / "yarn.lock"
