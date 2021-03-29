@@ -56,8 +56,8 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 # the tag
 GIT_REF = os.environ["GIT_REF"].split("/")[-1]
 
-# artifact size (in megabytes, slightly smaller for rounding)
-MAX_ARTIFACT_MBS = 1949
+# artifact size (in megabytes, with margin)
+MAX_ARTIFACT_MBS = 1885
 
 
 def make_notes():

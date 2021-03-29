@@ -136,7 +136,7 @@ jobs:
       - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: dist cpu linux-64 ${{ github.run_number }}
+          name: dist-cpu-linux-64-${{ github.run_number }}
           path: ./dist
 
   test-cpu-linux-64:
@@ -154,7 +154,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: dist cpu linux-64 ${{ github.run_number }}
+          name: dist-cpu-linux-64-${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -201,7 +201,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: atest cpu linux-64 ${{ github.run_number }}
+          name: atest-cpu-linux-64-${{ github.run_number }}
           path: |
             ./build/atest
             ./build/audit
@@ -261,7 +261,7 @@ jobs:
       - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: dist cpu osx-64 ${{ github.run_number }}
+          name: dist-cpu-osx-64-${{ github.run_number }}
           path: ./dist
 
   test-cpu-osx-64:
@@ -273,7 +273,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: dist cpu osx-64 ${{ github.run_number }}
+          name: dist-cpu-osx-64-${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -320,7 +320,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: atest cpu osx-64 ${{ github.run_number }}
+          name: atest-cpu-osx-64-${{ github.run_number }}
           path: |
             ./build/atest
             ./build/audit
@@ -391,7 +391,7 @@ jobs:
       - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: dist cpu win-64 ${{ github.run_number }}
+          name: dist-cpu-win-64-${{ github.run_number }}
           path: ./dist
 
   test-cpu-win-64:
@@ -414,7 +414,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: dist cpu win-64 ${{ github.run_number }}
+          name: dist-cpu-win-64-${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -461,7 +461,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: atest cpu win-64 ${{ github.run_number }}
+          name: atest-cpu-win-64-${{ github.run_number }}
           path: |
             ./build/atest
             ./build/audit
@@ -533,7 +533,7 @@ jobs:
       - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: dist gpu linux-64 ${{ github.run_number }}
+          name: dist-gpu-linux-64-${{ github.run_number }}
           path: ./dist
 
   test-gpu-linux-64:
@@ -551,7 +551,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: dist gpu linux-64 ${{ github.run_number }}
+          name: dist-gpu-linux-64-${{ github.run_number }}
           path: ./dist
 
       - name: cache (conda)
@@ -598,7 +598,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: atest gpu linux-64 ${{ github.run_number }}
+          name: atest-gpu-linux-64-${{ github.run_number }}
           path: |
             ./build/atest
             ./build/audit

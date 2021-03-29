@@ -159,13 +159,13 @@ jobs:
       - name: publish (dist)
         uses: actions/upload-artifact@v2
         with:
-          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          name: dist-{{ job.variant }}-{{ job.subdir }}-{{ "${{ github.run_number }}" }}
           path: ./dist
 
   test-{{ job.variant }}-{{ job.subdir }}:
     name: test {{ job.variant }} {{ job.subdir }}
     needs: [build-{{ job.variant }}-{{ job.subdir }}]
-    runs-on: {{ job.vm}}
+    runs-on: {{ job.vm }}
     steps:
       - uses: actions/checkout@v2
 
@@ -173,7 +173,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: dist {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          name: dist-{{ job.variant }}-{{ job.subdir }}-{{ "${{ github.run_number }}" }}
           path: ./dist
 
       {{ cache_conda(job.vm, job.atest_lockfile) }}
@@ -197,7 +197,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: atest {{ job.variant }} {{ job.subdir }} {{ "${{ github.run_number }}" }}
+          name: atest-{{ job.variant }}-{{ job.subdir }}-{{ "${{ github.run_number }}" }}
           path: |
             ./build/atest
             ./build/audit
