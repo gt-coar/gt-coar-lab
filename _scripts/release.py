@@ -3,8 +3,8 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 import logging
+import math
 import os
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -56,6 +56,9 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 # the tag
 GIT_REF = os.environ["GIT_REF"].split("/")[-1]
 
+# artifact size (in megabytes, slightly smaller for rounding)
+MAX_ARTIFACT_MBS = 1949
+
 
 def make_notes():
     """generate release notes"""
@@ -63,7 +66,8 @@ def make_notes():
     notes = chunks[1].strip()
     assert f"## {VERSION}" in notes
     LOG.info(f"notes {notes}")
-    return notes
+    NOTES.write_text(notes, encoding="utf-8")
+    return NOTES
 
 
 def make_hashsums():
@@ -77,19 +81,49 @@ def make_hashsums():
     hashsums = "\n".join(lines).strip()
     assert hashsums, "no sums"
     LOG.info(f"hashsums {hashsums}")
-    return hashsums
+    SHA256SUMS.write_text(hashsums, encoding="utf-8")
+    return SHA256SUMS
 
 
 def make_artifacts():
-    LOG.warning(f"... ensuring {RELEASE_ARTIFACTS} exists")
+    LOG.warning(f"... collecting release artifacts to {RELEASE_ARTIFACTS}")
     RELEASE_ARTIFACTS.mkdir(exist_ok=True, parents=True)
 
+    yield make_hashsums()
+    yield make_notes()
+
     for installer in INSTALLERS:
-        LOG.warning(f"... copying {installer.name}")
-        dest = RELEASE_ARTIFACTS / installer.name
-        if not dest.exists():
-            shutil.copy2(installer, dest)
-        LOG.warning(f"... OK {installer.name}")
+        stat = installer.stat()
+        mbs = int(stat.st_size / 1e6)
+        LOG.warning(f"{mbs}mb {installer.name}")
+        if mbs < MAX_ARTIFACT_MBS:
+            LOG.warning("... will be uploaded as-is")
+            yield installer
+            continue
+        LOG.warning(
+            f"... >{MAX_ARTIFACT_MBS}mb, will split into "
+            f"~{math.ceil(mbs / MAX_ARTIFACT_MBS)} .z* files"
+        )
+        args = [
+            "zip",
+            "-9",
+            "--no-dir-entries",
+            "--split-size",
+            f"{MAX_ARTIFACT_MBS}m",
+            RELEASE_ARTIFACTS / f"{installer.stem}.zip",
+            installer,
+        ]
+        str_args = [*map(str, args)]
+        LOG.warning(f"""... ... {" ".join(str_args)}""")
+        subprocess.check_call(str_args)
+        all_zipped = sorted(RELEASE_ARTIFACTS.glob(f"{installer.stem}.z*"))
+        if not all_zipped:
+            raise ValueError(f"... Failed to split {installer}")
+        for zipped in all_zipped:
+            LOG.warning(
+                f"... ... ... {int(zipped.stat().st_size / 1e6)}mb {zipped.name}"
+            )
+            yield zipped
 
 
 def upload_one(artifact) -> int:
@@ -128,20 +162,8 @@ def release():
     """
     assert INSTALLERS, "no installers"
 
-    make_artifacts()
-
-    hashsums = make_hashsums()
-    notes = make_notes()
-
-    assert hashsums, "no hashsums"
-    assert notes, "no notes"
-
-    SHA256SUMS.write_text(hashsums, encoding="utf-8")
-    NOTES.write_text(notes, encoding="utf-8")
-
-    statuses = [0]
-
-    for artifact in RELEASE_ARTIFACTS.glob("*"):
+    for artifact in make_artifacts():
+        statuses = [0]
         statuses += [upload_one(artifact)]
 
     return max(statuses)
