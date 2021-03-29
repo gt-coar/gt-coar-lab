@@ -445,7 +445,7 @@ class U:
         yield dict(
             name=f"{variant}:{subdir}",
             actions=[construct],
-            file_dep=[lock, overrides, *paths.keys()],
+            file_dep=[P.VERSION, lock, overrides, *paths.keys()],
             targets=[*paths.values()],
         )
 

@@ -2,7 +2,7 @@
 # Distributed under the terms of the BSD-3-Clause License
 
 name: "GTCOARLab-CPU"
-version: "2021.03.0-1"
+version: "2021.03.1-0"
 company: University System of Georgia
 license_file: LICENSE
 post_install: post_install.sh   # [unix]
