@@ -43,21 +43,25 @@ only tests or release scripts change.
 Some notes:
 
 - the installers should only be rebuilt when one of the following changes:
+  - the `VERSION` file
   - any file in `constructs/<variant>-<subdir>`
   - the platform-specific `locks/build-<subdir>.conda.lock` file
   - the `CACHE_EPOCH` (ideally, only by _increasing_)
 
 ### releasing
 
-After a successful merge to `master` and the workflow completes, a tag should
-test/release relatively quickly, as the built artifacts should still be in the cache.
-
-While not required, because _shipping is good_, marking a new tag as a _prerelease_
-allows the release upload script to work, and the release assets can be more easily
-tested.
-
-After the release job completes, the uploaded `NOTES.md` are ideally added to the
-release page.
+- Wait for a successful merge to `master`
+- Through the _GitHub Web UI_, create a _Release_
+  - name the release _the same thing_ as the current value of the `VERSION` file, with a
+    `v` prepended
+    - only these will trigger the (slow) upload mechanism
+  - creating/pushing a local tag will fail, as the `release` job expects the release id
+    to already exist in the GitHub API _before_ uploading artifacts
+  - it should build/upload relatively quickly, as the built artifacts _should_ still be
+    in the cache.
+  - _shipping is good_, but marking a new tag as a _prerelease_ allows the release
+    upload script to complete, and the release assets can be more easily tested.
+- After the `release` job completes, add the uploaded `NOTES.md` to the release page.
 
 ---
 

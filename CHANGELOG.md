@@ -2,6 +2,14 @@
 
 ---
 
+## 2021.03.1-0
+
+### All
+
+- update to `jupyterlab-gt-coar-theme 0.2.4`
+
+---
+
 ## 2021.03.0-0
 
 ### All
