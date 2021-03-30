@@ -48,7 +48,7 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/lint-linux-64.conda.lock
@@ -112,12 +112,16 @@ jobs:
 
       - name: setup conda (mambaforge)
         if: steps.cache-dist.outputs.cache-hit != 'true'
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: preflight (doit)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -138,6 +142,10 @@ jobs:
         with:
           name: dist-cpu-linux-64-${{ github.run_number }}
           path: ./dist
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   test-cpu-linux-64:
     name: test cpu linux-64
@@ -170,12 +178,16 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: test (robot)
         run: |
@@ -184,7 +196,7 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
@@ -205,6 +217,10 @@ jobs:
           path: |
             ./build/atest
             ./build/audit
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   build-cpu-osx-64:
     name: build cpu osx-64
@@ -237,12 +253,16 @@ jobs:
 
       - name: setup conda (mambaforge)
         if: steps.cache-dist.outputs.cache-hit != 'true'
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/build-osx-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: preflight (doit)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -263,6 +283,10 @@ jobs:
         with:
           name: dist-cpu-osx-64-${{ github.run_number }}
           path: ./dist
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   test-cpu-osx-64:
     name: test cpu osx-64
@@ -289,12 +313,16 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/atest-osx-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: test (robot)
         run: |
@@ -303,7 +331,7 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/audit-osx-64.conda.lock
@@ -324,6 +352,10 @@ jobs:
           path: |
             ./build/atest
             ./build/audit
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   build-cpu-win-64:
     name: build cpu win-64
@@ -367,12 +399,16 @@ jobs:
 
       - name: setup conda (mambaforge)
         if: steps.cache-dist.outputs.cache-hit != 'true'
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/build-win-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: preflight (doit)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -393,6 +429,10 @@ jobs:
         with:
           name: dist-cpu-win-64-${{ github.run_number }}
           path: ./dist
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   test-cpu-win-64:
     name: test cpu win-64
@@ -430,12 +470,16 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/atest-win-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: test (robot)
         run: |
@@ -444,7 +488,7 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/audit-win-64.conda.lock
@@ -465,6 +509,10 @@ jobs:
           path: |
             ./build/atest
             ./build/audit
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   build-gpu-linux-64:
     name: build gpu linux-64
@@ -503,7 +551,7 @@ jobs:
 
       - name: setup conda (mambaforge)
         if: steps.cache-dist.outputs.cache-hit != 'true'
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
@@ -515,6 +563,10 @@ jobs:
         run: |
           set -eux
           conda clean -yaf
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: preflight (doit)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -535,6 +587,10 @@ jobs:
         with:
           name: dist-gpu-linux-64-${{ github.run_number }}
           path: ./dist
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
 
   test-gpu-linux-64:
     name: test gpu linux-64
@@ -567,12 +623,16 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
           miniforge-version: 4.9.2-7
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
 
       - name: test (robot)
         run: |
@@ -581,7 +641,7 @@ jobs:
 
       - name: setup conda (mambaforge)
 
-        uses: conda-incubator/setup-miniconda@master
+        uses: conda-incubator/setup-miniconda@v2
         with:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
@@ -603,6 +663,10 @@ jobs:
             ./build/atest
             ./build/audit
 
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h
+
   draft-release:
     name: release
     needs:
@@ -620,15 +684,19 @@ jobs:
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: info
 
-      - name: download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: artifacts
-
       - name: apt clean (ubuntu)
         run: |
           set -eux
           sudo bash .github/scripts/clean_ubuntu.sh
+
+      - name: preflight (disk space)
+        if: always()
+        run: df -h
+
+      - name: download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: artifacts
 
       - name: dry-run release artifacts
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
@@ -642,3 +710,7 @@ jobs:
           GIT_REF: ${{ github.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python _scripts/release.py
+
+      - name: postmortem (disk space)
+        if: always()
+        run: df -h

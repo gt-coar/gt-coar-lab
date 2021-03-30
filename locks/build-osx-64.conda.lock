@@ -18,7 +18,7 @@ https://conda.anaconda.org/conda-forge/osx-64/zlib-1.2.11-h7795811_1010.tar.bz2#
 https://conda.anaconda.org/conda-forge/osx-64/icu-64.2-h6de7cb9_1.tar.bz2#98593e7221241d8e19fee197ac105b4d
 https://conda.anaconda.org/conda-forge/osx-64/libedit-3.1.20191231-hed1e85f_2.tar.bz2#779da5393199c3af97bd8f12c804b749
 https://conda.anaconda.org/conda-forge/osx-64/libffi-3.3-h046ec9c_2.tar.bz2#c7a196accaf92d40985d5c9b4d14f9cb
-https://conda.anaconda.org/conda-forge/osx-64/libsolv-0.7.17-hcf210ce_1.tar.bz2#696d280c2d1894188e06bbf9461b32d5
+https://conda.anaconda.org/conda-forge/osx-64/libsolv-0.7.18-hcf210ce_0.tar.bz2#200f413cd1a4f4840f56731d6c1c610a
 https://conda.anaconda.org/conda-forge/osx-64/lz4-c-1.9.3-h046ec9c_0.tar.bz2#7f13d69c1b7989b85029efb6f3e35af9
 https://conda.anaconda.org/conda-forge/osx-64/openssl-1.1.1k-h0d85af4_0.tar.bz2#f9582eb16f4e3bc7932995e122f30a74
 https://conda.anaconda.org/conda-forge/osx-64/readline-8.1-h05e3726_0.tar.bz2#2832e9b6a7caa7cb192fcda6cfcd8871
@@ -29,7 +29,7 @@ https://conda.anaconda.org/conda-forge/osx-64/libnghttp2-1.43.0-h07e645a_0.tar.b
 https://conda.anaconda.org/conda-forge/osx-64/libssh2-1.9.0-h52ee1ee_6.tar.bz2#42cebefd1fd127d1180e3df004a413b7
 https://conda.anaconda.org/conda-forge/osx-64/libxml2-2.9.10-h53d96d6_0.tar.bz2#18dab8184a9255bf6fcd55c69f94f3b1
 https://conda.anaconda.org/conda-forge/osx-64/nodejs-10.22.0-h3540aa8_0.tar.bz2#8bf53af71b381541807074a4a0bdf97e
-https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.35.2-h44b9ce1_0.tar.bz2#5bb8a32b0217be8b8da56aa81b82a5f1
+https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.35.3-h44b9ce1_0.tar.bz2#9a3cbdbdf26a14819bbf2b9163986fa2
 https://conda.anaconda.org/conda-forge/osx-64/zstd-1.4.9-h582d3a0_0.tar.bz2#551e04087371339ee63524f2988faa62
 https://conda.anaconda.org/conda-forge/osx-64/libarchive-3.5.1-h0a5793d_1.tar.bz2#cb556c11c227bb7c568204768bf2a100
 https://conda.anaconda.org/conda-forge/osx-64/libcurl-7.75.0-h8ef9fac_0.tar.bz2#fc1b048751c16b877364f9ac1b4a1e4b
@@ -59,7 +59,7 @@ https://conda.anaconda.org/conda-forge/osx-64/pysocks-1.7.1-py37hf985489_3.tar.b
 https://conda.anaconda.org/conda-forge/osx-64/pyyaml-5.4.1-py37hf967b71_0.tar.bz2#3c96ec4a68120ccee37cda33192381a0
 https://conda.anaconda.org/conda-forge/osx-64/ruamel_yaml-0.15.80-py37h7585375_1004.tar.bz2#66e51f9e5f98dee5558f092ebc9ac5c5
 https://conda.anaconda.org/conda-forge/osx-64/brotlipy-0.7.0-py37hf967b71_1001.tar.bz2#2e1016af5a81ba9e50d8bd25bf82b352
-https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.6-py37hce4a858_0.tar.bz2#7c92473e90da28313a08eee67997832b
+https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.7-py37hce4a858_0.tar.bz2#3d8dba99e6bba580b947da6daf8b1d94
 https://conda.anaconda.org/conda-forge/osx-64/doit-0.33.1-py37hc8dfbb8_1.tar.bz2#e4732773cfbfc471906fac96cdc85827
 https://conda.anaconda.org/conda-forge/osx-64/setuptools-49.6.0-py37hf985489_3.tar.bz2#5030dea82548d67ec8b80882e8e4a099
 https://conda.anaconda.org/conda-forge/noarch/jinja2-2.11.3-pyh44b312d_0.tar.bz2#1d4c3605d85a3655b1595e0694138eb6
@@ -71,4 +71,4 @@ https://conda.anaconda.org/conda-forge/osx-64/conda-4.9.2-py37hf985489_0.tar.bz2
 https://conda.anaconda.org/conda-forge/noarch/ensureconda-1.4.1-pyhd8ed1ab_0.tar.bz2#52a7f7cc9076e2c8a25e15e19ad42821
 https://conda.anaconda.org/conda-forge/noarch/conda-lock-0.9.1-pyhd8ed1ab_0.tar.bz2#c918c8071db1665663a46371b0a46620
 https://conda.anaconda.org/conda-forge/osx-64/constructor-3.2.0-py37hf985489_1.tar.bz2#77a11894869cfa5fb3ebba8adfea1537
-https://conda.anaconda.org/conda-forge/osx-64/mamba-0.9.0-py37hede01ff_0.tar.bz2#4628b489f1419e0b30ec34e5b3003860
+https://conda.anaconda.org/conda-forge/osx-64/mamba-0.9.1-py37hede01ff_0.tar.bz2#49606467543955a3930db701667618d9
