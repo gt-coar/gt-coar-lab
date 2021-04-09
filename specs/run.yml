@@ -27,6 +27,7 @@ dependencies:
   # collaboration and presentation
   - jupyter-videochat
   - jupyterlab-tour
+  - jupyter-starters
   # TODO: publish
   # - ipydrawio
   # numerical compute
