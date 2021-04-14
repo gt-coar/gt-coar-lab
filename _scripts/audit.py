@@ -29,6 +29,7 @@ PIP_TO_CONDA = {
     "antlr4-python3-runtime": "antlr-python-runtime",
     "ruamel-yaml-conda": "ruamel.yaml",
     "torch": "pytorch",
+    "flatbuffers": "python-flatbuffers",
 }
 
 
