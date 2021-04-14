@@ -25,9 +25,12 @@ dependencies:
   - importnb
   - jupyter_bokeh
   # collaboration and presentation
+  - graphviz2drawio
+  - ipydrawio-export
+  - jupyter-starters
   - jupyter-videochat
   - jupyterlab-tour
-  - jupyter-starters
+  - qrcode-artistic-svg
   # TODO: publish
   # - ipydrawio
   # numerical compute
