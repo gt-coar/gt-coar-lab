@@ -63,9 +63,10 @@ def task_setup():
 
 
 def task_lint():
+    """ensure all files match expected style"""
     if C.SKIP_LINT:
         return
-    """ensure all files match expected style"""
+
     yield dict(
         name="prettier",
         doc="format YAML, markdown, JSON, etc.",
@@ -135,25 +136,30 @@ def task_lint():
 
 
 def task_lock():
+    """generate conda locks for all envs"""
     if C.SKIP_LOCKS:
         return
-    """generate conda locks for all envs"""
+
     for subdir in C.SUBDIRS:
+        yield U.lock("atest", None, subdir)
+        yield U.lock("audit", None, subdir, include_base=False)
+        yield U.lock("build", None, subdir)
+        yield U.lock("dev", None, subdir, ["build", "lint", "atest", "audit"])
+        yield U.lock("lint", None, subdir)
+
         for variant in C.VARIANTS:
             variant_spec = U.variant_spec(variant, subdir)
             if variant_spec:
                 yield U.lock("run", variant, subdir)
-        yield U.lock("build", None, subdir)
-        yield U.lock("atest", None, subdir)
-        yield U.lock("lint", None, subdir)
-        yield U.lock("audit", None, subdir, include_base=False)
-        yield U.lock("dev", None, subdir, ["build", "lint", "atest", "audit"])
+
+        if subdir == "linux-64":
+            yield U.lock("binder", None, subdir, ["run"])
 
 
 def task_construct():
+    """generate construct folders"""
     if C.CI:
         return
-    """generate construct folders"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
@@ -161,9 +167,9 @@ def task_construct():
 
 
 def task_ci():
+    """generate CI workflows"""
     if C.CI:
         return
-    """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
     context = dict(copyright=C.COPYRIGHT_HEADER, license=C.LICENSE_HEADER, jobs=[])
