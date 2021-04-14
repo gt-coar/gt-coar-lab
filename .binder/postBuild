@@ -7,7 +7,7 @@ export MAMBA_NO_BANNER=1
 CONDARC=$(pwd)/.github/.condarc
 export CONDARC
 
-mamba create --prefix "${NB_PYTHON_PREFIX}" --file locks/binder-cpu-linux-64.conda.lock
+mamba create --prefix "${NB_PYTHON_PREFIX}" --file locks/binder-linux-64.conda.lock
 
 # shellcheck source=/dev/null
 source deactivate || echo "didn't deactivate..."
