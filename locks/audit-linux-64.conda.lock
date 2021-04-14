@@ -4,11 +4,11 @@
 https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2#d7c89558ba9fa0495403155b64376d81
 https://conda.anaconda.org/conda-forge/linux-64/ca-certificates-2020.12.5-ha878542_0.tar.bz2#7eb5d4ffeee663caa1635cd67071bc1b
 https://conda.anaconda.org/conda-forge/linux-64/ld_impl_linux-64-2.35.1-hea4e1c9_2.tar.bz2#83610dba766a186bdc7a116053b782a4
-https://conda.anaconda.org/conda-forge/linux-64/libstdcxx-ng-9.3.0-h6de172a_18.tar.bz2#2f03cd1e5c966d4af5822c7ae089ab03
+https://conda.anaconda.org/conda-forge/linux-64/libstdcxx-ng-9.3.0-h6de172a_19.tar.bz2#cd9a24a8dde03ec0cf0e603b0bea85a1
 https://conda.anaconda.org/conda-forge/noarch/tzdata-2021a-he74cb21_0.tar.bz2#6f36861f102249fc54861ff9343c3fdd
-https://conda.anaconda.org/conda-forge/linux-64/libgomp-9.3.0-h2828fa1_18.tar.bz2#fc7a2a7e6a741c8afdd764715ac7039d
+https://conda.anaconda.org/conda-forge/linux-64/libgomp-9.3.0-h2828fa1_19.tar.bz2#ab0a307912033126da02507b59e79ec9
 https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-1_gnu.tar.bz2#561e277319a41d4f24f5c05a9ef63c04
-https://conda.anaconda.org/conda-forge/linux-64/libgcc-ng-9.3.0-h2828fa1_18.tar.bz2#5a9490c49a3505a6d19bda012cde6ad3
+https://conda.anaconda.org/conda-forge/linux-64/libgcc-ng-9.3.0-h2828fa1_19.tar.bz2#9d5cdfc51476ee4dcdd96ed2dca3f943
 https://conda.anaconda.org/conda-forge/linux-64/libffi-3.3-h58526e2_2.tar.bz2#665369991d8dd290ac5ee92fce3e6bf5
 https://conda.anaconda.org/conda-forge/linux-64/ncurses-6.2-h58526e2_4.tar.bz2#509f2a21c4a09214cd737a480dfd80c9
 https://conda.anaconda.org/conda-forge/linux-64/openssl-1.1.1k-h7f98852_0.tar.bz2#07fae2cb088379c8441e0f3ffa1f4025
@@ -16,7 +16,7 @@ https://conda.anaconda.org/conda-forge/linux-64/xz-5.2.5-h516909a_1.tar.bz2#33f6
 https://conda.anaconda.org/conda-forge/linux-64/yaml-0.2.5-h516909a_0.tar.bz2#03a530e925414902547cf48da7756db8
 https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.11-h516909a_1010.tar.bz2#339cc5584e6d26bc73a875ba900028c3
 https://conda.anaconda.org/conda-forge/linux-64/readline-8.0-he28a2e2_2.tar.bz2#4d0ae8d473f863696088f76800ef9d38
-https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-h21135ba_1.tar.bz2#c647f70aa7e3d4cc4e029cc1c9a99953
+https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.10-hed695b0_1.tar.bz2#7ef837cd455bd0f19f49b8b62d4cb568
 https://conda.anaconda.org/conda-forge/linux-64/sqlite-3.35.4-h74cdb3f_0.tar.bz2#bc1c6047464060ba82a71448292be9c3
 https://conda.anaconda.org/conda-forge/linux-64/python-3.9.2-hffdb5ce_0_cpython.tar.bz2#1d42ab08338d49f54800522a89ca3602
 https://conda.anaconda.org/conda-forge/noarch/click-7.1.2-pyh9f0ad1d_0.tar.bz2#bd50a970ce07e660c319fdc4d730d3f1
