@@ -199,7 +199,6 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           installer-url: http://127.0.0.1:9999/{{ job.installer_name }}
-          activate-environment: base
           use-mamba: true
 
       - name: list packages
