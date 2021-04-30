@@ -168,16 +168,22 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
       - name: serve installer
         run: |
           cd dist
-          nohup python -m http.server 9999 &
+          nohup python -m http.server ${{ steps.port.outputs.unused }} &
           sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
           use-mamba: true
 
       - name: list packages
@@ -339,16 +345,22 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
       - name: serve installer
         run: |
           cd dist
-          nohup python -m http.server 9999 &
+          nohup python -m http.server ${{ steps.port.outputs.unused }} &
           sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
           use-mamba: true
 
       - name: list packages
@@ -526,16 +538,22 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
       - name: serve installer
         run: |
           cd dist
-          nohup python -m http.server 9999 &
+          nohup python -m http.server ${{ steps.port.outputs.unused }} &
           sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
           use-mamba: true
 
       - name: list packages
@@ -720,16 +738,22 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
       - name: serve installer
         run: |
           cd dist
-          nohup python -m http.server 9999 &
+          nohup python -m http.server ${{ steps.port.outputs.unused }} &
           sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: http://127.0.0.1:9999/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
           use-mamba: true
 
       - name: list packages
