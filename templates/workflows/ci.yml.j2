@@ -185,21 +185,26 @@ jobs:
           name: dist-{{ job.variant }}-{{ job.subdir }}-{{ "${{ github.run_number }}" }}
           path: ./dist
 
-      - name: move installer
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: serve installer
         run: |
-          mkdir -p /tmp
-          mv dist/{{ job.installer_name }} /tmp/{{ job.installer_name }}
+          cd dist
+          nohup python -m http.server 9999 &
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: {{ job.tmp_uri }}/{{ job.installer_name }}
+          installer-url: http://127.0.0.1:9999/{{ job.installer_name }}
           activate-environment: base
           use-mamba: true
 
       - name: list packages
         run: |
-          conda list --explicit
+          mamba list -n base --explicit
 
 
   test-{{ job.variant }}-{{ job.subdir }}:

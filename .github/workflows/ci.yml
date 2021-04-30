@@ -163,21 +163,26 @@ jobs:
           name: dist-cpu-linux-64-${{ github.run_number }}
           path: ./dist
 
-      - name: move installer
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: serve installer
         run: |
-          mkdir -p /tmp
-          mv dist/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh /tmp/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+          cd dist
+          nohup python -m http.server 9999 &
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: file:///tmp/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
           activate-environment: base
           use-mamba: true
 
       - name: list packages
         run: |
-          conda list --explicit
+          mamba list -n base --explicit
 
   test-cpu-linux-64:
     name: test cpu linux-64
@@ -329,21 +334,26 @@ jobs:
           name: dist-cpu-osx-64-${{ github.run_number }}
           path: ./dist
 
-      - name: move installer
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: serve installer
         run: |
-          mkdir -p /tmp
-          mv dist/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh /tmp/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+          cd dist
+          nohup python -m http.server 9999 &
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: file:///tmp/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
           activate-environment: base
           use-mamba: true
 
       - name: list packages
         run: |
-          conda list --explicit
+          mamba list -n base --explicit
 
   test-cpu-osx-64:
     name: test cpu osx-64
@@ -511,21 +521,26 @@ jobs:
           name: dist-cpu-win-64-${{ github.run_number }}
           path: ./dist
 
-      - name: move installer
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: serve installer
         run: |
-          mkdir -p /tmp
-          mv dist/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe /tmp/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+          cd dist
+          nohup python -m http.server 9999 &
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: file:///c:/tmp/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+          installer-url: http://127.0.0.1:9999/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
           activate-environment: base
           use-mamba: true
 
       - name: list packages
         run: |
-          conda list --explicit
+          mamba list -n base --explicit
 
   test-cpu-win-64:
     name: test cpu win-64
@@ -700,21 +715,26 @@ jobs:
           name: dist-gpu-linux-64-${{ github.run_number }}
           path: ./dist
 
-      - name: move installer
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: serve installer
         run: |
-          mkdir -p /tmp
-          mv dist/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh /tmp/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+          cd dist
+          nohup python -m http.server 9999 &
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
         with:
-          installer-url: file:///tmp/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+          installer-url: http://127.0.0.1:9999/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
           activate-environment: base
           use-mamba: true
 
       - name: list packages
         run: |
-          conda list --explicit
+          mamba list -n base --explicit
 
   test-gpu-linux-64:
     name: test gpu linux-64
