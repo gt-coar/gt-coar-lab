@@ -39,9 +39,14 @@ Run the Installer
     ...    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
+    ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
+    Wait Until Created    ${post}   timeout=120s
 
 Validate the Installation
     [Documentation]    Ensure some baseline commands work
+    ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
+    ${postinstall log} =  Get File   ${post}
+    Log    ${postinstall log}
     Wait Until Keyword Succeeds    5x    10s
     ...    Run Shell Script in Installation
     ...    mamba info
@@ -49,8 +54,6 @@ Validate the Installation
     ...    mamba list --explicit > ${OUTPUT DIR}${/}conda.lock
     Run Shell Script in Installation
     ...    python -m pip freeze > ${OUTPUT DIR}${/}requirements.txt
-    ${postinstall log} =  Get File   ${INST_DIR}${/}post_install.log
-    Log    ${postinstall log}
 
 Run the Linux installer
     [Documentation]    Install on Linux
