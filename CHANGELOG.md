@@ -6,7 +6,14 @@
 
 ### All
 
-- add `jupyterlab-starters`
+- [#33] adds [jupyterlab-starters] for starting new learning activities
+- [#34] adds [ipydrawio] and [segno] for posters with QR codes
+
+[#33]: https://github.com/gt-coar/gt-coar-lab/pull/33
+[#34]: https://github.com/gt-coar/gt-coar-lab/pull/34
+[ipydrawio]: https://github.com/deathbeds/ipydrawio
+[jupyterlab-starters]: https://github.com/deathbeds/jupyterlab-starters
+[segno]: https://github.com/heuer/segno
 
 ---
 

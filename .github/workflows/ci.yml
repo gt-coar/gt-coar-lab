@@ -53,7 +53,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/lint-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: cache (yarn)
         uses: actions/cache@v2
@@ -117,7 +117,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -183,7 +183,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -201,7 +201,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -258,7 +258,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -318,7 +318,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -336,7 +336,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -404,7 +404,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -475,7 +475,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -493,7 +493,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -556,7 +556,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: clean cache (conda)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -628,7 +628,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -646,7 +646,7 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.9.2-7
+          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
