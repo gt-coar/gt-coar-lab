@@ -11,9 +11,9 @@ dependencies:
   # deepmind
   - dm-acme
   # kernels
-  # TODO: unpin once python-ls is a thing and works with jedi 0.18
-  - ipython
-  - xeus-python
+  - ipython >=7.22.0
+  - ipykernel >=5.5.3
+  - xeus-python >=0.12.3
   # interactive computing extensions
   - jupyterlab >=3.0.14
   # scientific publishing
