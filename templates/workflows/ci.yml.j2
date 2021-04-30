@@ -25,7 +25,6 @@
           condarc-file: .github/.condarc
           environment-file: {{ lockfile }}
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 {% endmacro %}
 
 {% macro preflight(job, if_expr="") %}
