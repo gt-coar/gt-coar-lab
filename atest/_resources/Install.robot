@@ -8,6 +8,7 @@ Library           Process
 Resource          ./Cleanup.robot
 Resource          ./Variables.robot
 Resource          ./Shell.robot
+Resource          ./JSON.robot
 
 *** Keywords ***
 Maybe Run the Installer
@@ -18,6 +19,8 @@ Maybe Run the Installer
     ...    Log    Already installed!
     ...    ELSE
     ...    Run The Installer
+    ${files} =   List Directory   ${INST_DIR}
+    Create File as JSON   ${OUTPUT DIR}${/}post-install-files.json    ${files}
     Validate the Installation
 
 Run the Installer
