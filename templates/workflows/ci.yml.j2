@@ -208,6 +208,10 @@ jobs:
             http://127.0.0.1:${{'{{'}} steps.port.outputs.unused {{'}}'}}/{{ job.installer_name }}
           use-mamba: true
 
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
       - name: list packages
         run: |
           mamba list -n base --explicit

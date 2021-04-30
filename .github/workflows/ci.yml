@@ -186,6 +186,10 @@ jobs:
             http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
           use-mamba: true
 
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
       - name: list packages
         run: |
           mamba list -n base --explicit
@@ -362,6 +366,10 @@ jobs:
           installer-url: |
             http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
           use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
 
       - name: list packages
         run: |
@@ -555,6 +563,10 @@ jobs:
           installer-url: |
             http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
           use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
 
       - name: list packages
         run: |
@@ -755,6 +767,10 @@ jobs:
           installer-url: |
             http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
           use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
 
       - name: list packages
         run: |
