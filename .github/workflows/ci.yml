@@ -172,6 +172,7 @@ jobs:
         run: |
           cd dist
           nohup python -m http.server 9999 &
+          sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
@@ -342,6 +343,7 @@ jobs:
         run: |
           cd dist
           nohup python -m http.server 9999 &
+          sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
@@ -528,6 +530,7 @@ jobs:
         run: |
           cd dist
           nohup python -m http.server 9999 &
+          sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
@@ -721,6 +724,7 @@ jobs:
         run: |
           cd dist
           nohup python -m http.server 9999 &
+          sleep 5
 
       - name: setup conda (installer)
         uses: conda-incubator/setup-miniconda@v2
