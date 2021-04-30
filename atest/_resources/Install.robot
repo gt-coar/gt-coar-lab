@@ -40,7 +40,7 @@ Run the Installer
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
     ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
-    Wait Until Created    ${post}   timeout=120s
+    Wait Until Created    ${post}   timeout=600s
 
 Validate the Installation
     [Documentation]    Ensure some baseline commands work
