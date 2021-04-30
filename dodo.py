@@ -191,6 +191,10 @@ def task_ci():
                             (P.LOCKS / f"audit-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
                         vm=C.VM[subdir],
+                        installer_name=U.installer(variant, subdir).name,
+                        tmp_uri="file:///c:/tmp"
+                        if subdir == "win-64"
+                        else "file:///tmp",
                     )
                 ]
 

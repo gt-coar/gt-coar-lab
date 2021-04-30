@@ -145,6 +145,40 @@ jobs:
         if: always()
         run: df -h
 
+  smoke-cpu-linux-64:
+    name: test cpu linux-64
+    needs: [build-cpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-linux-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: move installer
+        run: |
+          mkdir -p /tmp
+          mv dist/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh /tmp/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: file:///tmp/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+          activate-environment: base
+          use-mamba: true
+
+      - name: list packages
+        run: |
+          conda list --explicit
+
   test-cpu-linux-64:
     name: test cpu linux-64
     needs: [build-cpu-linux-64]
@@ -282,6 +316,34 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-cpu-osx-64:
+    name: test cpu osx-64
+    needs: [build-cpu-osx-64]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-osx-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: move installer
+        run: |
+          mkdir -p /tmp
+          mv dist/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh /tmp/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: file:///tmp/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+          activate-environment: base
+          use-mamba: true
+
+      - name: list packages
+        run: |
+          conda list --explicit
 
   test-cpu-osx-64:
     name: test cpu osx-64
@@ -425,6 +487,45 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-cpu-win-64:
+    name: test cpu win-64
+    needs: [build-cpu-win-64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: enable long paths (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-win-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: move installer
+        run: |
+          mkdir -p /tmp
+          mv dist/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe /tmp/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: file:///c:/tmp/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+          activate-environment: base
+          use-mamba: true
+
+      - name: list packages
+        run: |
+          conda list --explicit
 
   test-cpu-win-64:
     name: test cpu win-64
@@ -580,6 +681,40 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-gpu-linux-64:
+    name: test gpu linux-64
+    needs: [build-gpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-gpu-linux-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: move installer
+        run: |
+          mkdir -p /tmp
+          mv dist/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh /tmp/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: file:///tmp/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+          activate-environment: base
+          use-mamba: true
+
+      - name: list packages
+        run: |
+          conda list --explicit
 
   test-gpu-linux-64:
     name: test gpu linux-64
