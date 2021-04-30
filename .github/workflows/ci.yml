@@ -146,7 +146,7 @@ jobs:
         run: df -h
 
   smoke-cpu-linux-64:
-    name: test cpu linux-64
+    name: smoke cpu linux-64
     needs: [build-cpu-linux-64]
     runs-on: ubuntu-20.04
     steps:
@@ -318,7 +318,7 @@ jobs:
         run: df -h
 
   smoke-cpu-osx-64:
-    name: test cpu osx-64
+    name: smoke cpu osx-64
     needs: [build-cpu-osx-64]
     runs-on: macos-latest
     steps:
@@ -489,7 +489,7 @@ jobs:
         run: df -h
 
   smoke-cpu-win-64:
-    name: test cpu win-64
+    name: smoke cpu win-64
     needs: [build-cpu-win-64]
     runs-on: windows-latest
     steps:
@@ -683,7 +683,7 @@ jobs:
         run: df -h
 
   smoke-gpu-linux-64:
-    name: test gpu linux-64
+    name: smoke gpu linux-64
     needs: [build-gpu-linux-64]
     runs-on: ubuntu-20.04
     steps:

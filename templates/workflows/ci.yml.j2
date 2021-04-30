@@ -172,7 +172,7 @@ jobs:
       {{ df("postmortem") }}
 
   smoke-{{ job.variant }}-{{ job.subdir }}:
-    name: test {{ job.variant }} {{ job.subdir }}
+    name: smoke {{ job.variant }} {{ job.subdir }}
     needs: [build-{{ job.variant }}-{{ job.subdir }}]
     runs-on: {{ job.vm }}
     steps:
