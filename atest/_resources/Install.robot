@@ -19,8 +19,6 @@ Maybe Run the Installer
     ...    Log    Already installed!
     ...    ELSE
     ...    Run The Installer
-    ${files} =   List Directory   ${INST_DIR}
-    Create File as JSON   ${OUTPUT DIR}${/}post-install-files.json    ${files}
     Validate the Installation
 
 Run the Installer
@@ -40,7 +38,13 @@ Run the Installer
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
     ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
-    Wait Until Created    ${post}   timeout=600s
+    Wait Until Created    ${post}   timeout=1000s
+    [Teardown]   List Files In Installation Directory
+
+List Files In Installation Directory
+    [Documentation]   List all of the files in the root of the installation
+    ${files} =   List Directory   ${INST_DIR}
+    Create File as JSON   ${OUTPUT DIR}${/}post-install-files.json    ${files}
 
 Validate the Installation
     [Documentation]    Ensure some baseline commands work
