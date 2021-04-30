@@ -85,7 +85,7 @@ Run the Windows installer
     ...    ${INST_DIR}${:}${INST_DIR}${/}Scripts${:}${INST_DIR}${/}Library${/}bin${:}%{PATH}
     ${args} =    Set Variable
     ...    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INST_DIR}
-    ${result} =    Run Process    start /wait "" ${INSTALLER} ${args}
+    ${result} =    Run Process    ${INSTALLER} ${args}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT    shell=True
     [Return]    ${result.rc}
 
