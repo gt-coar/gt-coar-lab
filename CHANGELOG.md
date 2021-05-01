@@ -8,12 +8,20 @@
 
 - [#33] adds [jupyterlab-starters] for starting new learning activities
 - [#34] adds [ipydrawio] and [segno] for posters with QR codes
+- [#36] adds [reinforcement-learning] Notebooks with Starter
+
+### Windows
+
+- A _very short_ installation path is recommended, e.g. `c:\gtcl`, to support long paths
+  such as [ipydrawio] assets
 
 [#33]: https://github.com/gt-coar/gt-coar-lab/pull/33
 [#34]: https://github.com/gt-coar/gt-coar-lab/pull/34
+[#36]: https://github.com/gt-coar/gt-coar-lab/pull/36
 [ipydrawio]: https://github.com/deathbeds/ipydrawio
 [jupyterlab-starters]: https://github.com/deathbeds/jupyterlab-starters
 [segno]: https://github.com/heuer/segno
+[reinforcement-learning]: https://github.com/dennybritz/reinforcement-learning
 
 ---
 
