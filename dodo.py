@@ -63,9 +63,10 @@ def task_setup():
 
 
 def task_lint():
+    """ensure all files match expected style"""
     if C.SKIP_LINT:
         return
-    """ensure all files match expected style"""
+
     yield dict(
         name="prettier",
         doc="format YAML, markdown, JSON, etc.",
@@ -135,25 +136,30 @@ def task_lint():
 
 
 def task_lock():
+    """generate conda locks for all envs"""
     if C.SKIP_LOCKS:
         return
-    """generate conda locks for all envs"""
+
     for subdir in C.SUBDIRS:
+        yield U.lock("atest", None, subdir)
+        yield U.lock("audit", None, subdir, include_base=False)
+        yield U.lock("build", None, subdir)
+        yield U.lock("dev", None, subdir, ["build", "lint", "atest", "audit"])
+        yield U.lock("lint", None, subdir)
+
         for variant in C.VARIANTS:
             variant_spec = U.variant_spec(variant, subdir)
             if variant_spec:
                 yield U.lock("run", variant, subdir)
-        yield U.lock("build", None, subdir)
-        yield U.lock("atest", None, subdir)
-        yield U.lock("lint", None, subdir)
-        yield U.lock("audit", None, subdir, include_base=False)
-        yield U.lock("dev", None, subdir, ["build", "lint", "atest", "audit"])
+
+        if subdir == "linux-64":
+            yield U.lock("binder", None, subdir, ["run"])
 
 
 def task_construct():
+    """generate construct folders"""
     if C.CI:
         return
-    """generate construct folders"""
     for variant in C.VARIANTS:
         for subdir in C.SUBDIRS:
             if U.variant_spec(variant, subdir) is not None:
@@ -161,9 +167,9 @@ def task_construct():
 
 
 def task_ci():
+    """generate CI workflows"""
     if C.CI:
         return
-    """generate CI workflows"""
     tmpl = P.TEMPLATES / "workflows/ci.yml.j2"
 
     context = dict(copyright=C.COPYRIGHT_HEADER, license=C.LICENSE_HEADER, jobs=[])
@@ -185,6 +191,10 @@ def task_ci():
                             (P.LOCKS / f"audit-{subdir}.conda.lock").relative_to(P.ROOT)
                         ),
                         vm=C.VM[subdir],
+                        installer_name=U.installer(variant, subdir).name,
+                        tmp_uri="file:///c:/tmp"
+                        if subdir == "win-64"
+                        else "file:///tmp",
                     )
                 ]
 
@@ -357,6 +367,7 @@ class C:
     }
     CI = bool(safe_load(os.environ.get("CI", "0")))
     CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
+    INST_DIR = os.environ.get("GTCL_INSTALL_DIR")
     SKIP_LOCKS = CI
     SKIP_LINT = CI and not CI_LINTING
     CHUNKSIZE = 8192
@@ -521,7 +532,7 @@ class U:
         installer = U.installer(variant, subdir)
         stem = f"{variant}-{subdir}-{attempt}"
         out_dir = P.ATEST_OUT / stem
-        inst_dir = P.BUILD / f"{variant}-{subdir}"
+        inst_dir = C.INST_DIR or P.BUILD / f"{variant}-{subdir}"
 
         if out_dir.exists():
             try:

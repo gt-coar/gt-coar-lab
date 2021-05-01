@@ -19,3 +19,9 @@ Get File as JSON
     ${text} =    Get File    ${path}
     ${loaded} =    Load JSON from String   ${text}
     [Return]     ${loaded}
+
+Create File as JSON
+    [Arguments]   ${path}  ${data}    ${indent}=${2}  ${sort_keys}=${TRUE}
+    [Documentation]   Write a JSON file
+    ${text} =    JSON.dumps    ${data}   indent=${indent}   sort_keys=${sort_keys}
+    Create File   ${path}   ${text}

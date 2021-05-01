@@ -8,6 +8,7 @@ Library           Process
 Resource          ./Cleanup.robot
 Resource          ./Variables.robot
 Resource          ./Shell.robot
+Resource          ./JSON.robot
 
 *** Keywords ***
 Maybe Run the Installer
@@ -36,9 +37,20 @@ Run the Installer
     ...    Fatal Error    Can't install on platform ${OS}!
     Should Be Equal as Integers    ${rc}    0
     ...    msg=Couldn't complete installer, see ${INSTALL LOG}
+    ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
+    Wait Until Created    ${post}   timeout=1000s
+    [Teardown]   List Files In Installation Directory
+
+List Files In Installation Directory
+    [Documentation]   List all of the files in the root of the installation
+    ${files} =   List Directory   ${INST_DIR}
+    Create File as JSON   ${OUTPUT DIR}${/}post-install-files.json    ${files}
 
 Validate the Installation
     [Documentation]    Ensure some baseline commands work
+    ${post} =   Set Variable    ${INST_DIR}${/}post_install.log
+    ${postinstall log} =  Get File   ${post}
+    Log    ${postinstall log}
     Wait Until Keyword Succeeds    5x    10s
     ...    Run Shell Script in Installation
     ...    mamba info
@@ -46,8 +58,6 @@ Validate the Installation
     ...    mamba list --explicit > ${OUTPUT DIR}${/}conda.lock
     Run Shell Script in Installation
     ...    python -m pip freeze > ${OUTPUT DIR}${/}requirements.txt
-    ${postinstall log} =  Get File   ${INST_DIR}${/}post_install.log
-    Log    ${postinstall log}
 
 Run the Linux installer
     [Documentation]    Install on Linux
@@ -75,7 +85,7 @@ Run the Windows installer
     ...    ${INST_DIR}${:}${INST_DIR}${/}Scripts${:}${INST_DIR}${/}Library${/}bin${:}%{PATH}
     ${args} =    Set Variable
     ...    /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=${INST_DIR}
-    ${result} =    Run Process    start /wait "" ${INSTALLER} ${args}
+    ${result} =    Run Process    ${INSTALLER} ${args}
     ...    stdout=${INSTALL LOG}    stderr=STDOUT    shell=True
     [Return]    ${result.rc}
 
