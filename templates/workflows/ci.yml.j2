@@ -216,6 +216,10 @@ jobs:
         run: |
           mamba list -n base --explicit
 
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
 
   test-{{ job.variant }}-{{ job.subdir }}:
     name: test {{ job.variant }} {{ job.subdir }}
@@ -238,8 +242,8 @@ jobs:
       {{ df("preflight") }}
 
       - name: test (robot)
+        {% if subdir == "win-64" %}shell: cmd /C CALL {0}{% endif %}
         run: |
-          set -eux
           doit -s test:{{ job.variant }}:{{ job.subdir }}
 
       {{ setup_miniconda(job.audit_lockfile) }}

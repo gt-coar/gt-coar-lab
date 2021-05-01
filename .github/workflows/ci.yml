@@ -194,6 +194,11 @@ jobs:
         run: |
           mamba list -n base --explicit
 
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
+
   test-cpu-linux-64:
     name: test cpu linux-64
     needs: [build-cpu-linux-64]
@@ -236,8 +241,8 @@ jobs:
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
           doit -s test:cpu:linux-64
 
       - name: setup conda (mambaforge)
@@ -375,6 +380,11 @@ jobs:
         run: |
           mamba list -n base --explicit
 
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
+
   test-cpu-osx-64:
     name: test cpu osx-64
     needs: [build-cpu-osx-64]
@@ -411,8 +421,8 @@ jobs:
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
           doit -s test:cpu:osx-64
 
       - name: setup conda (mambaforge)
@@ -572,6 +582,11 @@ jobs:
         run: |
           mamba list -n base --explicit
 
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
+
   test-cpu-win-64:
     name: test cpu win-64
     needs: [build-cpu-win-64]
@@ -619,8 +634,8 @@ jobs:
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
           doit -s test:cpu:win-64
 
       - name: setup conda (mambaforge)
@@ -776,6 +791,11 @@ jobs:
         run: |
           mamba list -n base --explicit
 
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
+
   test-gpu-linux-64:
     name: test gpu linux-64
     needs: [build-gpu-linux-64]
@@ -818,8 +838,8 @@ jobs:
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
           doit -s test:gpu:linux-64
 
       - name: setup conda (mambaforge)
