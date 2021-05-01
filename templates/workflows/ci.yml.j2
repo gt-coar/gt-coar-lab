@@ -245,7 +245,7 @@ jobs:
         {% if job.subdir == "win-64" %}
         shell: cmd /C CALL {0}
         env:
-          GTCL_INSTALL_DIR: "c:\tmp"
+          GTCL_INSTALL_DIR: c:\tmp
         {% endif %}
         run: |
           {% if job.subdir == "win-64" %}
