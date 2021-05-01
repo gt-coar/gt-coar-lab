@@ -53,7 +53,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/lint-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: cache (yarn)
         uses: actions/cache@v2
@@ -117,7 +116,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -146,6 +144,60 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-cpu-linux-64:
+    name: smoke cpu linux-64
+    needs: [build-cpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-linux-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
+      - name: serve installer
+        run: |
+          cd dist
+          nohup python3 -m http.server ${{ steps.port.outputs.unused }} -b 127.0.0.1 &
+          sleep 5
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Linux-x86_64.sh
+          use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
+      - name: list packages
+        run: |
+          mamba list -n base --explicit
+
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
 
   test-cpu-linux-64:
     name: test cpu linux-64
@@ -183,15 +235,15 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
+
           doit -s test:cpu:linux-64
 
       - name: setup conda (mambaforge)
@@ -201,7 +253,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -258,7 +309,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -287,6 +337,54 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-cpu-osx-64:
+    name: smoke cpu osx-64
+    needs: [build-cpu-osx-64]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-osx-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
+      - name: serve installer
+        run: |
+          cd dist
+          nohup python3 -m http.server ${{ steps.port.outputs.unused }} -b 127.0.0.1 &
+          sleep 5
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-MacOSX-x86_64.sh
+          use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
+      - name: list packages
+        run: |
+          mamba list -n base --explicit
+
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
 
   test-cpu-osx-64:
     name: test cpu osx-64
@@ -318,15 +416,15 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
+
           doit -s test:cpu:osx-64
 
       - name: setup conda (mambaforge)
@@ -336,7 +434,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-osx-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -404,7 +501,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
@@ -433,6 +529,65 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-cpu-win-64:
+    name: smoke cpu win-64
+    needs: [build-cpu-win-64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: enable long paths (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Value 1
+      - name: enable utf-8 console (windows)
+        shell: pwsh
+        run: |
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "ACP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "OEMCP" -Type String -Value 65001
+          Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Nls\CodePage" -Name "MACCP" -Type String -Value 65001
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-cpu-win-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
+      - name: serve installer
+        run: |
+          cd dist
+          nohup python3 -m http.server ${{ steps.port.outputs.unused }} -b 127.0.0.1 &
+          sleep 5
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-CPU-2021.04.0-0-Windows-x86_64.exe
+          use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
+      - name: list packages
+        run: |
+          mamba list -n base --explicit
+
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
 
   test-cpu-win-64:
     name: test cpu win-64
@@ -475,15 +630,21 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
         run: df -h
 
       - name: test (robot)
+
+        shell: cmd /C CALL {0}
+        env:
+          GTCL_INSTALL_DIR: c:\tmp
+
         run: |
-          set -eux
+
+          md c:\tmp
+
           doit -s test:cpu:win-64
 
       - name: setup conda (mambaforge)
@@ -493,7 +654,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-win-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |
@@ -556,7 +716,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/build-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: clean cache (conda)
         if: steps.cache-dist.outputs.cache-hit != 'true'
@@ -591,6 +750,60 @@ jobs:
       - name: postmortem (disk space)
         if: always()
         run: df -h
+
+  smoke-gpu-linux-64:
+    name: smoke gpu linux-64
+    needs: [build-gpu-linux-64]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: apt clean (ubuntu)
+
+        run: |
+          set -eux
+          sudo bash .github/scripts/clean_ubuntu.sh
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist-gpu-linux-64-${{ github.run_number }}
+          path: ./dist
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: get unused port
+        run: |
+          echo "##[set-output name=unused;]$(python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')"
+        id: port
+
+      - name: serve installer
+        run: |
+          cd dist
+          nohup python3 -m http.server ${{ steps.port.outputs.unused }} -b 127.0.0.1 &
+          sleep 5
+
+      - name: setup conda (installer)
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          installer-url: |
+            http://127.0.0.1:${{ steps.port.outputs.unused }}/GTCOARLab-GPU-2021.04.0-0-Linux-x86_64.sh
+          use-mamba: true
+
+      - name: list files in conda base
+        run: |
+          ls -lathr $CONDA
+
+      - name: list packages
+        run: |
+          mamba list -n base --explicit
+
+      - name: print post_install.log
+        run: |
+          cd $CONDA
+          cat post_install.log
 
   test-gpu-linux-64:
     name: test gpu linux-64
@@ -628,15 +841,15 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/atest-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: preflight (disk space)
         if: always()
         run: df -h
 
       - name: test (robot)
+
         run: |
-          set -eux
+
           doit -s test:gpu:linux-64
 
       - name: setup conda (mambaforge)
@@ -646,7 +859,6 @@ jobs:
           condarc-file: .github/.condarc
           environment-file: locks/audit-linux-64.conda.lock
           miniforge-variant: Mambaforge
-          miniforge-version: 4.10.0-0
 
       - name: audit (safety)
         run: |

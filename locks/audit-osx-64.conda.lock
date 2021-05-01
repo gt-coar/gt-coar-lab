@@ -12,7 +12,7 @@ https://conda.anaconda.org/conda-forge/osx-64/libffi-3.3-h046ec9c_2.tar.bz2#c7a1
 https://conda.anaconda.org/conda-forge/osx-64/openssl-1.1.1k-h0d85af4_0.tar.bz2#f9582eb16f4e3bc7932995e122f30a74
 https://conda.anaconda.org/conda-forge/osx-64/readline-8.1-h05e3726_0.tar.bz2#2832e9b6a7caa7cb192fcda6cfcd8871
 https://conda.anaconda.org/conda-forge/osx-64/tk-8.6.10-hb0a8c7a_1.tar.bz2#f7477bf81dcfc7b4dddc7b3790a99a0c
-https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.35.4-h44b9ce1_0.tar.bz2#8a07c36ce8a003a8213591882314dac6
+https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.35.5-h44b9ce1_0.tar.bz2#2c2013573c0ebe9eb400f483de607360
 https://conda.anaconda.org/conda-forge/osx-64/python-3.9.2-h2502468_0_cpython.tar.bz2#57dbdb212b9437aed31875d015885bee
 https://conda.anaconda.org/conda-forge/noarch/click-7.1.2-pyh9f0ad1d_0.tar.bz2#bd50a970ce07e660c319fdc4d730d3f1
 https://conda.anaconda.org/conda-forge/noarch/idna-2.10-pyh9f0ad1d_0.tar.bz2#f95a12b4f435aae6680fe55ae2eb1b06
@@ -32,7 +32,7 @@ https://conda.anaconda.org/conda-forge/osx-64/brotlipy-0.7.0-py39hcbf5805_1001.t
 https://conda.anaconda.org/conda-forge/osx-64/cryptography-3.4.7-py39ha2c9959_0.tar.bz2#2c4542d3abca07b2b7263e15c85917db
 https://conda.anaconda.org/conda-forge/noarch/dparse-0.5.1-py_0.tar.bz2#a3148bd94a6d6ffb4a694c739eab6121
 https://conda.anaconda.org/conda-forge/osx-64/setuptools-49.6.0-py39h6e9494a_3.tar.bz2#f4f757b28d82aae4f8c7f5aac5c9e477
-https://conda.anaconda.org/conda-forge/noarch/pip-21.0.1-pyhd8ed1ab_0.tar.bz2#849477e10d78cbc283c78fd53bfbb567
+https://conda.anaconda.org/conda-forge/noarch/pip-21.1-pyhd8ed1ab_0.tar.bz2#5acc8aa0e57f31553f7bf9c22ca4d064
 https://conda.anaconda.org/conda-forge/noarch/pyopenssl-20.0.1-pyhd8ed1ab_0.tar.bz2#92371c25994d0f5d28a01c1fb75ebf86
 https://conda.anaconda.org/conda-forge/noarch/urllib3-1.26.4-pyhd8ed1ab_0.tar.bz2#d7b20b328e23d993994ea02077c009c0
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc

@@ -4,18 +4,18 @@
 dependencies:
   # coar
   - jupyterlab-gt-coar-theme >=0.2.4
+  - jupyter-starters-reinforcement-learning-dennybritz
   # gym and friends
   - gym
   - gym-box2d
   # deepmind
   - dm-acme
   # kernels
-  # TODO: unpin once python-ls is a thing and works with jedi 0.18
-  - ipython <7.20
-  - jedi <0.18
-  - xeus-python
+  - ipython >=7.22.0
+  - ipykernel >=5.5.3
+  - xeus-python >=0.12.3
   # interactive computing extensions
-  - jupyterlab >=3.0.9
+  - jupyterlab >=3.0.14
   # scientific publishing
   - tectonic
   - jupyter-book >=0.10
@@ -69,7 +69,7 @@ dependencies:
   - pygraphviz
   # code assistance
   - jupyterlab-lsp
-  - jupyter-lsp-python-plugins
+  - jupyter-lsp-python-lsp-server
   - jupyter-lsp-latex
   # computer algebra
   - antlr-python-runtime >=4.7,<4.8
