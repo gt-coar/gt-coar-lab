@@ -634,7 +634,7 @@ jobs:
         run: df -h
 
       - name: test (robot)
-
+        shell: cmd /C CALL {0}
         run: |
           doit -s test:cpu:win-64
 

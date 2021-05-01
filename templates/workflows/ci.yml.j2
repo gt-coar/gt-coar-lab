@@ -242,7 +242,7 @@ jobs:
       {{ df("preflight") }}
 
       - name: test (robot)
-        {% if subdir == "win-64" %}shell: cmd /C CALL {0}{% endif %}
+        {% if job.subdir == "win-64" %}shell: cmd /C CALL {0}{% endif %}
         run: |
           doit -s test:{{ job.variant }}:{{ job.subdir }}
 
