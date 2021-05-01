@@ -367,6 +367,7 @@ class C:
     }
     CI = bool(safe_load(os.environ.get("CI", "0")))
     CI_LINTING = bool(safe_load(os.environ.get("CI_LINTING", "0")))
+    INST_DIR = os.environ.get("GTCL_INSTALL_DIR")
     SKIP_LOCKS = CI
     SKIP_LINT = CI and not CI_LINTING
     CHUNKSIZE = 8192
@@ -531,7 +532,7 @@ class U:
         installer = U.installer(variant, subdir)
         stem = f"{variant}-{subdir}-{attempt}"
         out_dir = P.ATEST_OUT / stem
-        inst_dir = P.BUILD / f"{variant}-{subdir}"
+        inst_dir = C.INST_DIR or P.BUILD / f"{variant}-{subdir}"
 
         if out_dir.exists():
             try:

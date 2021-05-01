@@ -242,8 +242,15 @@ jobs:
       {{ df("preflight") }}
 
       - name: test (robot)
-        {% if job.subdir == "win-64" %}shell: cmd /C CALL {0}{% endif %}
+        {% if job.subdir == "win-64" %}
+        shell: cmd /C CALL {0}
+        env:
+          GTCL_INSTALL_DIR: "c:\tmp"
+        {% endif %}
         run: |
+          {% if job.subdir == "win-64" %}
+          md c:\tmp
+          {% endif %}
           doit -s test:{{ job.variant }}:{{ job.subdir }}
 
       {{ setup_miniconda(job.audit_lockfile) }}
