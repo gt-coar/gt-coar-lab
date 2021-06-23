@@ -10,3 +10,4 @@ dependencies:
   - firefox =78
   - geckodriver
   - robotframework-jupyterlibrary
+  - robotframework >=4
