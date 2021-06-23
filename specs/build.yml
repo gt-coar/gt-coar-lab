@@ -7,7 +7,7 @@ channels:
   - https://conda.anaconda.org/conda-forge
 
 dependencies:
-  - conda-lock >=0.9.1,<0.10
+  - conda-lock >=0.10,<0.11
   - constructor >=3.2.0,<3.3
   - nodejs >=10,!=11.*,!=13.*,<15
   - yarn <2
